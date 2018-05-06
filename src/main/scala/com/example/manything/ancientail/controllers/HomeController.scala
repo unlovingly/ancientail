@@ -1,7 +1,6 @@
-package controllers
+package com.example.manything.ancientail.controllers
 
 import javax.inject._
-import play.api._
 import play.api.mvc._
 
 /**
