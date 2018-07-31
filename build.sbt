@@ -1,14 +1,16 @@
-name := """ancientail"""
 organization := "com.example.manything.ancientail"
+name := """ancientail"""
 
-version := "1.0-SNAPSHOT"
+version := "0.1.0-SNAPSHOT"
+
+resolvers += Resolver.jcenterRepo
 
 lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
       guice,
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
-      "com.example.manything" %% "roundelayout" % "0.1.0"
+      "com.example.manything" %% "roundelayout" % "0.1.0-SNAPSHOT"
     )
   )
   .enablePlugins(PlayScala)
@@ -16,7 +18,7 @@ lazy val root = (project in file("."))
 
 PlayKeys.playMonitoredFiles ++= (sourceDirectories in (Compile, TwirlKeys.compileTemplates)).value
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.6"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.manything.ancientail.controllers._"
