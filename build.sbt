@@ -18,12 +18,14 @@ lazy val root = (project in file("."))
       "com.example.manything" %% "roundelayout" % "0.1.0-SNAPSHOT"
     )
   )
-  .enablePlugins(PlayScala)
+  .enablePlugins(PlayScala, ScalafmtPlugin)
   .disablePlugins(PlayLayoutPlugin)
 
 PlayKeys.playMonitoredFiles ++= (sourceDirectories in (Compile, TwirlKeys.compileTemplates)).value
 
 scalaVersion := "2.12.6"
+
+scalafmtOnCompile := true
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.manything.ancientail.controllers._"
