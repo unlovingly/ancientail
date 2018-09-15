@@ -12,5 +12,7 @@ package object publisher {
   val publishers = lifted.TableQuery[Publishers]
 
   implicit val idColumnType: TypedType[Identifiability[UUID, Publisher]] =
-    MappedColumnType.base[Identifiability[UUID, Publisher], UUID](_.value, Identifiability[UUID, Publisher])
+    MappedColumnType.base[Identifiability[UUID, Publisher], UUID](
+      _.value,
+      Identifiability[UUID, Publisher])
 }

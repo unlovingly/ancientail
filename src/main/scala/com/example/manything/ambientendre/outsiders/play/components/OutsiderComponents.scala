@@ -11,6 +11,6 @@ trait OutsiderComponents extends HttpFiltersComponents with SlickComponents {
       def get[P <: BasicProfile]: DatabaseConfig[P] =
         slickApi.dbConfig[P](DbName("default"))
     }
-  lazy implicit val db: JdbcBackend#DatabaseDef =
+  implicit lazy val db: JdbcBackend#DatabaseDef =
     databaseConfigProvider.get[JdbcProfile].db
 }

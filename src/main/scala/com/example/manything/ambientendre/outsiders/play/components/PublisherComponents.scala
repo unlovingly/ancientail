@@ -14,9 +14,9 @@ import play.api.mvc.DefaultControllerComponents
 import router.Routes
 
 class PublisherComponents(context: Context)
-    extends BuiltInComponentsFromContext(context)
-    with OutsiderComponents
-    with controllers.AssetsComponents {
+  extends BuiltInComponentsFromContext(context)
+  with OutsiderComponents
+  with controllers.AssetsComponents {
   override lazy val controllerComponents = DefaultControllerComponents(
     defaultActionBuilder,
     playBodyParsers,
@@ -34,5 +34,5 @@ class PublisherComponents(context: Context)
     cc = controllerComponents,
     usecase = listingPublishers)
   lazy val routes = new publishers.Routes(httpErrorHandler, publisherController)
-  lazy override val router = new Routes(httpErrorHandler, routes, assets)
+  override lazy val router = new Routes(httpErrorHandler, routes, assets)
 }
