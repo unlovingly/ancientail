@@ -1,9 +1,9 @@
 package com.example.manything.ambientendre.outsiders.infrastructure.publisher
 
-import java.util.UUID
-
-import com.example.manything.ambientendre.domain.publisher.{Publisher, PublisherId}
-import com.example.manything.roundelayout.domain.Identifiability
+import com.example.manything.ambientendre.domain.publisher.{
+  Publisher,
+  PublisherId
+}
 import slick.jdbc.PostgresProfile.api._
 
 class Publishers(tag: Tag) extends Table[Publisher](tag, "publishers") {
