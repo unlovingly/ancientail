@@ -6,9 +6,7 @@ import com.example.manything.ambientendre.domain.publisher._
 import scala.concurrent.Future
 
 class PublisherRepositoryWithSlick(implicit val db: Database)
-  extends PublisherRepository {
-  override def store(entity: Publisher): Future[Publisher] = ???
-
+    extends PublisherRepository {
   override def retrieve: Future[Seq[Publisher]] = {
     val q = publishers
     val a = q.result
@@ -22,4 +20,6 @@ class PublisherRepositoryWithSlick(implicit val db: Database)
 
     db.run(a)
   }
+
+  override def store(entity: Publisher): Future[Publisher] = ???
 }
