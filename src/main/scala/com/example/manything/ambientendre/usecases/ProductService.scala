@@ -1,5 +1,5 @@
 package com.example.manything.ambientendre.usecases
 
-abstract class ProductService extends UsesProductRepository {
+abstract class ProductService {
 
 }

@@ -9,6 +9,11 @@ lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
       guice,
+      "org.postgresql" % "postgresql" % "42.2.2",
+      "org.typelevel" %% "cats-core" % "1.1.0",
+      "org.typelevel" %% "cats-effect" % "1.0.0-RC2",
+      "com.typesafe.slick" %% "slick" % "3.2.3",
+      "com.typesafe.play" %% "play-slick" % "3.0.3",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
       "com.example.manything" %% "roundelayout" % "0.1.0-SNAPSHOT"
     )

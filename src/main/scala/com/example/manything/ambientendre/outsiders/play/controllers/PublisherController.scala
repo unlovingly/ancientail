@@ -1,5 +1,7 @@
-package com.example.manything.ancientail.controllers
+package com.example.manything.ambientendre.outsiders.play.controllers
 
+import com.example.manything.ambientendre.domain.publisher.Publisher
+import com.example.manything.roundelayout.usecase.UseCase
 import javax.inject._
 import play.api.mvc._
 
@@ -8,7 +10,8 @@ import play.api.mvc._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+//class PublisherController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
+class PublisherController(cc: ControllerComponents, usecase: UseCase[Publisher]) extends AbstractController(cc) {
 
   /**
    * Create an Action to render an HTML page.
@@ -18,6 +21,6 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
    * a path of `/`.
    */
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+    Ok(views.html.publisher.index())
   }
 }

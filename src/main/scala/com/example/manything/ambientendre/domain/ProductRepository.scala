@@ -1,6 +1,8 @@
 package com.example.manything.ambientendre.domain
 
-import com.example.manything.roundelayout.Repository
+import java.util.UUID
 
-trait ProductRepository extends Repository[Product, ProductIdentifier] {
+import com.example.manything.roundelayout.domain.Repository
+
+trait ProductRepository extends Repository[Product, UUID] {
 }

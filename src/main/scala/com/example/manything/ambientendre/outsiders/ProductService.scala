@@ -1,8 +1,6 @@
 package com.example.manything.ambientendre.outsiders
 
-import com.example.manything.ambientendre.{domain, usecases}
+import com.example.manything.ambientendre.usecases
 
 abstract class ProductService extends usecases.ProductService {
 }
-
-object ProductService extends MixinProductRepository
