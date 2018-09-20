@@ -3,5 +3,4 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-# An example controller showing a sample home page
-#GET     /index    com.example.manything.ambientendre.outsiders.play.controllers.ProductController.index
+GET     /index    com.example.manything.ancientail.outsiders.play.controllers.ProductController.index

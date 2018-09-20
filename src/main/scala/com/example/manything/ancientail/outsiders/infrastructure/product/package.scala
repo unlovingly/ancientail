@@ -1,4 +1,4 @@
-package com.example.manything.ambientendre.outsiders.infrastructure
+package com.example.manything.ancientail.outsiders.infrastructure
 
 import slick.lifted
 

@@ -7,32 +7,26 @@ import com.example.manything.ambientendre.domain.publisher.{
 import com.example.manything.ambientendre.outsiders.infrastructure.publisher.PublisherRepositoryWithSlick
 import com.example.manything.ambientendre.outsiders.play.controllers.PublisherController
 import com.example.manything.ambientendre.usecases.publisher.ListingPublishers
+import com.example.manything.outsiders.play.components.{
+  ControllerComponents,
+  OutsiderComponents
+}
 import com.example.manything.roundelayout.usecase.UseCase
-import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.mvc.DefaultControllerComponents
-import router.Routes
 
-class PublisherComponents(context: Context)
-  extends BuiltInComponentsFromContext(context)
-  with OutsiderComponents
-  with controllers.AssetsComponents {
-  override lazy val controllerComponents = DefaultControllerComponents(
-    defaultActionBuilder,
-    playBodyParsers,
-    messagesApi,
-    langs,
-    fileMimeTypes,
-    executionContext
-  )
-
-  lazy val repository: PublisherRepository = new PublisherRepositoryWithSlick()
+/**
+ * Publisher リポジトリや Publisher コントローラーに必要な依存オブジェクトを宣言する
+ */
+trait PublisherComponents extends ControllerComponents {
+  this: BuiltInComponentsFromContext with OutsiderComponents =>
+  private lazy val repository: PublisherRepository =
+    new PublisherRepositoryWithSlick()
   lazy val listingPublishers: UseCase[Seq[Publisher]] = new ListingPublishers(
     repository)
 
   lazy val publisherController = new PublisherController(
     cc = controllerComponents,
     usecase = listingPublishers)
-  lazy val routes = new publishers.Routes(httpErrorHandler, publisherController)
-  override lazy val router = new Routes(httpErrorHandler, routes, assets)
+  lazy val publisherRoutes =
+    new publishers.Routes(httpErrorHandler, publisherController)
 }

@@ -1,4 +1,4 @@
-package com.example.manything.ambientendre.domain.product
+package com.example.manything.ancientail.domain.product
 
 import java.util.UUID
 

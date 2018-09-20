@@ -1,6 +1,6 @@
-package com.example.manything.ambientendre.outsiders.infrastructure.product
+package com.example.manything.ancientail.outsiders.infrastructure.product
 
-import com.example.manything.ambientendre.domain.product._
+import com.example.manything.ancientail.domain.product._
 
 import scala.concurrent.Future
 

@@ -1,0 +1,10 @@
+@import _root_.com.example.manything.ancientail.domain.product.Product
+@(products: Seq[Product])
+
+@layouts.main("products") {
+    <ul>
+    @for(p <- products) {
+        <li>@p.name</li>
+    }
+    </ul>
+}
