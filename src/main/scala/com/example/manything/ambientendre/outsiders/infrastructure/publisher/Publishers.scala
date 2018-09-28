@@ -11,6 +11,3 @@ class Publishers(tag: Tag) extends Table[Publisher](tag, "publishers") {
   def name = column[String]("name")
   def * = (identity.?, name) <> (Publisher.tupled, Publisher.unapply)
 }
-
-// https://stackoverflow.com/questions/39781193/slick-3-1-retrieving-subset-of-columns-as-a-case-class
-// case class LiftedPublisher(id: Rep[PublisherId], name: Rep[String])
