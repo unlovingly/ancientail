@@ -14,11 +14,13 @@ import com.example.manything.outsiders.play.components.{
 import com.example.manything.roundelayout.usecase.UseCase
 import play.api.BuiltInComponentsFromContext
 
+import scala.concurrent.Future
+
 trait ProductComponents extends ControllerComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
-  private lazy val repository: ProductRepository =
+  private lazy val repository: ProductRepository[Future] =
     new ProductRepositoryWithSlick()
-  lazy val listingProducts: UseCase[Seq[Product]] =
+  lazy val listingProducts: UseCase[Seq[Product], Future] =
     new ListingProducts(repository)
 
   lazy val productController =

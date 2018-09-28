@@ -14,7 +14,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
  */
 @Singleton
 class PublisherController(cc: ControllerComponents,
-                          usecase: UseCase[Seq[Publisher]])
+                          usecase: UseCase[Seq[Publisher], Future])
   extends AbstractController(cc) {
 
   /**

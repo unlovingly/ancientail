@@ -8,7 +8,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class ProductRepositoryWithSlick(
   implicit val db: Database,
   implicit val executionContext: ExecutionContext)
-  extends ProductRepository {
+  extends ProductRepository[Future] {
   override def retrieve: Future[Seq[Product]] = {
     import com.example.manything.ambientendre.outsiders.infrastructure.publisher._
 
@@ -25,7 +25,7 @@ class ProductRepositoryWithSlick(
           Product(
             product.identity,
             product.name,
-            publisher
+            publisher.identity.get
           )
       }
     }

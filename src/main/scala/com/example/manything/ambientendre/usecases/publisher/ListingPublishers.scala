@@ -6,9 +6,7 @@ import com.example.manything.ambientendre.domain.publisher.{
 }
 import com.example.manything.roundelayout.usecase.UseCase
 
-import scala.concurrent.Future
-
-class ListingPublishers(publishers: PublisherRepository)
-  extends UseCase[Seq[Publisher]] {
-  def realize(): Future[Seq[Publisher]] = publishers.retrieve
+class ListingPublishers[C[_]](publishers: PublisherRepository[C])
+  extends UseCase[Seq[Publisher], C] {
+  def realize(): C[Seq[Publisher]] = publishers.retrieve
 }

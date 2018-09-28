@@ -15,6 +15,5 @@ class Products(tag: Tag) extends Table[Product](tag, "products") {
 
   // https://stackoverflow.com/questions/15627981/mapped-projection-with-companion-object-in-slick
   def * =
-    //(identity.?, name, publisherId) <> (Product.tupled, Product.unapply)
-    (identity.?, name, publisherId) <> ((Product.rapply _).tupled, Product.runapply)
+    (identity.?, name, publisherId) <> (Product.tupled, Product.unapply)
 }
