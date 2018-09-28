@@ -7,16 +7,19 @@ import com.example.manything.ancientail.domain.product.{
 import com.example.manything.ancientail.outsiders.infrastructure.product.ProductRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.play.controllers.ProductController
 import com.example.manything.ancientail.usecases.product.ListingProducts
-import com.example.manything.outsiders.play.components.ControllerComponents
+import com.example.manything.outsiders.play.components.{
+  ControllerComponents,
+  OutsiderComponents
+}
 import com.example.manything.roundelayout.usecase.UseCase
 import play.api.BuiltInComponentsFromContext
 
 trait ProductComponents extends ControllerComponents {
-  this: BuiltInComponentsFromContext =>
+  this: BuiltInComponentsFromContext with OutsiderComponents =>
   private lazy val repository: ProductRepository =
     new ProductRepositoryWithSlick()
-  lazy val listingProducts: UseCase[Seq[Product]] = new ListingProducts(
-    repository)
+  lazy val listingProducts: UseCase[Seq[Product]] =
+    new ListingProducts(repository)
 
   lazy val productController =
     new ProductController(cc = controllerComponents, usecase = listingProducts)

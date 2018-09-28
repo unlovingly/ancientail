@@ -1,10 +1,10 @@
-@import _root_.com.example.manything.ancientail.domain.product.Product
+@import _root_.com.example.manything.ancientail.domain.product._
 @(products: Seq[Product])
 
 @layouts.main("products") {
     <ul>
     @for(p <- products) {
-        <li>@p.name</li>
+        <li>@p.name from @p.publisher.name</li>
     }
     </ul>
 }

@@ -8,7 +8,7 @@ import scala.concurrent.Future
 class PublisherRepositoryWithSlick(implicit val db: Database)
   extends PublisherRepository {
   override def retrieve: Future[Seq[Publisher]] = {
-    val q = publishers
+    val q = publishers.take(20)
     val a = q.result
 
     db.run(a)
