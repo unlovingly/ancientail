@@ -14,7 +14,7 @@ import scala.concurrent.Future
  */
 @Singleton
 class ProductController(cc: ControllerComponents,
-                        usecase: UseCase[Seq[Product]])
+                        usecase: UseCase[Seq[Product], Future])
   extends AbstractController(cc) {
 
   /**
