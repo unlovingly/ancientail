@@ -1,7 +1,7 @@
 organization := "com.example.manything.ancientail"
 name := """ancientail"""
 
-version := "0.2.0-SNAPSHOT"
+version := "0.2.0"
 
 resolvers += Resolver.jcenterRepo
 
@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
       "com.typesafe.slick" %% "slick" % "3.2.3",
       "com.typesafe.play" %% "play-slick" % "3.0.3",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
-      "com.example.manything" %% "roundelayout" % "0.2.0-SNAPSHOT"
+      "com.example.manything" %% "roundelayout" % "0.2.0"
     )
   )
   .enablePlugins(PlayScala)
