@@ -3,7 +3,7 @@ package com.example.manything.ambientendre.outsiders.infrastructure
 import java.util.UUID
 
 import com.example.manything.ambientendre.domain.publisher.{
-  Publisher,
+  Publisher => DPublisher,
   PublisherId
 }
 import com.example.manything.roundelayout.domain.Identifiability
@@ -15,5 +15,5 @@ package object publisher {
 
   implicit lazy val publisherIdColumnType: BaseColumnType[PublisherId] =
     MappedColumnType
-      .base[PublisherId, UUID](_.value, Identifiability[UUID, Publisher])
+      .base[PublisherId, UUID](_.value, Identifiability[UUID, DPublisher])
 }
