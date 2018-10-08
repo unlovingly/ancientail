@@ -20,7 +20,7 @@ trait ProductComponents extends ControllerComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
   private lazy val repository: ProductRepository[Future] =
     new ProductRepositoryWithSlick()
-  lazy val listingProducts: UseCase[Seq[Product], Future] =
+  lazy val listingProducts: UseCase[Seq[Product], Seq[Product]] =
     new ListingProducts(repository)
 
   lazy val productController =

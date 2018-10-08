@@ -8,7 +8,8 @@ import com.example.manything.roundelayout.usecase.UseCase
 
 import scala.concurrent.Future
 
-class ListingPublishers[C[_]](publishers: PublisherRepository[Future])
-  extends UseCase[Unit, Seq[Publisher]] {
-  def realize(p: Unit): Future[Seq[Publisher]] = publishers.retrieve
+class CreatePublisher(publishers: PublisherRepository[Future])
+  extends UseCase[Unit, Publisher] {
+  override def realize(p: Unit): Future[Publisher] =
+    ???
 }

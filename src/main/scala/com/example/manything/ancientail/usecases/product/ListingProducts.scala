@@ -6,7 +6,9 @@ import com.example.manything.ancientail.domain.product.{
 }
 import com.example.manything.roundelayout.usecase.UseCase
 
-class ListingProducts[C[_]](products: ProductRepository[C])
-  extends UseCase[Seq[Product], C] {
-  def realize(): C[Seq[Product]] = products.retrieve
+import scala.concurrent.Future
+
+class ListingProducts(products: ProductRepository[Future])
+  extends UseCase[Seq[Product], Seq[Product]] {
+  def realize(p: Seq[Product]): Future[Seq[Product]] = products.retrieve
 }

@@ -14,7 +14,7 @@ import scala.concurrent.Future
  */
 @Singleton
 class ProductController(cc: ControllerComponents,
-                        usecase: UseCase[Seq[Product], Future])
+                        usecase: UseCase[Seq[Product], Seq[Product]])
   extends AbstractController(cc) {
 
   /**
@@ -25,7 +25,7 @@ class ProductController(cc: ControllerComponents,
    * a path of `/`.
    */
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    val products: Future[Seq[Product]] = usecase.realize()
+    val products: Future[Seq[Product]] = usecase.realize(Seq.empty[Product])
 
     products.map(p => Ok(views.html.product.index(p)))
   }

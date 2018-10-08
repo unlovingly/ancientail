@@ -23,7 +23,7 @@ trait PublisherComponents extends ControllerComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
   private lazy val repository: PublisherRepository[Future] =
     new PublisherRepositoryWithSlick()
-  lazy val listingPublishers: UseCase[Seq[Publisher], Future] =
+  lazy val listingPublishers: UseCase[Unit, Seq[Publisher]] =
     new ListingPublishers(repository)
 
   lazy val publisherController = new PublisherController(

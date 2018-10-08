@@ -34,5 +34,13 @@ class PublisherRepositoryWithSlick(
       }
   }
 
-  override def store(entity: DPublisher): Future[DPublisher] = ???
+  override def store(entity: DPublisher): Future[DPublisher] = {
+    val q = (publishers returning publishers) += Publisher(entity.identity,
+                                                           entity.name)
+
+    db.run(q)
+      .map { p =>
+        DPublisher(p.identity, p.name)
+      }
+  }
 }

@@ -14,7 +14,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
  */
 @Singleton
 class PublisherController(cc: ControllerComponents,
-                          usecase: UseCase[Seq[Publisher], Future])
+                          usecase: UseCase[Unit, Seq[Publisher]])
   extends AbstractController(cc) {
 
   /**
@@ -25,8 +25,12 @@ class PublisherController(cc: ControllerComponents,
    * a path of `/`.
    */
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    val publishers: Future[Seq[Publisher]] = usecase.realize()
+    val publishers: Future[Seq[Publisher]] = usecase.realize(())
 
     publishers.map(p => Ok(views.html.publisher.index(p)))
+  }
+
+  def create() = Action { implicit request: Request[AnyContent] =>
+    Ok("")
   }
 }
