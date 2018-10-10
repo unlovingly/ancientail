@@ -1,7 +1,7 @@
 package com.example.manything.ancientail.outsiders.play.controllers
 
-import com.example.manything.ancientail.domain.product.Product
-import com.example.manything.roundelayout.usecase.UseCase
+import com.example.manything.ancientail.domain.product.{Product, ProductId}
+import com.example.manything.ancientail.usecases.product.ProductUseCases
 import javax.inject._
 import play.api.mvc._
 
@@ -13,8 +13,7 @@ import scala.concurrent.Future
  * application's home page.
  */
 @Singleton
-class ProductController(cc: ControllerComponents,
-                        usecase: UseCase[Seq[Product], Seq[Product]])
+class ProductController(cc: ControllerComponents, uc: ProductUseCases)
   extends AbstractController(cc) {
 
   /**
@@ -25,7 +24,7 @@ class ProductController(cc: ControllerComponents,
    * a path of `/`.
    */
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    val products: Future[Seq[Product]] = usecase.realize(Seq.empty[Product])
+    val products: Future[Seq[Product]] = uc.list(Seq.empty[ProductId])
 
     products.map(p => Ok(views.html.product.index(p)))
   }

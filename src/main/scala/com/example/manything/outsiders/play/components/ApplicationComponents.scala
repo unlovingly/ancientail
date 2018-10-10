@@ -7,8 +7,6 @@ import play.api.BuiltInComponentsFromContext
 import play.api.db.slick._
 import play.filters.HttpFiltersComponents
 import router.Routes
-import slick.basic.{BasicProfile, DatabaseConfig}
-import slick.jdbc.{JdbcBackend, JdbcProfile}
 
 class ApplicationComponents(context: Context)
   extends BuiltInComponentsFromContext(context)

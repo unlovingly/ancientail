@@ -1,7 +1,10 @@
 package com.example.manything.ambientendre.outsiders.play.controllers
 
-import com.example.manything.ambientendre.domain.publisher.Publisher
-import com.example.manything.roundelayout.usecase.UseCase
+import com.example.manything.ambientendre.domain.publisher.{
+  Publisher,
+  PublisherId
+}
+import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import javax.inject._
 import play.api.mvc._
 
@@ -13,8 +16,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
  * application's home page.
  */
 @Singleton
-class PublisherController(cc: ControllerComponents,
-                          usecase: UseCase[Unit, Seq[Publisher]])
+class PublisherController(cc: ControllerComponents, uc: PublisherUseCases)
   extends AbstractController(cc) {
 
   /**
@@ -25,7 +27,7 @@ class PublisherController(cc: ControllerComponents,
    * a path of `/`.
    */
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    val publishers: Future[Seq[Publisher]] = usecase.realize(())
+    val publishers: Future[Seq[Publisher]] = uc.list(Seq.empty[PublisherId])
 
     publishers.map(p => Ok(views.html.publisher.index(p)))
   }
