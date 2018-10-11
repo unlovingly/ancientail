@@ -1,0 +1,8 @@
+@import _root_.com.example.manything.ambientendre.domain.publisher.Publisher
+@(f: Form[Publisher])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@layouts.main("publishers") {
+    @helper.form(action = _root_.com.example.manything.ambientendre.outsiders.play.controllers.routes.PublisherController.performCreation) {
+        @helper.inputText(f("name"))
+    }
+}
