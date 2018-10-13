@@ -4,7 +4,8 @@ import com.example.manything.ambientendre.domain.publisher.PublisherId
 import slick.jdbc.PostgresProfile.api._
 
 class Publishers(tag: Tag) extends Table[Publisher](tag, "publishers") {
-  def identity = column[PublisherId]("publisher_id", O.PrimaryKey)
+  def identity =
+    column[PublisherId]("publisher_id", O.PrimaryKey, O.AutoInc)
   def name = column[String]("name")
   def * = (identity.?, name) <> (Publisher.tupled, Publisher.unapply)
 }

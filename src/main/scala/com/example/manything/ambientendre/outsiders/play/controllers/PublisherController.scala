@@ -1,32 +1,51 @@
 package com.example.manything.ambientendre.outsiders.play.controllers
 
-import com.example.manything.ambientendre.domain.publisher.Publisher
-import com.example.manything.roundelayout.usecase.UseCase
+import com.example.manything.ambientendre.domain.publisher.{
+  Publisher,
+  PublisherId
+}
+import com.example.manything.ambientendre.outsiders.play.forms.PublisherIdForm
+import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import javax.inject._
 import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import play.api.data._
+import play.api.data.Forms._
+import play.api.i18n.I18nSupport
 
-/**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
 @Singleton
-class PublisherController(cc: ControllerComponents,
-                          usecase: UseCase[Seq[Publisher], Future])
-  extends AbstractController(cc) {
+class PublisherController(cc: ControllerComponents, uc: PublisherUseCases)
+  extends AbstractController(cc)
+  with I18nSupport {
+  lazy val f = Form(
+    mapping(
+      "identity" -> optional(of[PublisherId](new PublisherIdForm() {})),
+      "name" -> nonEmptyText
+    )(Publisher.apply)(Publisher.unapply))
 
-  /**
-   * Create an Action to render an HTML page.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    val publishers: Future[Seq[Publisher]] = usecase.realize()
+    val publishers: Future[Seq[Publisher]] = uc.list(Seq.empty[PublisherId])
 
     publishers.map(p => Ok(views.html.publisher.index(p)))
+  }
+
+  def create() = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.publisher.create(f))
+  }
+
+  def performCreation() = Action.async { implicit request =>
+    f.bindFromRequest.fold(
+      e => {
+        Future.successful(Ok(views.html.publisher.create(e)))
+      },
+      p => {
+        uc.create(p).map { _ =>
+          Redirect(routes.PublisherController.create())
+            .flashing("success" -> "publisher.created")
+        }
+      }
+    )
   }
 }
