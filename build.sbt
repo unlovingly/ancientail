@@ -16,6 +16,12 @@ lazy val root = (project in file("."))
       "com.typesafe.play" %% "play-slick" % "3.0.3",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
       "com.example.manything" %% "roundelayout" % "0.3.0-SNAPSHOT"
+    ),
+    scalacOptions ++= Seq(
+      "-deprecation",
+      "-feature",
+      "-language:existentials",
+      "-language:higherKinds"
     )
   )
   .enablePlugins(PlayScala)

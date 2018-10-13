@@ -1,14 +1,7 @@
 package com.example.manything.ancientail.outsiders.infrastructure.product
 
-import com.example.manything.ambientendre.domain.publisher.{
-  Publisher,
-  PublisherId
-}
-import com.example.manything.ancientail.domain.product.{
-  Product => DProduct,
-  ProductId
-}
-import com.example.manything.roundelayout.domain.Entity
+import com.example.manything.ambientendre.domain.publisher.PublisherId
+import com.example.manything.ancientail.domain.product.ProductId
 
 /**
  * domain.Product の DXO
