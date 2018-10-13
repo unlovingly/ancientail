@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ScalaCompilerConfiguration">
     <profile name="sbt 1" modules="ancientail">
+      <option name="higherKinds" value="true" />
+      <option name="existentials" value="true" />
       <option name="deprecationWarnings" value="true" />
       <option name="uncheckedWarnings" value="true" />
+      <option name="featureWarnings" value="true" />
       <parameters>
         <parameter value="-encoding" />
         <parameter value="utf8" />
+        <parameter value="-Xfatal-warnings" />
+        <parameter value="-Xlint" />
       </parameters>
     </profile>
     <profile name="sbt 2" modules="root">
