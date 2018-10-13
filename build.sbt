@@ -1,21 +1,21 @@
 organization := "com.example.manything.ancientail"
 name := """ancientail"""
 
-version := "0.2.0"
+version := "0.3.0-SNAPSHOT"
 
 resolvers += Resolver.jcenterRepo
 
 lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
-      guice,
+      filters,
       "org.postgresql" % "postgresql" % "42.2.5",
       "org.typelevel" %% "cats-core" % "1.4.0",
       "org.typelevel" %% "cats-effect" % "1.0.0",
       "com.typesafe.slick" %% "slick" % "3.2.3",
       "com.typesafe.play" %% "play-slick" % "3.0.3",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
-      "com.example.manything" %% "roundelayout" % "0.2.0"
+      "com.example.manything" %% "roundelayout" % "0.3.0-SNAPSHOT"
     )
   )
   .enablePlugins(PlayScala)

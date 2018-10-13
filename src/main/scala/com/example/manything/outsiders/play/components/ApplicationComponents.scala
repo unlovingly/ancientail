@@ -7,8 +7,6 @@ import play.api.BuiltInComponentsFromContext
 import play.api.db.slick._
 import play.filters.HttpFiltersComponents
 import router.Routes
-import slick.basic.{BasicProfile, DatabaseConfig}
-import slick.jdbc.{JdbcBackend, JdbcProfile}
 
 class ApplicationComponents(context: Context)
   extends BuiltInComponentsFromContext(context)
@@ -18,13 +16,6 @@ class ApplicationComponents(context: Context)
   with HttpFiltersComponents
   with SlickComponents
   with controllers.AssetsComponents {
-  override lazy val databaseConfigProvider: DatabaseConfigProvider =
-    new DatabaseConfigProvider {
-      def get[P <: BasicProfile]: DatabaseConfig[P] =
-        slickApi.dbConfig[P](DbName("default"))
-    }
-  implicit override lazy val db: JdbcBackend#DatabaseDef =
-    databaseConfigProvider.get[JdbcProfile].db
   override lazy val router: Routes =
     new Routes(httpErrorHandler, publisherRoutes, productRoutes, assets)
 }

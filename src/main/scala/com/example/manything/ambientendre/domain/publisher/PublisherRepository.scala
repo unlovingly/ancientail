@@ -4,4 +4,4 @@ import java.util.UUID
 
 import com.example.manything.roundelayout.domain.Repository
 
-trait PublisherRepository[C[_]] extends Repository[Publisher, UUID, C] {}
+trait PublisherRepository[A[_]] extends Repository[Publisher, UUID, A] {}
