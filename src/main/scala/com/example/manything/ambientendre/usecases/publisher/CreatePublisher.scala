@@ -7,5 +7,5 @@ import scala.concurrent.Future
 trait CreatePublisher {
   this: PublisherUseCases =>
   def create(p: Publisher): Future[Publisher] =
-    ???
+    publishers.store(p)
 }

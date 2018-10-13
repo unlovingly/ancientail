@@ -8,7 +8,7 @@ resolvers += Resolver.jcenterRepo
 lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
-      guice,
+      filters,
       "org.postgresql" % "postgresql" % "42.2.5",
       "org.typelevel" %% "cats-core" % "1.4.0",
       "org.typelevel" %% "cats-effect" % "1.0.0",
