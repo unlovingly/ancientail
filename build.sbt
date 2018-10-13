@@ -21,9 +21,7 @@ lazy val root = (project in file("."))
       "-deprecation",
       "-feature",
       "-language:existentials",
-      "-language:higherKinds",
-      "-Xfatal-warnings",
-      "-Xlint"
+      "-language:higherKinds"
     )
   )
   .enablePlugins(PlayScala)

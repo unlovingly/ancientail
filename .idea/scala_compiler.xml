@@ -10,8 +10,6 @@
       <parameters>
         <parameter value="-encoding" />
         <parameter value="utf8" />
-        <parameter value="-Xfatal-warnings" />
-        <parameter value="-Xlint" />
       </parameters>
     </profile>
     <profile name="sbt 2" modules="root">
