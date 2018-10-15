@@ -1,6 +1,6 @@
-package com.example.manything.ancientail.usecases.product
+package com.example.manything.ambientendre.usecases.product
+import com.example.manything.ambientendre.domain.product.Product
 
-import com.example.manything.ancientail.domain.product.Product
 import scala.concurrent.Future
 
 trait CreateProduct { this: ProductUseCases =>

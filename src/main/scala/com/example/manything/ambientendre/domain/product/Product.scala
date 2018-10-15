@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.domain.product
+package com.example.manything.ambientendre.domain.product
 
 import com.example.manything.ambientendre.domain.publisher.Publisher
 import com.example.manything.roundelayout.domain.Entity

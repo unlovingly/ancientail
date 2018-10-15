@@ -1,6 +1,5 @@
-package com.example.manything.ancientail.usecases.product
-
-import com.example.manything.ancientail.domain.product._
+package com.example.manything.ambientendre.usecases.product
+import com.example.manything.ambientendre.domain.product.Product
 
 import scala.concurrent.Future
 

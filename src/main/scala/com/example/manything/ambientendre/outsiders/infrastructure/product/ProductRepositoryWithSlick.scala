@@ -1,14 +1,16 @@
-package com.example.manything.ancientail.outsiders.infrastructure.product
+package com.example.manything.ambientendre.outsiders.infrastructure.product
 
-import slick.jdbc.PostgresProfile.api._
+import com.example.manything.ambientendre.domain
+import com.example.manything.ambientendre.domain.product.ProductRepository
 import com.example.manything.ambientendre.domain.publisher.{
   Publisher => DPublisher
 }
-import com.example.manything.ancientail.domain.product.{
-  Product => DProduct,
+import com.example.manything.ambientendre.domain.product.{
   ProductId,
-  ProductRepository
+  ProductRepository,
+  Product => DProduct
 }
+import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -16,7 +18,7 @@ class ProductRepositoryWithSlick(
   implicit val db: Database,
   implicit val executionContext: ExecutionContext)
   extends ProductRepository[Future] {
-  override def retrieve: Future[Seq[DProduct]] = {
+  override def retrieve: Future[Seq[domain.product.Product]] = {
     import com.example.manything.ambientendre.outsiders.infrastructure.publisher._
 
     val q = for {
@@ -38,7 +40,7 @@ class ProductRepositoryWithSlick(
     }
   }
 
-  override def retrieve(id: ProductId): Future[DProduct] = {
+  override def retrieve(id: ProductId): Future[domain.product.Product] = {
     import com.example.manything.ambientendre.outsiders.infrastructure.publisher._
 
     val q = for {
@@ -56,7 +58,8 @@ class ProductRepositoryWithSlick(
       }
   }
 
-  override def store(entity: DProduct): Future[DProduct] = {
+  override def store(
+    entity: domain.product.Product): Future[domain.product.Product] = {
     val q = (products returning products.map { _.identity }) += Product(
       entity.identity,
       entity.name,

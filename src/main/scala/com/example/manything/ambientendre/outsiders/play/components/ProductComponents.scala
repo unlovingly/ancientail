@@ -1,12 +1,11 @@
-package com.example.manything.ancientail.outsiders.play.components
-
+package com.example.manything.ambientendre.outsiders.play.components
+import com.example.manything.ambientendre.domain.product.ProductRepository
 import com.example.manything.ambientendre.domain.publisher.PublisherRepository
+import com.example.manything.ambientendre.outsiders.infrastructure.product.ProductRepositoryWithSlick
 import com.example.manything.ambientendre.outsiders.infrastructure.publisher.PublisherRepositoryWithSlick
+import com.example.manything.ambientendre.usecases.product.ProductUseCases
 import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
-import com.example.manything.ancientail.domain.product.ProductRepository
-import com.example.manything.ancientail.outsiders.infrastructure.product.ProductRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.play.controllers.ProductController
-import com.example.manything.ancientail.usecases.product.ProductUseCases
 import com.example.manything.outsiders.play.components.OutsiderComponents
 import play.api.BuiltInComponentsFromContext
 

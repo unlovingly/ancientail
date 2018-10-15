@@ -1,11 +1,11 @@
-package com.example.manything.ancientail.outsiders.play.forms
-
+package com.example.manything.ambientendre.outsiders.play.forms
 import java.util.UUID
 
-import com.example.manything.ancientail.domain.product.{Product, ProductId}
+import com.example.manything.ambientendre.domain.product.Product
+import com.example.manything.ambientendre.domain.product.{Product, ProductId}
 import com.example.manything.roundelayout.domain.Identifiability
 import play.api.data.FormError
-import play.api.data.format.Formats._
+import play.api.data.format.Formats.parsing
 import play.api.data.format.Formatter
 
 trait ProductIdFormatter extends Formatter[ProductId] {

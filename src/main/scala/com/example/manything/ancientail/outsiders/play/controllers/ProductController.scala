@@ -1,8 +1,8 @@
 package com.example.manything.ancientail.outsiders.play.controllers
 
+import com.example.manything.ambientendre.domain.product.Product
+import com.example.manything.ambientendre.usecases.product.ProductUseCases
 import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
-import com.example.manything.ancientail.usecases.product.ProductUseCases
-import com.example.manything.ancientail.domain.product.Product
 import javax.inject._
 import play.api.data._
 import play.api.i18n.I18nSupport
@@ -25,7 +25,7 @@ class ProductController(cc: ControllerComponents,
   }
 
   def create() = Action.async { implicit request: Request[AnyContent] =>
-    import com.example.manything.ancientail.outsiders.play.forms.productForm
+    import com.example.manything.ambientendre.outsiders.play.forms.productForm
 
     val publishers = publisherUseCases.list()
 
@@ -34,7 +34,7 @@ class ProductController(cc: ControllerComponents,
   }
 
   def performCreation() = Action.async { implicit request =>
-    import com.example.manything.ancientail.outsiders.play.forms.productForm
+    import com.example.manything.ambientendre.outsiders.play.forms.productForm
 
     implicitly[Form[Product]].bindFromRequest.fold(
       e => {
