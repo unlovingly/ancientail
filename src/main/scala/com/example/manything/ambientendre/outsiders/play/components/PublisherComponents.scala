@@ -16,7 +16,7 @@ trait PublisherComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
   implicit private lazy val repository: PublisherRepository[Future] =
     new PublisherRepositoryWithSlick()
-  lazy val publisherUseCases = new PublisherUseCases()
+  private lazy val publisherUseCases = new PublisherUseCases()
 
   lazy val publisherController =
     new PublisherController(cc = controllerComponents, uc = publisherUseCases)

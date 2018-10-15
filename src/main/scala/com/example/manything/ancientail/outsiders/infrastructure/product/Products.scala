@@ -7,7 +7,7 @@ import slick.jdbc.PostgresProfile.api._
 class Products(tag: Tag) extends Table[Product](tag, "products") {
   import com.example.manything.ambientendre.outsiders.infrastructure.publisher._
 
-  def identity = column[ProductId]("product_id", O.PrimaryKey)
+  def identity = column[ProductId]("product_id", O.PrimaryKey, O.AutoInc)
   def name = column[String]("name")
   def publisherId = column[PublisherId]("publisher_id")
   def publisher =

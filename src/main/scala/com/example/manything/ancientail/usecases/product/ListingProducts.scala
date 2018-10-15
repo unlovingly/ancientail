@@ -6,5 +6,5 @@ import scala.concurrent.Future
 
 trait ListingProducts {
   this: ProductUseCases =>
-  def list(id: Seq[ProductId]): Future[Seq[Product]] = products.retrieve
+  def list(): Future[Seq[Product]] = products.retrieve
 }

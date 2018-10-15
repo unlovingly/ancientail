@@ -1,5 +1,8 @@
 package com.example.manything.ancientail.outsiders.play.components
 
+import com.example.manything.ambientendre.domain.publisher.PublisherRepository
+import com.example.manything.ambientendre.outsiders.infrastructure.publisher.PublisherRepositoryWithSlick
+import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import com.example.manything.ancientail.domain.product.ProductRepository
 import com.example.manything.ancientail.outsiders.infrastructure.product.ProductRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.play.controllers.ProductController
@@ -11,13 +14,19 @@ import scala.concurrent.Future
 
 trait ProductComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
-  implicit private lazy val repository: ProductRepository[Future] =
+  implicit private lazy val productRepository: ProductRepository[Future] =
     new ProductRepositoryWithSlick()
-  lazy val listingProducts =
+  implicit private lazy val publisherRepository: PublisherRepository[Future] =
+    new PublisherRepositoryWithSlick()
+  private lazy val productUseCases =
     new ProductUseCases()
+  private lazy val publisherUseCases =
+    new PublisherUseCases()
 
   lazy val productController =
-    new ProductController(cc = controllerComponents, uc = listingProducts)
+    new ProductController(cc = controllerComponents,
+                          productUseCases = productUseCases,
+                          publisherUseCases = publisherUseCases)
   lazy val productRoutes =
     new products.Routes(httpErrorHandler, productController)
 }

@@ -6,5 +6,5 @@ import scala.concurrent.Future
 
 trait ListingPublishers {
   this: PublisherUseCases =>
-  def list(id: Seq[PublisherId]): Future[Seq[Publisher]] = publishers.retrieve
+  def list(): Future[Seq[Publisher]] = publishers.retrieve
 }

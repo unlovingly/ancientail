@@ -4,7 +4,6 @@ import com.example.manything.ambientendre.domain.publisher.{
   Publisher,
   PublisherId
 }
-import com.example.manything.ambientendre.outsiders.play.forms.PublisherIdForm
 import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import javax.inject._
 import play.api.mvc._
@@ -12,31 +11,28 @@ import play.api.mvc._
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.data._
-import play.api.data.Forms._
 import play.api.i18n.I18nSupport
 
 @Singleton
 class PublisherController(cc: ControllerComponents, uc: PublisherUseCases)
   extends AbstractController(cc)
   with I18nSupport {
-  lazy val f = Form(
-    mapping(
-      "identity" -> optional(of[PublisherId](new PublisherIdForm() {})),
-      "name" -> nonEmptyText
-    )(Publisher.apply)(Publisher.unapply))
-
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    val publishers: Future[Seq[Publisher]] = uc.list(Seq.empty[PublisherId])
+    val publishers: Future[Seq[Publisher]] = uc.list()
 
     publishers.map(p => Ok(views.html.publisher.index(p)))
   }
 
   def create() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.publisher.create(f))
+    import com.example.manything.ambientendre.outsiders.play.forms.publisherForm
+
+    Ok(views.html.publisher.create(implicitly[Form[Publisher]]))
   }
 
   def performCreation() = Action.async { implicit request =>
-    f.bindFromRequest.fold(
+    import com.example.manything.ambientendre.outsiders.play.forms.publisherForm
+
+    implicitly[Form[Publisher]].bindFromRequest.fold(
       e => {
         Future.successful(Ok(views.html.publisher.create(e)))
       },

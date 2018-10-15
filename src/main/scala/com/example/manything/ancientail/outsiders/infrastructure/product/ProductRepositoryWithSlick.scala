@@ -37,7 +37,35 @@ class ProductRepositoryWithSlick(
       }
     }
   }
-  override def retrieve(id: ProductId): Future[DProduct] =
-    ???
-  override def store(entity: DProduct): Future[DProduct] = ???
+
+  override def retrieve(id: ProductId): Future[DProduct] = {
+    import com.example.manything.ambientendre.outsiders.infrastructure.publisher._
+
+    val q = for {
+      publisher <- publishers
+      product <- products if product.publisherId === publisher.identity
+    } yield (product, publisher)
+    val a = q.result.head
+
+    db.run(a)
+      .map {
+        case (product, publisher) =>
+          DProduct(product.identity,
+                   product.name,
+                   DPublisher(publisher.identity, publisher.name))
+      }
+  }
+
+  override def store(entity: DProduct): Future[DProduct] = {
+    val q = (products returning products.map { _.identity }) += Product(
+      entity.identity,
+      entity.name,
+      entity.publisher.identity.get
+    )
+
+    db.run(q)
+      .map { id =>
+        entity.copy(identity = Some(id))
+      }
+  }
 }

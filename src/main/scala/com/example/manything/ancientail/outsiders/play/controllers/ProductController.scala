@@ -1,31 +1,55 @@
 package com.example.manything.ancientail.outsiders.play.controllers
 
-import com.example.manything.ancientail.domain.product.{Product, ProductId}
+import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import com.example.manything.ancientail.usecases.product.ProductUseCases
+import com.example.manything.ancientail.domain.product.Product
 import javax.inject._
+import play.api.data._
+import play.api.i18n.I18nSupport
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-/**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
 @Singleton
-class ProductController(cc: ControllerComponents, uc: ProductUseCases)
-  extends AbstractController(cc) {
-
-  /**
-   * Create an Action to render an HTML page.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
+class ProductController(cc: ControllerComponents,
+                        productUseCases: ProductUseCases,
+                        publisherUseCases: PublisherUseCases)
+  extends AbstractController(cc)
+  with I18nSupport {
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    val products: Future[Seq[Product]] = uc.list(Seq.empty[ProductId])
+    val products: Future[Seq[Product]] =
+      productUseCases.list()
 
     products.map(p => Ok(views.html.product.index(p)))
+  }
+
+  def create() = Action.async { implicit request: Request[AnyContent] =>
+    import com.example.manything.ancientail.outsiders.play.forms.productForm
+
+    val publishers = publisherUseCases.list()
+
+    publishers.map(p =>
+      Ok(views.html.product.create(implicitly[Form[Product]], p)))
+  }
+
+  def performCreation() = Action.async { implicit request =>
+    import com.example.manything.ancientail.outsiders.play.forms.productForm
+
+    implicitly[Form[Product]].bindFromRequest.fold(
+      e => {
+        val publishers = publisherUseCases.list()
+
+        publishers.map { p =>
+          BadRequest(views.html.product.create(implicitly[Form[Product]], p))
+        }
+      },
+      p => {
+        productUseCases.create(p).map { _ =>
+          Redirect(routes.ProductController.create())
+            .flashing("success" -> "product.created")
+        }
+      }
+    )
   }
 }

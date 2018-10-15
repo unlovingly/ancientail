@@ -5,4 +5,4 @@ import scala.concurrent.Future
 
 class PublisherUseCases(implicit val publishers: PublisherRepository[Future])
   extends CreatePublisher
-  with ListingPublishers {}
+  with ListingPublishers
