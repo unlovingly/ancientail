@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.play.controllers
+package com.example.manything.ambientendre.outsiders.play.controllers.product
 
 import com.example.manything.ambientendre.domain.product.Product
 import com.example.manything.ambientendre.usecases.product.ProductUseCases
