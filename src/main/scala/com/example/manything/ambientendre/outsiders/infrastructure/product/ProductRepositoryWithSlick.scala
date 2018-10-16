@@ -1,11 +1,6 @@
 package com.example.manything.ambientendre.outsiders.infrastructure.product
 
-import com.example.manything.ambientendre.domain
-import com.example.manything.ambientendre.domain.product.{
-  Product,
-  ProductId,
-  ProductRepository
-}
+import com.example.manything.ambientendre.domain.product._
 import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -14,30 +9,23 @@ class ProductRepositoryWithSlick(
   implicit val db: Database,
   implicit val executionContext: ExecutionContext)
   extends ProductRepository[Future] {
-  override def retrieve: Future[Seq[domain.product.Product]] = {
+  override def retrieve(): Future[Seq[Product]] = {
     val q = products
     val a = q.result
 
-    // FIXME
-    db.run(a).map { // Future
-      _.map { product =>
-        Product(product.identity, product.name, product.publisherId)
-      }
-    }
+    db.run(a)
   }
 
-  override def retrieve(id: ProductId): Future[domain.product.Product] = {
-    val q = products
-    val a = q.result.head
+  override def retrieve(id: Seq[ProductId]): Future[Seq[Product]] = {
+    val q = for {
+      p <- products if p.identity.inSet(id)
+    } yield p
+    val a = q.result
 
     db.run(a)
-      .map { product =>
-        Product(product.identity, product.name, product.publisherId)
-      }
   }
 
-  override def store(
-    entity: domain.product.Product): Future[domain.product.Product] = {
+  override def store(entity: Product): Future[Product] = {
     val q = (products returning products.map { _.identity }) += Product(
       entity.identity,
       entity.name,

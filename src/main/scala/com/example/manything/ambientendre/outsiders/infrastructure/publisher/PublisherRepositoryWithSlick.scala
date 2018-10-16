@@ -13,25 +13,20 @@ class PublisherRepositoryWithSlick(
   implicit val db: Database,
   implicit val executionContext: ExecutionContext)
   extends PublisherRepository[Future] {
-  override def retrieve: Future[Seq[Publisher]] = {
+  override def retrieve(): Future[Seq[Publisher]] = {
     val q = publishers.take(20)
     val a = q.result
 
-    db.run(a).map {
-      _.map { p =>
-        Publisher(p.identity, p.name)
-      }
-    }
+    db.run(a)
   }
 
-  override def retrieve(id: PublisherId): Future[Publisher] = {
-    val q = publishers.filter(_.identity === id)
-    val a = q.result.head
+  override def retrieve(id: Seq[PublisherId]): Future[Seq[Publisher]] = {
+    val q = for {
+      p <- publishers if p.identity.inSet(id)
+    } yield p
+    val a = q.result
 
     db.run(a)
-      .map { p =>
-        Publisher(p.identity, p.name)
-      }
   }
 
   override def store(entity: Publisher): Future[Publisher] = {
