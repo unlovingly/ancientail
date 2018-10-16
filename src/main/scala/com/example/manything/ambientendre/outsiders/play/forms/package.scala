@@ -27,7 +27,7 @@ package object forms {
   implicit lazy val productMapping: Mapping[Product] = mapping(
     "identity" -> optional(of[ProductId](productIdFormatter)),
     "name" -> text,
-    "publisher" -> implicitly[Mapping[Publisher]]
+    "publisherId" -> of[PublisherId](publisherIdFormatter)
   )(Product.apply)(Product.unapply)
 
   implicit lazy val productForm: Form[product.Product] =

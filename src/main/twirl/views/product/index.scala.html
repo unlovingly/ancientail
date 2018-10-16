@@ -5,7 +5,7 @@
 @layouts.main("products") {
     <ul>
     @for(p <- products) {
-        <li>@p.name from @p.publisher.name</li>
+        <li>@p.name from @p.publisherId</li>
     }
     </ul>
 }
