@@ -7,11 +7,11 @@ import com.example.manything.ambientendre.domain.publisher.{
   PublisherId
 }
 import com.example.manything.roundelayout.domain.Identifiability
-import play.api.data.FormError
+import play.api.data._
 import play.api.data.format.Formatter
 import play.api.data.format.Formats._
 
-trait PublisherIdForm extends Formatter[PublisherId] {
+trait PublisherIdFormatter extends Formatter[PublisherId] {
   val i: String => PublisherId =
     (id: String) => Identifiability[UUID, Publisher](UUID.fromString(id))
 

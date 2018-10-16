@@ -1,7 +1,9 @@
 package com.example.manything.outsiders.play.components
 
-import com.example.manything.ambientendre.outsiders.play.components.PublisherComponents
-import com.example.manything.ancientail.outsiders.play.components.ProductComponents
+import com.example.manything.ambientendre.outsiders.play.components.{
+  ProductComponents,
+  PublisherComponents
+}
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.db.slick._
