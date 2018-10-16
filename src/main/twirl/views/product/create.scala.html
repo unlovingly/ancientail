@@ -1,0 +1,28 @@
+@import _root_.com.example.manything.ambientendre.domain.product.Product
+@import _root_.com.example.manything.ambientendre.domain.publisher.Publisher
+
+@(f: Form[Product], publishers: Seq[Publisher])(implicit request: RequestHeader, messages: Messages)
+
+@layouts.main("products") {
+    @request.flash.get("success").map { key =>
+        @messages(key)
+    }
+
+    @helper.form(action = _root_.com.example.manything.ambientendre.outsiders.play.controllers.product.routes.ProductController.performCreation) {
+        @helper.inputText(f("name"))
+        @helper.select(
+            f("publisher.identity"),
+            publishers.map { p =>
+                (p.identity.get.value.toString -> p.name)
+            },
+            '_default -> "Choose One"
+        )
+        @helper.select(
+            f("publisher.name"),
+            publishers.map { p =>
+                (p.name -> p.name)
+            },
+            '_default -> "Choose One"
+        )
+    }
+}
