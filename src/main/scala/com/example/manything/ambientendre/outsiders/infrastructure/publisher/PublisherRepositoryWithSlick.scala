@@ -13,7 +13,7 @@ class PublisherRepositoryWithSlick(
   implicit val db: Database,
   implicit val executionContext: ExecutionContext)
   extends PublisherRepository[Future] {
-  override def retrieve: Future[Seq[Publisher]] = {
+  override def retrieve(): Future[Seq[Publisher]] = {
     val q = publishers.take(20)
     val a = q.result
 
