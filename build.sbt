@@ -29,7 +29,7 @@ lazy val root = (project in file("."))
 
 PlayKeys.playMonitoredFiles ++= (sourceDirectories in (Compile, TwirlKeys.compileTemplates)).value
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.7"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.manything.ancientail.controllers._"
