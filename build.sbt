@@ -29,6 +29,8 @@ lazy val root = (project in file("."))
 
 PlayKeys.playMonitoredFiles ++= (sourceDirectories in (Compile, TwirlKeys.compileTemplates)).value
 
+unmanagedResourceDirectories in Assets += baseDirectory.value / "node_modules"
+
 scalaVersion := "2.12.7"
 
 // Adds additional packages into Twirl
