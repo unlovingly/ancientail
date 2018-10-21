@@ -8,6 +8,16 @@
     </option>
     <ScalaCodeStyleSettings>
       <option name="classCountToUseImportOnDemand" value="3" />
+      <option name="importLayout">
+        <array>
+          <option value="_______ blank line _______" />
+          <option value="java" />
+          <option value="_______ blank line _______" />
+          <option value="all other imports" />
+          <option value="_______ blank line _______" />
+          <option value="scala" />
+        </array>
+      </option>
       <option name="NOT_CONTINUATION_INDENT_FOR_PARAMS" value="true" />
       <option name="FORMATTER" value="1" />
       <option name="USE_SCALADOC2_FORMATTING" value="false" />
