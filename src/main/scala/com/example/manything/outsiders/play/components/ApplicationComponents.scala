@@ -6,7 +6,6 @@ import com.example.manything.ambientendre.outsiders.play.components.{
 }
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.db.slick._
 import play.filters.HttpFiltersComponents
 import router.Routes
 
@@ -16,7 +15,6 @@ class ApplicationComponents(context: Context)
   with PublisherComponents
   with ProductComponents
   with HttpFiltersComponents
-  with SlickComponents
   with controllers.AssetsComponents {
   override lazy val router: Routes =
     new Routes(httpErrorHandler, publisherRoutes, productRoutes, assets)

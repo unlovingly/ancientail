@@ -4,7 +4,6 @@ import com.example.manything.ambientendre.domain.product.Product
 import com.example.manything.ambientendre.usecases.product.ProductUseCases
 import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import javax.inject._
-import play.api.data._
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._

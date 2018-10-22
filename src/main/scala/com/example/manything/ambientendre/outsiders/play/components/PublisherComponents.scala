@@ -19,7 +19,8 @@ trait PublisherComponents {
   private lazy val publisherUseCases = new PublisherUseCases()
 
   lazy val publisherController =
-    new PublisherController(cc = controllerComponents, uc = publisherUseCases)
+    new PublisherController(cc = controllerComponents,
+                            publihserUseCases = publisherUseCases)
   lazy val publisherRoutes =
     new publishers.Routes(httpErrorHandler, publisherController)
 }

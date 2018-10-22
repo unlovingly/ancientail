@@ -1,11 +1,7 @@
 package com.example.manything.ambientendre.outsiders.infrastructure.publisher
 
+import com.example.manything.ambientendre.domain.publisher._
 import slick.jdbc.PostgresProfile.api._
-import com.example.manything.ambientendre.domain.publisher.{
-  Publisher,
-  PublisherId,
-  PublisherRepository
-}
 
 import scala.concurrent.{ExecutionContext, Future}
 

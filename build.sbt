@@ -14,9 +14,6 @@ lazy val root = (project in file("."))
       "org.typelevel" %% "cats-effect" % "1.0.0",
       "com.typesafe.slick" %% "slick" % "3.2.3",
       "com.typesafe.play" %% "play-slick" % "3.0.3",
-      "io.circe" %% "circe-core" % "0.10.0",
-      "io.circe" %% "circe-generic" % "0.10.0",
-      "io.circe" %% "circe-parser" % "0.10.0",
       "com.dripower" %% "play-circe" % "2610.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
       "com.example.manything" %% "roundelayout" % "0.3.0"
