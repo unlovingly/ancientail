@@ -1,5 +1,6 @@
 package com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher
 
+import com.example.manything.EitherAppliedFuture
 import com.example.manything.ambientendre.domain.publisher.Publisher
 import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import javax.inject._
@@ -17,16 +18,23 @@ class PublisherController(cc: ControllerComponents,
   with I18nSupport
   with Circe {
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    val publishers: Future[Seq[Publisher]] = publihserUseCases.list()
+    import io.circe.generic.auto._
+    import io.circe.syntax._
 
-    publishers.map { p =>
-      import io.circe.generic.auto._
-      import io.circe.syntax._
+    val publishers: EitherAppliedFuture[Seq[Publisher]] =
+      publihserUseCases.list()
 
-      val j = p.asJson.spaces2
+    val result: Future[Result] = publishers
+      .map {
+        case Right(r) =>
+          r.asJson.spaces2
+        case Left(l) => l.toString.asJson.spaces2
+      }
+      .map { r =>
+        Ok(r)
+      }
 
-      Ok(j)
-    }
+    result
   }
 
   def performCreation() =
