@@ -1,9 +1,10 @@
 package com.example.manything.ambientendre.outsiders.play.components
+import com.example.manything.EitherAppliedFuture
 import com.example.manything.ambientendre.domain.product.ProductRepository
 import com.example.manything.ambientendre.domain.publisher.PublisherRepository
 import com.example.manything.ambientendre.outsiders.infrastructure.product.ProductRepositoryWithSlick
 import com.example.manything.ambientendre.outsiders.infrastructure.publisher.PublisherRepositoryWithSlick
-import com.example.manything.ambientendre.outsiders.play.controllers.product.ProductController
+import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.ProductController
 import com.example.manything.ambientendre.usecases.product.ProductUseCases
 import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import com.example.manything.outsiders.play.components.OutsiderComponents
@@ -13,9 +14,11 @@ import scala.concurrent.Future
 
 trait ProductComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
-  implicit private lazy val productRepository: ProductRepository[Future] =
+  implicit private lazy val productRepository
+    : ProductRepository[EitherAppliedFuture] =
     new ProductRepositoryWithSlick()
-  implicit private lazy val publisherRepository: PublisherRepository[Future] =
+  implicit private lazy val publisherRepository
+    : PublisherRepository[EitherAppliedFuture] =
     new PublisherRepositoryWithSlick()
   private lazy val productUseCases =
     new ProductUseCases()

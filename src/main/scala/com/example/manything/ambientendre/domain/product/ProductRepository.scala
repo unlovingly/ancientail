@@ -4,4 +4,4 @@ import java.util.UUID
 
 import com.example.manything.roundelayout.domain.Repository
 
-trait ProductRepository[A[_]] extends Repository[Product, UUID, A] {}
+trait ProductRepository[C[_]] extends Repository[Product, UUID, C] {}

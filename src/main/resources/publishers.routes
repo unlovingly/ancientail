@@ -3,6 +3,5 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-GET     /index          com.example.manything.ambientendre.outsiders.play.controllers.publisher.PublisherController.index
-GET     /create         com.example.manything.ambientendre.outsiders.play.controllers.publisher.PublisherController.create
-GET     /perfomCreation com.example.manything.ambientendre.outsiders.play.controllers.publisher.PublisherController.performCreation
+GET     /index          com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.PublisherController.index
+POST    /create         com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.PublisherController.performCreation
