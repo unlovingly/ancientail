@@ -10,6 +10,7 @@ class Products(tag: Tag) extends Table[Product](tag, "products") {
   def identity = column[ProductId]("product_id", O.PrimaryKey, O.AutoInc)
   def name = column[String]("name")
   def publisherId = column[PublisherId]("publisher_id")
+
   def publisher =
     foreignKey("publisher_fk", publisherId, publishers)(_.identity)
 

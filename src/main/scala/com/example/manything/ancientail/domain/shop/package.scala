@@ -6,4 +6,5 @@ import com.example.manything.roundelayout.domain.Identifiability
 
 package object shop {
   type ShopId = Identifiability[UUID, Shop]
+  type StockId = Identifiability[UUID, Stock]
 }

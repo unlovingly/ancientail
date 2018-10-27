@@ -9,6 +9,7 @@ package object product {
   import cats.syntax.either._
   import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.decodePublisherId
   import io.circe.{Decoder, Encoder}
+
   implicit val encodeProductId: Encoder[ProductId] =
     Encoder.encodeString.contramap[ProductId](_.value.toString)
 
@@ -16,7 +17,7 @@ package object product {
     str =>
       Either
         .catchNonFatal(Identifiability[UUID, Product](UUID.fromString(str)))
-        .leftMap(t => "ProductId")
+        .leftMap(_ => "ProductId")
   }
 
   implicit val productDecoder: Decoder[Product] =

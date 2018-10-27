@@ -1,9 +1,8 @@
 package com.example.manything.ancientail.usecases.shop
 
+import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.shop.ShopRepository
 
-import scala.concurrent.Future
-
-class ShopUseCases(implicit val shops: ShopRepository[Future])
+class ShopUseCases(implicit val shops: ShopRepository[EitherAppliedFuture])
   extends CreateShop
   with ListingShops
