@@ -1,5 +1,4 @@
 package com.example
-import cats.data.EitherT
 
 import scala.concurrent.Future
 

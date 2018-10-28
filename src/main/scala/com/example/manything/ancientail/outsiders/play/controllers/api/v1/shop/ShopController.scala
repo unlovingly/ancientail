@@ -1,7 +1,6 @@
 package com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop
 
 import com.example.manything.EitherAppliedFuture
-import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import com.example.manything.ancientail.domain.shop.Shop
 import com.example.manything.ancientail.usecases.shop.ShopUseCases
 import javax.inject._
@@ -12,9 +11,7 @@ import play.api.mvc._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class ShopController(cc: ControllerComponents,
-                     shopUseCases: ShopUseCases,
-                     publisherUseCases: PublisherUseCases)
+class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
