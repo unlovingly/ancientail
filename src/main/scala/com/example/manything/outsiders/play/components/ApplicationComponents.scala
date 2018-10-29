@@ -4,7 +4,10 @@ import com.example.manything.ambientendre.outsiders.play.components.{
   ProductComponents,
   PublisherComponents
 }
-import com.example.manything.ancientail.outsiders.play.components.ShopComponents
+import com.example.manything.ancientail.outsiders.play.components.{
+  ShopComponents,
+  SlipComponents
+}
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.filters.HttpFiltersComponents
@@ -16,6 +19,7 @@ class ApplicationComponents(context: Context)
   with ProductComponents
   with PublisherComponents
   with ShopComponents
+  with SlipComponents
   with HttpFiltersComponents
   with controllers.AssetsComponents {
   override lazy val router: Routes =
@@ -23,5 +27,6 @@ class ApplicationComponents(context: Context)
                productRoutes,
                publisherRoutes,
                shopRoutes,
+               slipRoutes,
                assets)
 }

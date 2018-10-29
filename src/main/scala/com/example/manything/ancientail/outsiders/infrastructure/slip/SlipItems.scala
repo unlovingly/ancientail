@@ -1,7 +1,7 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip
 
 import com.example.manything.ambientendre.domain.product.ProductId
-import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.slip.{SlipId, SlipItemId}
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted.Tag
 
@@ -19,5 +19,5 @@ class SlipItems(tag: Tag) extends Table[SlipItem](tag, "slip_items") {
     foreignKey("slip_fk", slipId, slips)(_.identity)
 
   def * =
-    (identity.?, productId, amount, price) <> (SlipItem.tupled, SlipItem.unapply)
+    (identity.?, productId, amount, price, slipId) <> (SlipItem.tupled, SlipItem.unapply)
 }

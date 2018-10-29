@@ -10,9 +10,9 @@ class Slips(tag: Tag) extends Table[Slip](tag, "slips") {
   import com.example.manything.ambientendre.outsiders.infrastructure.publisher._
   import com.example.manything.ancientail.outsiders.infrastructure.shop._
 
-  def identity = column[SlipId]("name_id", O.PrimaryKey, O.AutoInc)
+  def identity = column[SlipId]("slip_id", O.PrimaryKey, O.AutoInc)
   def senderId = column[PublisherId]("publisher_id")
-  def receiverId = column[ShopId]("publisher_id")
+  def receiverId = column[ShopId]("shop_id")
 
   def * =
     (identity.?, senderId, receiverId) <> (Slip.tupled, Slip.unapply)

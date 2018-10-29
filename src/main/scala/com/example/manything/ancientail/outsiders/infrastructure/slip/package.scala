@@ -4,9 +4,9 @@ import java.util.UUID
 
 import com.example.manything.ancientail.domain.slip.{
   SlipId,
-  SlipItem,
+  SlipItem => EntityItem,
   SlipItemId,
-  Slip => S
+  Slip => Entity
 }
 import com.example.manything.roundelayout.domain.Identifiability
 import slick.jdbc.PostgresProfile.api._
@@ -18,9 +18,9 @@ package object slip {
 
   implicit lazy val slipIdColumnType: BaseColumnType[SlipId] =
     MappedColumnType
-      .base[SlipId, UUID](_.value, Identifiability[UUID, S])
+      .base[SlipId, UUID](_.value, Identifiability[UUID, Entity])
 
   implicit lazy val slipItemIdColumnType: BaseColumnType[SlipItemId] =
     MappedColumnType
-      .base[SlipItemId, UUID](_.value, Identifiability[UUID, SlipItem])
+      .base[SlipItemId, UUID](_.value, Identifiability[UUID, EntityItem])
 }
