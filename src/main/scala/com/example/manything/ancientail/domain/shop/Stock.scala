@@ -6,6 +6,6 @@ import com.example.manything.ancientail.domain.slip.{Amount, Price}
 case class Stock(
   shopId: ShopId,
   productId: ProductId,
-  amount: Amount,
+  amount: Amount, // TODO: ensuring(amount > 0)
   price: Price
 )

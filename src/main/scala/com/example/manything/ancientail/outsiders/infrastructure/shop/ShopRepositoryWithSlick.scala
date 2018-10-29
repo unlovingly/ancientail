@@ -1,6 +1,7 @@
 package com.example.manything.ancientail.outsiders.infrastructure.shop
 
 import com.example.manything.EitherAppliedFuture
+import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.shop.{
   ShopId,
   ShopRepository,
@@ -58,8 +59,25 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     db.run(a)
   }
 
-  override def stock(shopId: ShopId,
-                     stocks: Seq[Stock]): EitherAppliedFuture[Entity] = {
-    ???
+  override def retrieveWithStock(
+    shopId: ShopId,
+    productIds: Seq[ProductId]): EitherAppliedFuture[Seq[Entity]] = {
+    import com.example.manything.ambientendre.outsiders.infrastructure.product.productIdColumnType
+
+    val q = for {
+      shop <- shops if shop.identity === shopId
+      stock <- stocks if stock.productId.inSetBind(productIds)
+    } yield (shop, stock)
+    val a = q.result.asTry.map { _.toEither }
+
+    // 本当は Either[_, Entity] したい
+    db.run(a).map {
+      _.map {
+        _.map {
+          case (shop, stock) =>
+            Entity(shop.identity, shop.name, Seq(stock))
+        }
+      }
+    }
   }
 }

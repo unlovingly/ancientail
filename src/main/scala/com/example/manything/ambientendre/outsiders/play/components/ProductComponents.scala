@@ -1,4 +1,5 @@
 package com.example.manything.ambientendre.outsiders.play.components
+
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ambientendre.domain.product.ProductRepository
 import com.example.manything.ambientendre.domain.publisher.PublisherRepository
@@ -9,8 +10,6 @@ import com.example.manything.ambientendre.usecases.product.ProductUseCases
 import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import com.example.manything.outsiders.play.components.OutsiderComponents
 import play.api.BuiltInComponentsFromContext
-
-import scala.concurrent.Future
 
 trait ProductComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>

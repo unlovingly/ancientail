@@ -8,8 +8,8 @@ import com.example.manything.ambientendre.domain.publisher.{
 }
 import com.example.manything.roundelayout.domain.Identifiability
 import play.api.data._
-import play.api.data.format.Formatter
 import play.api.data.format.Formats._
+import play.api.data.format.Formatter
 
 trait PublisherIdFormatter extends Formatter[PublisherId] {
   val i: String => PublisherId =

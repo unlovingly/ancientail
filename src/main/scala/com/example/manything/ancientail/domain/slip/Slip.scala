@@ -8,5 +8,5 @@ case class Slip(
   identity: Option[SlipId] = None,
   senderId: PublisherId,
   receiverId: ShopId,
-  items: Seq[SlipItem] // 怪しい
+  items: Seq[SlipItem]
 ) extends Entity[SlipId] {}

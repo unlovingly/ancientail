@@ -3,8 +3,8 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.SlipId
-import slick.lifted.Tag
 import slick.jdbc.PostgresProfile.api._
+import slick.lifted.Tag
 
 class Slips(tag: Tag) extends Table[Slip](tag, "slips") {
   import com.example.manything.ambientendre.outsiders.infrastructure.publisher._

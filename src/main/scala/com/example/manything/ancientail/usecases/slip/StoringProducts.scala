@@ -16,11 +16,13 @@ trait StoringProducts { this: SlipUseCases =>
   def storing(shopId: ShopId, slip: Slip): EitherAppliedFuture[Slip] = {
     import scala.concurrent.ExecutionContext.Implicits.global
 
-    val shop = shops.retrieve(Seq(shopId))
+    val productIds = slip.items.map { i =>
+      i.productId
+    }
+    val shop = shops.retrieveWithStock(shopId, productIds)
     // 1. 伝票を保存して
     val result = slips.store(slip)
 
-    // TODO: N+1
     shop.map { s =>
       s.map { h =>
         // 2. 在庫情報を更新する

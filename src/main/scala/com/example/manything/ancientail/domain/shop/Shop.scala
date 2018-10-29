@@ -17,14 +17,17 @@ case class Shop(
    * @param slip
    */
   def storing(slip: Slip): Shop = {
-    // TODO: amount
-    val s = stocks ++ slip.items.map { i =>
+    import cats.implicits._
+
+    val newStocks: Seq[Stock] = slip.items.map { s =>
       Stock(shopId = slip.receiverId,
-            productId = i.productId,
-            amount = i.amount,
-            price = i.price)
+            productId = s.productId,
+            amount = s.amount,
+            price = s.price)
     }
 
-    this.copy(stocks = s)
+    val result: Seq[Stock] = newStocks.toList |+| stocks.toList
+
+    this.copy(stocks = result)
   }
 }

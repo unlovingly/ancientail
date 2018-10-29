@@ -34,7 +34,13 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)
   }
 
   def performCreation() =
-    Action(circe.tolerantJson[Shop]) { implicit request =>
-      Ok("")
+    Action(circe.tolerantJson[Shop]).async { implicit request =>
+      val result: EitherAppliedFuture[Shop] =
+        shopUseCases.create(request.body)
+
+      result.map {
+        case Right(r) => Ok(r.name)
+        case Left(l) => BadRequest(l.toString)
+      }
     }
 }

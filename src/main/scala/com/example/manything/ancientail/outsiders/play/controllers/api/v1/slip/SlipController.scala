@@ -35,9 +35,16 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)
   }
 
   def performCreation() =
-    Action(circe.tolerantJson[Slip]) { implicit request =>
-      slipUseCases.storing(Identifiability(new UUID(0, 0)), request.body)
+    Action(circe.tolerantJson[Slip]).async { implicit request =>
+      import io.circe.generic.auto._
+      import io.circe.syntax._
 
-      Ok("")
+      val result =
+        slipUseCases.storing(Identifiability(new UUID(0, 0)), request.body)
+
+      result.map {
+        case Right(r) => Ok(r.asJson.spaces2)
+        case Left(l) => BadRequest(l.toString)
+      }
     }
 }
