@@ -26,7 +26,19 @@ case class Shop(
             price = s.price)
     }
 
-    val result: Seq[Stock] = newStocks.toList |+| stocks.toList
+    val result: List[Stock] = (newStocks ++ stocks)
+      .filter(s => s.shopId === slip.receiverId)
+      .groupBy(_.productId)
+      .mapValues(
+        _.groupBy(_.price)
+          .mapValues(
+            _.reduce(_ |+| _)
+          )
+          .values
+          .toSeq)
+      .values
+      .toList
+      .flatten
 
     this.copy(stocks = result)
   }

@@ -27,9 +27,9 @@ trait StoringProducts { this: SlipUseCases =>
       s.map { h =>
         // 2. 在庫情報を更新する
         h.map { o =>
-          o.storing(slip)
+          val p = o.storing(slip)
 
-          shops.store(o)
+          shops.store(p)
         }
       }
     }

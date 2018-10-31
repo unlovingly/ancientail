@@ -11,3 +11,11 @@ class Shops(tag: Tag) extends Table[Shop](tag, "shops") {
   def * =
     (identity.?, name) <> (Shop.tupled, Shop.unapply)
 }
+
+object Shops {
+  implicit class ShopsExtensions[C[_]](q: Query[Shops, Shop, C]) {
+    def withStocks =
+      q.join(stocks)
+        .on(_.identity === _.shopId)
+  }
+}

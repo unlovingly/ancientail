@@ -11,7 +11,6 @@ import com.example.manything.ancientail.domain.shop.{
 import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.ExecutionContext
-import scala.util.{Failure, Success}
 
 class ShopRepositoryWithSlick(implicit val db: Database,
                               implicit val executionContext: ExecutionContext)
@@ -48,35 +47,75 @@ class ShopRepositoryWithSlick(implicit val db: Database,
   }
 
   override def store(entity: Entity): EitherAppliedFuture[Entity] = {
-    val q = (shops returning shops.map { _.identity }) += Shop(entity.identity,
-                                                               entity.name)
-    val a = q.asTry
+    val inserter = (id: ShopId, s: Stock) => {
+      (stocks returning stocks).insertOrUpdate(
+        Stock(shopId = id,
+              productId = s.productId,
+              amount = s.amount,
+              price = s.price))
+    }
+
+    val q = for {
+      shopId <- (shops returning shops.map { _.identity })
+        .insertOrUpdate(Shop(entity.identity, entity.name))
+      ss <- shopId match {
+        case Some(id) =>
+          DBIO.sequence(entity.stocks.map(inserter(id, _)))
+        case None =>
+          DBIO.sequence(entity.stocks.map(inserter(entity.identity.get, _)))
+      }
+    } yield (shopId, ss)
+
+    val query = (shops returning shops.map { _.identity })
+      .insertOrUpdate(Shop(entity.identity, entity.name))
+      .flatMap {
+        case Some(id) =>
+          DBIO.sequence(entity.stocks.map(inserter(id, _)))
+        case None =>
+          DBIO.sequence(entity.stocks.map(inserter(entity.identity.get, _)))
+      }
+      .transactionally
+
+    // try[seq[option[(shopid, stock)]]]
+    val actions = q.asTry
+      .map { _.toEither }
       .map {
-        case Success(id) => Right(entity.copy(identity = Some(id)))
-        case Failure(e) => Left(e)
+        _.map {
+          case (optionalShopId, sequencialOptionalStocks: Seq[Option[Stock]]) =>
+            val id = optionalShopId.get
+            val unveiled = sequencialOptionalStocks.map {
+              case Some(sss) =>
+                sss
+            }
+
+            entity.copy(identity = Some(id), stocks = unveiled)
+        }
       }
 
-    db.run(a)
+    db.run(actions)
   }
 
   override def retrieveWithStock(
     shopId: ShopId,
     productIds: Seq[ProductId]): EitherAppliedFuture[Seq[Entity]] = {
-    import com.example.manything.ambientendre.outsiders.infrastructure.product.productIdColumnType
 
-    val q = for {
-      shop <- shops if shop.identity === shopId
-      stock <- stocks if stock.productId.inSetBind(productIds)
-    } yield (shop, stock)
-    val a = q.result.asTry.map { _.toEither }
+    // val q = for {
+    //   stock <- stocks.filter(_.shopId === shopId).result
+    //   shop <- shops.filter(_.identity === shopId).result.headOption
+    // } yield (shop, stock)
+
+    val q1 = shops.filter(_.identity === shopId).result
+    val q2 = stocks.filter(_.shopId === shopId).result
+
+    val a = (q1 zip q2).asTry.map { _.toEither }
 
     // 本当は Either[_, Entity] したい
-    db.run(a).map {
-      _.map {
-        _.map {
-          case (shop, stock) =>
-            Entity(shop.identity, shop.name, Seq(stock))
-        }
+    db.run(a).map { e =>
+      e.map {
+        case (h, t) =>
+          h.map { o =>
+            Entity(o.identity, o.name, t)
+          }
       }
     }
   }
