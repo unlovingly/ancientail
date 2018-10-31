@@ -25,9 +25,10 @@ trait ProductComponents {
     new PublisherUseCases()
 
   lazy val productController =
-    new ProductController(cc = controllerComponents,
-                          productUseCases = productUseCases,
-                          publisherUseCases = publisherUseCases)
+    new ProductController(
+      cc = controllerComponents,
+      productUseCases = productUseCases,
+      publisherUseCases = publisherUseCases)(executionContext)
   lazy val productRoutes =
     new products.Routes(httpErrorHandler, productController)
 }

@@ -14,8 +14,6 @@ trait StoringProducts { this: SlipUseCases =>
    * 2. 在庫情報を更新する
    */
   def storing(shopId: ShopId, slip: Slip): EitherAppliedFuture[Slip] = {
-    import scala.concurrent.ExecutionContext.Implicits.global
-
     val productIds = slip.items.map { i =>
       i.productId
     }

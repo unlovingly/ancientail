@@ -8,12 +8,12 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PublisherController(cc: ControllerComponents,
-                          publihserUseCases: PublisherUseCases)
+                          publihserUseCases: PublisherUseCases)(
+  implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
   with Circe {

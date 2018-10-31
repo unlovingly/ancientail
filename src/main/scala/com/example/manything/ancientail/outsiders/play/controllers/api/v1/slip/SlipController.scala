@@ -11,10 +11,11 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext
 
 @Singleton
-class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)
+class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
+  implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
   with Circe {

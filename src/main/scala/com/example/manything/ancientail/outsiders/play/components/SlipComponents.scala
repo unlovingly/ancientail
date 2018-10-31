@@ -22,7 +22,8 @@ trait SlipComponents {
     new SlipUseCases()
 
   lazy val slipController =
-    new SlipController(cc = controllerComponents, slipUseCases = slipUseCases)
+    new SlipController(cc = controllerComponents, slipUseCases = slipUseCases)(
+      executionContext)
   lazy val slipRoutes =
     new slips.Routes(httpErrorHandler, slipController)
 }

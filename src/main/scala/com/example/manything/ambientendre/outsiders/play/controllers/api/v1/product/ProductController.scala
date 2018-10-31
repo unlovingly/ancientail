@@ -9,12 +9,13 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class ProductController(cc: ControllerComponents,
                         productUseCases: ProductUseCases,
-                        publisherUseCases: PublisherUseCases)
+                        publisherUseCases: PublisherUseCases)(
+  implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
