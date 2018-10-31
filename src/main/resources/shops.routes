@@ -1,0 +1,2 @@
+GET     /index          com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.index
+POST    /create         com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.performCreation

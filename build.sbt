@@ -22,7 +22,8 @@ lazy val root = (project in file("."))
       "-deprecation",
       "-feature",
       "-language:existentials",
-      "-language:higherKinds"
+      "-language:higherKinds",
+      "-Ypartial-unification"
     )
   )
   .enablePlugins(PlayScala)

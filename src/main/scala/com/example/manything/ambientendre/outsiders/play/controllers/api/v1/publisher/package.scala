@@ -19,7 +19,7 @@ package object publisher {
     Decoder.decodeString.emap { str =>
       Either
         .catchNonFatal(Identifiability[UUID, Publisher](UUID.fromString(str)))
-        .leftMap(t => "PublisherId")
+        .leftMap(_ => "PublisherId")
     }
 
   implicit val publisherDecoder: Decoder[Publisher] =

@@ -1,9 +1,8 @@
-package com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product
+package com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop
 
 import com.example.manything.EitherAppliedFuture
-import com.example.manything.ambientendre.domain.product.Product
-import com.example.manything.ambientendre.usecases.product.ProductUseCases
-import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
+import com.example.manything.ancientail.domain.shop.Shop
+import com.example.manything.ancientail.usecases.shop.ShopUseCases
 import javax.inject._
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
@@ -12,9 +11,7 @@ import play.api.mvc._
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class ProductController(cc: ControllerComponents,
-                        productUseCases: ProductUseCases,
-                        publisherUseCases: PublisherUseCases)(
+class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
   implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
@@ -23,10 +20,10 @@ class ProductController(cc: ControllerComponents,
     import io.circe.generic.auto._
     import io.circe.syntax._
 
-    val products: EitherAppliedFuture[Seq[Product]] =
-      productUseCases.list()
+    val shops: EitherAppliedFuture[Seq[Shop]] =
+      shopUseCases.list()
 
-    products
+    shops
       .map {
         case Right(r) =>
           r.asJson.spaces2
@@ -38,7 +35,13 @@ class ProductController(cc: ControllerComponents,
   }
 
   def performCreation() =
-    Action(circe.tolerantJson[Product]) { implicit request =>
-      Ok("")
+    Action(circe.tolerantJson[Shop]).async { implicit request =>
+      val result: EitherAppliedFuture[Shop] =
+        shopUseCases.create(request.body)
+
+      result.map {
+        case Right(r) => Ok(r.name)
+        case Left(l) => BadRequest(l.toString)
+      }
     }
 }

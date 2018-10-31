@@ -3,12 +3,12 @@ package com.example.manything.ambientendre.outsiders.infrastructure
 import java.util.UUID
 
 import com.example.manything.ambientendre.domain.publisher.{
-  Publisher => DPublisher,
-  PublisherId
+  PublisherId,
+  Publisher => DPublisher
 }
 import com.example.manything.roundelayout.domain.Identifiability
-import slick.lifted
 import slick.jdbc.PostgresProfile.api._
+import slick.lifted
 
 package object publisher {
   lazy val publishers = lifted.TableQuery[Publishers]

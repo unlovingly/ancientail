@@ -1,7 +1,7 @@
 package com.example.manything.ambientendre.outsiders.infrastructure.product
 
-import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ambientendre.domain.product.{Product, ProductId}
+import com.example.manything.ambientendre.domain.publisher.PublisherId
 import slick.jdbc.PostgresProfile.api._
 
 class Products(tag: Tag) extends Table[Product](tag, "products") {
@@ -10,6 +10,7 @@ class Products(tag: Tag) extends Table[Product](tag, "products") {
   def identity = column[ProductId]("product_id", O.PrimaryKey, O.AutoInc)
   def name = column[String]("name")
   def publisherId = column[PublisherId]("publisher_id")
+
   def publisher =
     foreignKey("publisher_fk", publisherId, publishers)(_.identity)
 

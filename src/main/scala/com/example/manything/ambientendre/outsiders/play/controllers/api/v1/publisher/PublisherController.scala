@@ -8,12 +8,12 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class PublisherController(cc: ControllerComponents,
-                          publihserUseCases: PublisherUseCases)
+                          publihserUseCases: PublisherUseCases)(
+  implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
@@ -38,9 +38,13 @@ class PublisherController(cc: ControllerComponents,
   }
 
   def performCreation() =
-    Action(circe.tolerantJson[Publisher]) { implicit request =>
-      publihserUseCases.create(request.body)
+    Action(circe.tolerantJson[Publisher]).async { implicit request =>
+      val result: EitherAppliedFuture[Publisher] =
+        publihserUseCases.create(request.body)
 
-      Ok("")
+      result.map {
+        case Right(r) => Ok(r.name)
+        case Left(l) => BadRequest(l.toString)
+      }
     }
 }

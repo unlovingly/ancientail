@@ -1,0 +1,6 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# https://www.playframework.com/documentation/latest/ScalaRouting
+# ~~~~
+
+POST    /         com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.performCreation
