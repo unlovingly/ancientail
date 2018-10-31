@@ -9,14 +9,12 @@ package object shop {
   type ShopId = Identifiability[UUID, Shop]
   type StockId = Identifiability[UUID, Stock]
 
-  implicit lazy val stockSemigroup = new Semigroup[Stock] {
-    override def combine(x: Stock, y: Stock): Stock = {
-      import cats.implicits._
+  implicit lazy val stockSemigroup: Semigroup[Stock] = (x: Stock, y: Stock) => {
+    import cats.implicits._
 
-      if (x.shopId === y.shopId && x.productId === y.productId && x.price === y.price)
-        x.copy(amount = x.amount + y.amount)
-      else
-        x
-    }
+    if (x.shopId === y.shopId && x.productId === y.productId && x.price === y.price)
+      x.copy(amount = x.amount + y.amount)
+    else
+      x
   }
 }

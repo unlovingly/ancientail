@@ -25,7 +25,7 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     db.run(a).map {
       _.map {
         _.map { s =>
-          Entity(s.identity, s.name, Seq.empty[Stock])
+          Entity(s.identity, s.name, Seq.empty)
         }
       }
     }
@@ -40,7 +40,7 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     db.run(a).map {
       _.map {
         _.map { s =>
-          Entity(s.identity, s.name, Seq.empty[Stock])
+          Entity(s.identity, s.name, Seq.empty)
         }
       }
     }
@@ -98,11 +98,6 @@ class ShopRepositoryWithSlick(implicit val db: Database,
   override def retrieveWithStock(
     shopId: ShopId,
     productIds: Seq[ProductId]): EitherAppliedFuture[Seq[Entity]] = {
-
-    // val q = for {
-    //   stock <- stocks.filter(_.shopId === shopId).result
-    //   shop <- shops.filter(_.identity === shopId).result.headOption
-    // } yield (shop, stock)
 
     val q1 = shops.filter(_.identity === shopId).result
     val q2 = stocks.filter(_.shopId === shopId).result

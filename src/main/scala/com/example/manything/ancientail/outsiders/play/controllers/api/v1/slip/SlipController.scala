@@ -3,6 +3,7 @@ package com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip
 import java.util.UUID
 
 import com.example.manything.EitherAppliedFuture
+import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.{Slip, SlipId}
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
 import com.example.manything.roundelayout.domain.Identifiability
@@ -19,13 +20,16 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
+  // TODO
+  val shopId: ShopId = Identifiability(new UUID(0, 0))
+
   def detail(id: SlipId) = Action.async {
     implicit request: Request[AnyContent] =>
       import io.circe.generic.auto._
       import io.circe.syntax._
 
       val slips: EitherAppliedFuture[Seq[Slip]] =
-        slipUseCases.retrieve(Identifiability(new UUID(0, 0)), id)
+        slipUseCases.retrieve(shopId, id)
 
       slips
         .map {
@@ -41,7 +45,7 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
       import io.circe.syntax._
 
       val result =
-        slipUseCases.storing(Identifiability(new UUID(0, 0)), request.body)
+        slipUseCases.storing(shopId, request.body)
 
       result.map {
         case Right(r) => Ok(r.asJson.spaces2)
