@@ -1,40 +1,45 @@
 package com.example.manything.ambientendre.outsiders.infrastructure.product
 
+import com.example.manything.EitherAppliedFuture
 import com.example.manything.ambientendre.domain.product._
 import slick.jdbc.PostgresProfile.api._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
+import scala.util.{Failure, Success}
 
 class ProductRepositoryWithSlick(
   implicit val db: Database,
   implicit val executionContext: ExecutionContext)
-  extends ProductRepository[Future] {
-  override def retrieve(): Future[Seq[Product]] = {
+  extends ProductRepository[EitherAppliedFuture] {
+  override def retrieve(): EitherAppliedFuture[Seq[Product]] = {
     val q = products
-    val a = q.result
+    val a = q.result.asTry.map { _.toEither }
 
     db.run(a)
   }
 
-  override def retrieve(id: Seq[ProductId]): Future[Seq[Product]] = {
+  override def retrieve(
+    id: Seq[ProductId]): EitherAppliedFuture[Seq[Product]] = {
     val q = for {
       p <- products if p.identity.inSet(id)
     } yield p
-    val a = q.result
+    val a = q.result.asTry.map { _.toEither }
 
     db.run(a)
   }
 
-  override def store(entity: Product): Future[Product] = {
+  override def store(entity: Product): EitherAppliedFuture[Product] = {
     val q = (products returning products.map { _.identity }) += Product(
       entity.identity,
       entity.name,
       entity.publisherId
     )
-
-    db.run(q)
-      .map { id =>
-        entity.copy(identity = Some(id))
+    val a = q.asTry
+      .map {
+        case Success(id) => Right(entity.copy(identity = Some(id)))
+        case Failure(e) => Left(e)
       }
+
+    db.run(a)
   }
 }
