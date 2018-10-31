@@ -1,7 +1,7 @@
 organization := "com.example.manything.ancientail"
 name := """ancientail"""
 
-version := "0.4.0"
+version := "0.4.1-SNAPSHOT"
 
 resolvers += Resolver.jcenterRepo
 
@@ -16,6 +16,7 @@ lazy val root = (project in file("."))
       "com.typesafe.play" %% "play-slick" % "3.0.3",
       "com.dripower" %% "play-circe" % "2610.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
+      "org.mockito" % "mockito-core" % "2.23.0" % "test",
       "com.example.manything" %% "roundelayout" % "0.3.0"
     ),
     scalacOptions ++= Seq(
