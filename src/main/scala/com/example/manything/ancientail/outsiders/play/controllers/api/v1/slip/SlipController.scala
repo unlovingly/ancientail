@@ -45,7 +45,7 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
       import io.circe.syntax._
 
       val result =
-        slipUseCases.storing(shopId, request.body)
+        slipUseCases.storing(request.body)
 
       result.map {
         case Right(r) => Ok(r.asJson.spaces2)

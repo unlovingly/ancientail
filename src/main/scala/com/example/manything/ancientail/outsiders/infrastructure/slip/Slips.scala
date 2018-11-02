@@ -17,11 +17,3 @@ class Slips(tag: Tag) extends Table[Slip](tag, "slips") {
   def * =
     (identity.?, senderId, receiverId) <> (Slip.tupled, Slip.unapply)
 }
-
-object Slips {
-  implicit class SlipsExtensions[C[_]](q: Query[Slips, Slip, C]) {
-    def withItems =
-      q.join(slipItems)
-        .on(_.identity === _.slipId)
-  }
-}

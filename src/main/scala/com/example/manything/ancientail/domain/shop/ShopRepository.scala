@@ -6,5 +6,5 @@ import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.roundelayout.domain.Repository
 
 trait ShopRepository[A[_]] extends Repository[Shop, UUID, A] {
-  def retrieveWithStock(shopId: ShopId, productId: Seq[ProductId]): A[Seq[Shop]]
+  def retrieveWithStocks(shopId: ShopId, productId: Seq[ProductId]): A[Shop]
 }

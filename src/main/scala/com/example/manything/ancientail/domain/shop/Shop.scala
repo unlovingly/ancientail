@@ -17,17 +17,15 @@ case class Shop(
     import cats.implicits._
 
     val newStocks: Seq[Stock] = slip.items.map { s =>
-      Stock(
-        pluCode =
-          PluCode.generate(v = slip.receiverId, a = s.productId, l = s.price),
-        shopId = slip.receiverId,
-        productId = s.productId,
-        amount = s.amount,
-        price = s.price)
+      Stock(pluCode =
+              PluCode.generate(v = identity.get, a = s.productId, l = s.price),
+            shopId = identity.get,
+            productId = s.productId,
+            amount = s.amount,
+            price = s.price)
     }
 
     val result: Seq[Stock] = (newStocks ++ stocks)
-      .filter(s => s.shopId === slip.receiverId)
       .groupBy(_.pluCode)
       .mapValues(_.reduce((x, y) => x |+| y))
       .values
