@@ -3,6 +3,7 @@ package com.example.manything.ancientail.outsiders.infrastructure.shop
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.shop.{
+  PluCode,
   ShopId,
   ShopRepository,
   Stock,
@@ -49,7 +50,9 @@ class ShopRepositoryWithSlick(implicit val db: Database,
   override def store(entity: Entity): EitherAppliedFuture[Entity] = {
     val inserter = (id: ShopId, s: Stock) => {
       (stocks returning stocks).insertOrUpdate(
-        Stock(shopId = id,
+        Stock(pluCode = PluCode
+                .generate(v = id, a = s.productId, l = s.price),
+              shopId = id,
               productId = s.productId,
               amount = s.amount,
               price = s.price))
@@ -66,23 +69,13 @@ class ShopRepositoryWithSlick(implicit val db: Database,
       }
     } yield (shopId, ss)
 
-    val query = (shops returning shops.map { _.identity })
-      .insertOrUpdate(Shop(entity.identity, entity.name))
-      .flatMap {
-        case Some(id) =>
-          DBIO.sequence(entity.stocks.map(inserter(id, _)))
-        case None =>
-          DBIO.sequence(entity.stocks.map(inserter(entity.identity.get, _)))
-      }
-      .transactionally
-
-    // try[seq[option[(shopid, stock)]]]
     val actions = q.asTry
       .map { _.toEither }
       .map {
         _.map {
           case (optionalShopId, sequencialOptionalStocks: Seq[Option[Stock]]) =>
             val id = optionalShopId.get
+            // FIXME
             val unveiled = sequencialOptionalStocks.map {
               case Some(sss) =>
                 sss

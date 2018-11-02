@@ -65,17 +65,30 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
     identity = Some(shopId),
     name = "Shop One",
     stocks = Seq(
-      Stock(shopId = shopId, productId = productId1, amount = 1, price = 1000),
-      Stock(shopId = shopId, productId = productId1, amount = 1, price = 2000),
-      Stock(shopId = shopId, productId = productId2, amount = 3, price = 1000)
+      Stock(pluCode = PluCode.generate(shopId, productId1, 1000),
+            shopId = shopId,
+            productId = productId1,
+            amount = 1,
+            price = 1000),
+      Stock(pluCode = PluCode.generate(shopId, productId1, 2000),
+            shopId = shopId,
+            productId = productId1,
+            amount = 1,
+            price = 2000),
+      Stock(pluCode = PluCode.generate(shopId, productId2, 1000),
+            shopId = shopId,
+            productId = productId2,
+            amount = 3,
+            price = 1000)
     )
   )
 
   "method storing" should "update Shop.stocks" in {
-    val crime = suspect.storing(slip)
+    val sorter = (s: Seq[Stock]) => s.sortBy(t => t.pluCode.value)
 
-    val sorter = (s: Seq[Stock]) => s.sortBy(t => (t.price, t.amount))
+    val crime = sorter(suspect.storing(slip).stocks)
+    val expect = sorter(expected.stocks)
 
-    assert(sorter(crime.stocks) === sorter(expected.stocks))
+    assert(crime === expect)
   }
 }
