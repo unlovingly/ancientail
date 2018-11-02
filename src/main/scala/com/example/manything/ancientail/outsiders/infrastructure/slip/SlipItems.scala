@@ -15,9 +15,6 @@ class SlipItems(tag: Tag) extends Table[SlipItem](tag, "slip_items") {
 
   def slipId = column[SlipId]("slip_id")
 
-  def slip =
-    foreignKey("slip_fk", slipId, slips)(_.identity)
-
   def * =
     (identity.?, productId, amount, price, slipId) <> (SlipItem.tupled, SlipItem.unapply)
 }
