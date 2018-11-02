@@ -88,22 +88,21 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     db.run(actions)
   }
 
-  override def retrieveWithStock(
+  override def retrieveWithStocks(
     shopId: ShopId,
-    productIds: Seq[ProductId]): EitherAppliedFuture[Seq[Entity]] = {
+    productIds: Seq[ProductId]): EitherAppliedFuture[Entity] = {
 
     val q1 = shops.filter(_.identity === shopId).result
     val q2 = stocks.filter(_.shopId === shopId).result
 
     val a = (q1 zip q2).asTry.map { _.toEither }
 
-    // 本当は Either[_, Entity] したい
     db.run(a).map { e =>
       e.map {
         case (h, t) =>
-          h.map { o =>
-            Entity(o.identity, o.name, t)
-          }
+          val p = h.head
+
+          Entity(p.identity, p.name, t)
       }
     }
   }

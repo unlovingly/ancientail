@@ -17,18 +17,16 @@ trait StoringProducts { this: SlipUseCases =>
     val productIds = slip.items.map { i =>
       i.productId
     }
-    val shop = shops.retrieveWithStock(shopId, productIds)
+    val shop = shops.retrieveWithStocks(shopId, productIds)
     // 1. 伝票を保存して
     val result = slips.store(slip)
 
     shop.map { s =>
+      // 2. 在庫情報を更新する
       s.map { h =>
-        // 2. 在庫情報を更新する
-        h.map { o =>
-          val p = o.storing(slip)
+        val o = h.storing(slip)
 
-          shops.store(p)
-        }
+        shops.store(o)
       }
     }
 
