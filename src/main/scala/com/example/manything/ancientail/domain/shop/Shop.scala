@@ -1,13 +1,16 @@
 package com.example.manything.ancientail.domain.shop
 
+import java.util.UUID
+
 import com.example.manything.ancientail.domain.slip.Slip
-import com.example.manything.roundelayout.domain.Entity
+import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class Shop(
-  identity: Option[ShopId] = None,
+  override val identity: Option[ShopId] = None,
   name: String,
   stocks: Seq[Stock]
-) extends Entity[ShopId] {
+) extends Entity {
+  override type Identifier = ShopId
 
   /**
    * 1. 伝票を保存して
@@ -33,4 +36,8 @@ case class Shop(
 
     this.copy(stocks = result)
   }
+}
+
+case class ShopId(override val value: UUID) extends Identifiability[UUID] {
+  override type EntityType = Shop
 }

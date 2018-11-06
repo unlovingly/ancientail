@@ -3,7 +3,6 @@ package com.example.manything.ancientail.outsiders.play.controllers.api.v1
 import java.util.UUID
 
 import com.example.manything.ancientail.domain.slip._
-import com.example.manything.roundelayout.domain.Identifiability
 
 package object slip {
   import cats.syntax.either._
@@ -21,7 +20,7 @@ package object slip {
   implicit lazy val slipIdDecoder: Decoder[SlipId] =
     Decoder.decodeString.emap { str =>
       Either
-        .catchNonFatal(Identifiability[UUID, Slip](UUID.fromString(str)))
+        .catchNonFatal(SlipId(UUID.fromString(str)))
         .leftMap(_ => "SlipId")
     }
 
@@ -31,7 +30,7 @@ package object slip {
   implicit lazy val slipItemIdDecoder: Decoder[SlipItemId] =
     Decoder.decodeString.emap { str =>
       Either
-        .catchNonFatal(Identifiability[UUID, SlipItem](UUID.fromString(str)))
+        .catchNonFatal(SlipItemId(UUID.fromString(str)))
         .leftMap(_ => "SlipItemId")
     }
 

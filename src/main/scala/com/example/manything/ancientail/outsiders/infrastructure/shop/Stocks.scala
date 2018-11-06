@@ -16,14 +16,6 @@ class Stocks(tag: Tag) extends Table[Stock](tag, "stocks") {
   def amount = column[Amount]("amount")
   def price = column[Price]("price")
 
-  def pk = primaryKey("pk_stocks", (shopId, productId, price))
-
-  def shop =
-    foreignKey("shop_fk", shopId, shops)(_.identity)
-
-  def product =
-    foreignKey("product_fk", productId, products)(_.identity)
-
   def * =
     (pluCode, shopId, productId, amount, price) <> ((Stock.apply _).tupled, Stock.unapply)
 }

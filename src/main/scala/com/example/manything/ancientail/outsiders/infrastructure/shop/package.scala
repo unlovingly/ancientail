@@ -17,5 +17,5 @@ package object shop {
 
   implicit lazy val shopIdColumnType: BaseColumnType[ShopId] =
     MappedColumnType
-      .base[ShopId, UUID](_.value, Identifiability.apply)
+      .base[ShopId, UUID](_.value, ShopId.apply)
 }

@@ -11,7 +11,7 @@ class PublisherRepositoryWithSlick(
   implicit val db: Database,
   implicit val executionContext: ExecutionContext)
   extends PublisherRepository[EitherAppliedFuture] {
-  override def retrieve(): EitherAppliedFuture[Seq[Publisher]] = {
+  override def retrieve(): EitherAppliedFuture[Seq[EntityType]] = {
     val q = publishers.take(20)
     val a = q.result.asTry.map { _.toEither }
 
@@ -19,7 +19,7 @@ class PublisherRepositoryWithSlick(
   }
 
   override def retrieve(
-    id: Seq[PublisherId]): EitherAppliedFuture[Seq[Publisher]] = {
+    id: Seq[Identifier]): EitherAppliedFuture[Seq[EntityType]] = {
     val q = for {
       p <- publishers if p.identity.inSet(id)
     } yield p
@@ -28,7 +28,7 @@ class PublisherRepositoryWithSlick(
     db.run(a)
   }
 
-  override def store(entity: Publisher): EitherAppliedFuture[Publisher] = {
+  override def store(entity: EntityType): EitherAppliedFuture[EntityType] = {
     val q = (publishers returning publishers.map { _.identity }) += Publisher(
       entity.identity,
       entity.name)

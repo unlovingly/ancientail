@@ -16,7 +16,7 @@ package object shop {
   implicit val decodeShopId: Decoder[ShopId] = Decoder.decodeString.emap {
     str =>
       Either
-        .catchNonFatal(Identifiability[UUID, Shop](UUID.fromString(str)))
+        .catchNonFatal(ShopId(UUID.fromString(str)))
         .leftMap(_ => "ShopId")
   }
 

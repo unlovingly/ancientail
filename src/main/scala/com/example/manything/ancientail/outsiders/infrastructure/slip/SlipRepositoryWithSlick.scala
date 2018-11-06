@@ -2,10 +2,9 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip
 
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.slip.{
-  SlipId,
-  SlipItem => EntityItem,
   SlipRepository,
-  Slip => Entity
+  Slip => Entity,
+  SlipItem => EntityItem
 }
 import slick.jdbc.PostgresProfile.api._
 
@@ -14,7 +13,7 @@ import scala.concurrent.ExecutionContext
 class SlipRepositoryWithSlick(implicit val db: Database,
                               implicit val executionContext: ExecutionContext)
   extends SlipRepository[EitherAppliedFuture] {
-  override def retrieve(): EitherAppliedFuture[Seq[Entity]] = {
+  override def retrieve(): EitherAppliedFuture[Seq[EntityType]] = {
     val q = slips.take(20)
     val a = q.result.asTry
       .map { // FIXME
@@ -32,7 +31,8 @@ class SlipRepositoryWithSlick(implicit val db: Database,
     db.run(a)
   }
 
-  override def retrieve(id: Seq[SlipId]): EitherAppliedFuture[Seq[Entity]] = {
+  override def retrieve(
+    id: Seq[Identifier]): EitherAppliedFuture[Seq[EntityType]] = {
     val q = for {
       p <- slips if p.identity.inSet(id)
     } yield p
@@ -52,7 +52,7 @@ class SlipRepositoryWithSlick(implicit val db: Database,
     db.run(a)
   }
 
-  override def store(entity: Entity): EitherAppliedFuture[Entity] = {
+  override def store(entity: EntityType): EitherAppliedFuture[EntityType] = {
     val queries = for {
       savedSlipId <- (slips returning slips.map { _.identity }) += Slip(
         entity.identity,

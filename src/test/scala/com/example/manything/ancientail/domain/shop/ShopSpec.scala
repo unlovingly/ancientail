@@ -5,30 +5,29 @@ import java.util.UUID
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.slip._
-import com.example.manything.roundelayout.domain.Identifiability
 import org.scalatest._
 
 class ShopSpec extends FlatSpec with DiagrammedAssertions {
-  val shopId: ShopId = Identifiability(
+  val shopId: ShopId = ShopId(
     value = UUID.fromString("00000000-0000-0000-0000-000000000000"))
-  val publisherId: PublisherId = Identifiability(
+  val publisherId: PublisherId = PublisherId(
     value = UUID.fromString("00000000-0000-0001-0000-000000000001"))
 
-  val productId1: ProductId = Identifiability(
+  val productId1: ProductId = ProductId(
     UUID.fromString("00000000-0000-0002-0000-000000000001"))
-  val productId2: ProductId = Identifiability(
+  val productId2: ProductId = ProductId(
     UUID.fromString("00000000-0000-0002-0000-000000000002"))
 
-  val slipId: SlipId = Identifiability(
+  val slipId: SlipId = SlipId(
     UUID.fromString("00000000-0000-0003-0000-000000000001"))
 
-  val slipItem1Id: SlipItemId = Identifiability(
+  val slipItem1Id: SlipItemId = SlipItemId(
     UUID.fromString("00000000-0000-0004-0000-000000000001"))
-  val slipItem2Id: SlipItemId = Identifiability(
+  val slipItem2Id: SlipItemId = SlipItemId(
     UUID.fromString("00000000-0000-0004-0000-000000000002"))
-  val slipItem3Id: SlipItemId = Identifiability(
+  val slipItem3Id: SlipItemId = SlipItemId(
     UUID.fromString("00000000-0000-0004-0000-000000000003"))
-  val slipItem4Id: SlipItemId = Identifiability(
+  val slipItem4Id: SlipItemId = SlipItemId(
     UUID.fromString("00000000-0000-0004-0000-000000000004"))
 
   val slip: Slip = Slip(

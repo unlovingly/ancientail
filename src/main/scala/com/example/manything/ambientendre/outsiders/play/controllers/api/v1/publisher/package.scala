@@ -6,7 +6,6 @@ import com.example.manything.ambientendre.domain.publisher.{
   Publisher,
   PublisherId
 }
-import com.example.manything.roundelayout.domain.Identifiability
 
 package object publisher {
   import cats.syntax.either._
@@ -18,7 +17,7 @@ package object publisher {
   implicit val decodePublisherId: Decoder[PublisherId] =
     Decoder.decodeString.emap { str =>
       Either
-        .catchNonFatal(Identifiability[UUID, Publisher](UUID.fromString(str)))
+        .catchNonFatal(PublisherId(UUID.fromString(str)))
         .leftMap(_ => "PublisherId")
     }
 

@@ -1,8 +1,16 @@
 package com.example.manything.ambientendre.domain.publisher
 
-import com.example.manything.roundelayout.domain.Entity
+import java.util.UUID
+
+import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class Publisher(
-  identity: Option[PublisherId] = None,
+  override val identity: Option[PublisherId] = None,
   name: String
-) extends Entity[PublisherId] {}
+) extends Entity {
+  override type Identifier = PublisherId
+}
+
+case class PublisherId(override val value: UUID) extends Identifiability[UUID] {
+  override type EntityType = Publisher
+}

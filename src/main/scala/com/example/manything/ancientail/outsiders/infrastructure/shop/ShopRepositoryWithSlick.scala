@@ -16,7 +16,7 @@ import scala.concurrent.ExecutionContext
 class ShopRepositoryWithSlick(implicit val db: Database,
                               implicit val executionContext: ExecutionContext)
   extends ShopRepository[EitherAppliedFuture] {
-  override def retrieve(): EitherAppliedFuture[Seq[Entity]] = {
+  override def retrieve(): EitherAppliedFuture[Seq[EntityType]] = {
     val q = shops.take(20)
     val a = q.result.asTry.map { _.toEither }
 
@@ -32,7 +32,8 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     }
   }
 
-  override def retrieve(id: Seq[ShopId]): EitherAppliedFuture[Seq[Entity]] = {
+  override def retrieve(
+    id: Seq[Identifier]): EitherAppliedFuture[Seq[EntityType]] = {
     val q = for {
       p <- shops if p.identity.inSet(id)
     } yield p
@@ -47,7 +48,7 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     }
   }
 
-  override def store(entity: Entity): EitherAppliedFuture[Entity] = {
+  override def store(entity: EntityType): EitherAppliedFuture[EntityType] = {
     val inserter = (id: ShopId, s: Stock) => {
       (stocks returning stocks).insertOrUpdate(
         Stock(pluCode = PluCode
@@ -89,8 +90,8 @@ class ShopRepositoryWithSlick(implicit val db: Database,
   }
 
   override def retrieveWithStocks(
-    shopId: ShopId,
-    productIds: Seq[ProductId]): EitherAppliedFuture[Entity] = {
+    shopId: Identifier,
+    productIds: Seq[ProductId]): EitherAppliedFuture[EntityType] = {
 
     val q1 = shops.filter(_.identity === shopId).result
     val q2 = stocks.filter(_.shopId === shopId).result

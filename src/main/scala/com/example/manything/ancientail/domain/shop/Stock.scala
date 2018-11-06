@@ -1,8 +1,11 @@
 package com.example.manything.ancientail.domain.shop
 
+import java.util.UUID
+
 import cats.{Eq, Semigroup}
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.slip.{Amount, Price}
+import com.example.manything.roundelayout.domain.Identifiability
 
 case class Stock(
   pluCode: PluCode,
@@ -11,6 +14,10 @@ case class Stock(
   amount: Amount,
   price: Price
 )
+
+case class StockId(override val value: UUID) extends Identifiability[UUID] {
+  override type EntityType = Stock
+}
 
 object Stock {
   import cats.implicits._

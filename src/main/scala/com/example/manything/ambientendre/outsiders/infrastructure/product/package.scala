@@ -3,7 +3,6 @@ package com.example.manything.ambientendre.outsiders.infrastructure
 import java.util.UUID
 
 import com.example.manything.ambientendre.domain.product.ProductId
-import com.example.manything.roundelayout.domain.Identifiability
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted
 
@@ -12,5 +11,5 @@ package object product {
 
   implicit lazy val productIdColumnType: BaseColumnType[ProductId] =
     MappedColumnType
-      .base[ProductId, UUID](_.value, Identifiability.apply)
+      .base[ProductId, UUID](_.value, ProductId.apply)
 }

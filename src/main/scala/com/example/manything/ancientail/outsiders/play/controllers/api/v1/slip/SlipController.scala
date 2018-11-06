@@ -6,7 +6,6 @@ import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.{Slip, SlipId}
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
-import com.example.manything.roundelayout.domain.Identifiability
 import javax.inject._
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
@@ -21,7 +20,7 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
   with I18nSupport
   with Circe {
   // TODO
-  val shopId: ShopId = Identifiability(new UUID(0, 0))
+  val shopId: ShopId = ShopId(new UUID(0, 0))
 
   def detail(id: SlipId) = Action.async {
     implicit request: Request[AnyContent] =>

@@ -1,10 +1,18 @@
 package com.example.manything.ambientendre.domain.product
 
+import java.util.UUID
+
 import com.example.manything.ambientendre.domain.publisher.PublisherId
-import com.example.manything.roundelayout.domain.Entity
+import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class Product(
-  identity: Option[ProductId] = None,
+  override val identity: Option[ProductId] = None,
   name: String,
   publisherId: PublisherId
-) extends Entity[ProductId] {}
+) extends Entity {
+  override type Identifier = ProductId
+}
+
+case class ProductId(override val value: UUID) extends Identifiability[UUID] {
+  override type EntityType = Product
+}
