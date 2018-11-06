@@ -13,9 +13,7 @@ case class Shop(
    * 1. 伝票を保存して
    * 2. 在庫情報を更新する
    */
-  def storing(slip: Slip): Shop = {
-    import cats.implicits._
-
+  def storing[S <: Slip[_]](slip: S): Shop = {
     val newStocks: Seq[Stock] = slip.items.map { s =>
       Stock(pluCode =
               PluCode.generate(v = identity.get, a = s.productId, l = s.price),
@@ -25,7 +23,21 @@ case class Shop(
             price = s.price)
     }
 
-    val result: Seq[Stock] = (newStocks ++ stocks)
+    updateStocks(newStocks)
+  }
+
+  def inbound[S <: Slip[_]](slip: S): Shop = {
+    updateStocks(Seq.empty)
+  }
+
+  def outbound[S <: Slip[_]](slip: S): Shop = {
+    updateStocks(Seq.empty)
+  }
+
+  private def updateStocks(newStocks: Seq[Stock]): Shop = {
+    import cats.implicits._
+
+    val result: Seq[Stock] = newStocks
       .groupBy(_.pluCode)
       .mapValues(_.reduce((x, y) => x |+| y))
       .values

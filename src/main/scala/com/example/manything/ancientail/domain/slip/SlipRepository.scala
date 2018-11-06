@@ -2,6 +2,11 @@ package com.example.manything.ancientail.domain.slip
 
 import java.util.UUID
 
-import com.example.manything.roundelayout.domain.Repository
+import com.example.manything.roundelayout.domain.{Identifiability, Repository}
 
-trait SlipRepository[A[_]] extends Repository[Slip, UUID, A] {}
+/**
+ *
+ * @tparam A SenderIdType
+ * @tparam B MonadType
+ */
+trait SlipRepository[A, B[_]] extends Repository[Slip[A], UUID, B] {}

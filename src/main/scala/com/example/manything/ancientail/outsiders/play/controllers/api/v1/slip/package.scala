@@ -39,7 +39,11 @@ package object slip {
     Decoder.forProduct4("identity", "productId", "amount", "price")(
       SlipItem.apply)
 
-  implicit lazy val slipDecoder: Decoder[Slip] =
+  implicit lazy val exchangeSlipDecoder: Decoder[ExchangeSlip] =
     Decoder.forProduct4("identity", "senderId", "receiverId", "items")(
-      Slip.apply)
+      ExchangeSlip.apply)
+
+  implicit lazy val purchaseSlipDecoder: Decoder[PurchaseSlip] =
+    Decoder.forProduct4("identity", "senderId", "receiverId", "items")(
+      PurchaseSlip.apply)
 }

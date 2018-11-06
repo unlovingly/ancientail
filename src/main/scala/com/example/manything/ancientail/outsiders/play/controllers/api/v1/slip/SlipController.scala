@@ -4,7 +4,7 @@ import java.util.UUID
 
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.shop.ShopId
-import com.example.manything.ancientail.domain.slip.{Slip, SlipId}
+import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
 import com.example.manything.roundelayout.domain.Identifiability
 import javax.inject._
@@ -39,13 +39,27 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
         }
   }
 
-  def performCreation() =
-    Action(circe.tolerantJson[Slip]).async { implicit request =>
+  def storing() =
+    Action(circe.tolerantJson[PurchaseSlip]).async { implicit request =>
       import io.circe.generic.auto._
       import io.circe.syntax._
 
       val result =
         slipUseCases.storing(request.body)
+
+      result.map {
+        case Right(r) => Ok(r.asJson.spaces2)
+        case Left(l) => BadRequest(l.toString)
+      }
+    }
+
+  def exchange() =
+    Action(circe.tolerantJson[ExchangeSlip]).async { implicit request =>
+      import io.circe.generic.auto._
+      import io.circe.syntax._
+
+      val result =
+        slipUseCases.exchanging(request.body)
 
       result.map {
         case Right(r) => Ok(r.asJson.spaces2)
