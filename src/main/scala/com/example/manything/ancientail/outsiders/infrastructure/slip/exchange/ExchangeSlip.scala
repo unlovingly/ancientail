@@ -1,12 +1,7 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip
-
+package com.example.manything.ancientail.outsiders.infrastructure.slip.exchange
 import com.example.manything.ancientail.domain.shop.ShopId
-import com.example.manything.ancientail.domain.slip.{
-  SlipId,
-  ExchangeSlip => Entity,
-  Slip => EntityBase,
-  SlipItem => EntityItem
-}
+import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.ancientail.outsiders.infrastructure.slip.Slip
 
 case class ExchangeSlip(
   override val identity: Option[SlipId] = None,

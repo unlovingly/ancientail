@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip
+package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ambientendre.domain.publisher.PublisherId
@@ -7,6 +7,11 @@ import com.example.manything.ancientail.domain.slip.{
   SlipRepository,
   Slip => EntityBase,
   SlipItem => EntityItem
+}
+import com.example.manything.ancientail.outsiders.infrastructure.slip.{
+  SlipItem,
+  purchaseSlips,
+  slipItems
 }
 import slick.jdbc.PostgresProfile.api._
 

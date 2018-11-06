@@ -1,7 +1,7 @@
 package com.example.manything.ancientail.usecases.slip
 
 import com.example.manything.EitherAppliedFuture
-import com.example.manything.ancientail.domain.shop.ShopRepository
+import com.example.manything.ancientail.domain.shop.{ShopId, ShopRepository}
 import com.example.manything.ancientail.domain.slip._
 
 /**
@@ -15,7 +15,7 @@ trait ExchangingProducts { this: SlipUseCases =>
    */
   def exchanging(slip: ExchangeSlip)(
     implicit shops: ShopRepository[EitherAppliedFuture],
-    slips: SlipRepository[EitherAppliedFuture])
+    slips: SlipRepository[ShopId, EitherAppliedFuture])
     : EitherAppliedFuture[Slip[_]] = {
     val productIds = slip.items.map(_.productId)
     val sender = shops.retrieveWithStocks(slip.senderId, productIds)

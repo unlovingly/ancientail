@@ -1,15 +1,16 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip
+package com.example.manything.ancientail.outsiders.infrastructure.slip.exchange
 
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.ancientail.outsiders.infrastructure.slip.purchase.PurchaseSlip
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted.Tag
 
-class PurchaseSlips(tag: Tag, _tableName: String)
+class ExchangeSlips(tag: Tag, _tableName: String)
   extends Table[PurchaseSlip](tag, _tableName) {
-  import com.example.manything.ancientail.outsiders.infrastructure.shop._
   import com.example.manything.ambientendre.outsiders.infrastructure.publisher._
+  import com.example.manything.ancientail.outsiders.infrastructure.shop._
 
   def identity: Rep[SlipId] = column[SlipId]("slip_id", O.PrimaryKey, O.AutoInc)
   def senderId: Rep[PublisherId] = column[PublisherId]("sender_id")

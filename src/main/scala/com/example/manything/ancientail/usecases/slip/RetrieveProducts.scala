@@ -9,7 +9,7 @@ import com.example.manything.ancientail.domain.slip.{Slip, SlipId}
  */
 trait RetrieveProducts { this: SlipUseCases =>
   def retrieve(shopId: ShopId,
-               slipId: SlipId): EitherAppliedFuture[Seq[Slip]] = {
+               slipId: SlipId): EitherAppliedFuture[Seq[Slip[_]]] = {
     slips.retrieve(Seq(slipId))
   }
 }

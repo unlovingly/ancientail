@@ -21,7 +21,7 @@ package object slip {
   implicit lazy val slipIdDecoder: Decoder[SlipId] =
     Decoder.decodeString.emap { str =>
       Either
-        .catchNonFatal(Identifiability[UUID, Slip](UUID.fromString(str)))
+        .catchNonFatal(Identifiability[UUID, Slip[_]](UUID.fromString(str)))
         .leftMap(_ => "SlipId")
     }
 

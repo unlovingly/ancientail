@@ -3,6 +3,7 @@ package com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip
 import java.util.UUID
 
 import com.example.manything.EitherAppliedFuture
+import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
@@ -28,7 +29,7 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
       import io.circe.generic.auto._
       import io.circe.syntax._
 
-      val slips: EitherAppliedFuture[Seq[Slip]] =
+      val slips: EitherAppliedFuture[Seq[Slip[PublisherId]]] =
         slipUseCases.retrieve(shopId, id)
 
       slips

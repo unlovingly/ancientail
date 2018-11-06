@@ -16,5 +16,5 @@ class SlipItems(tag: Tag) extends Table[SlipItem](tag, "slip_items") {
   def slipId = column[SlipId]("slip_id")
 
   def * =
-    (identity.?, productId, amount, price, slipId) <> (SlipItem.tupled, SlipItem.unapply)
+    (identity.?, productId, amount, price, slipId) <> ((SlipItem.apply _).tupled, SlipItem.unapply)
 }
