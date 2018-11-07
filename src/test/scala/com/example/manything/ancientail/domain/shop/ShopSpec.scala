@@ -30,7 +30,7 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
   val slipItem4Id: SlipItemId = SlipItemId(
     UUID.fromString("00000000-0000-0004-0000-000000000004"))
 
-  val slip: Slip = Slip(
+  val slip: PurchaseSlip = PurchaseSlip(
     identity = Some(slipId),
     senderId = publisherId,
     receiverId = shopId,

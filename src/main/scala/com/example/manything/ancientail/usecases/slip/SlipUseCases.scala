@@ -9,5 +9,6 @@ import scala.concurrent.ExecutionContext
 class SlipUseCases(implicit val slips: SlipRepository[EitherAppliedFuture],
                    implicit val shops: ShopRepository[EitherAppliedFuture],
                    implicit val executionContext: ExecutionContext)
-  extends RetrieveProducts
+  extends RetrieveSlips
+  with RetrieveOneSlip
   with StoringProducts

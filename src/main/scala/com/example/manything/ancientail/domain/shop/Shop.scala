@@ -2,7 +2,7 @@ package com.example.manything.ancientail.domain.shop
 
 import java.util.UUID
 
-import com.example.manything.ancientail.domain.slip.Slip
+import com.example.manything.ancientail.domain.slip._
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class Shop(
@@ -16,7 +16,7 @@ case class Shop(
    * 1. 伝票を保存して
    * 2. 在庫情報を更新する
    */
-  def storing(slip: Slip): Shop = {
+  def storing(slip: PurchaseSlip): Shop = {
     import cats.implicits._
 
     val newStocks: Seq[Stock] = slip.items.map { s =>
@@ -36,6 +36,9 @@ case class Shop(
 
     this.copy(stocks = result)
   }
+
+  def inbound(slip: ExchangeSlip): Shop = ???
+  def outbound(slip: ExchangeSlip): Shop = ???
 }
 
 case class ShopId(override val value: UUID) extends Identifiability[UUID] {
