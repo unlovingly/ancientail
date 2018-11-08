@@ -28,6 +28,15 @@ trait ExchangeProducts { this: SlipUseCases =>
       }
     }
 
+    sender.map { s =>
+      // 2. 在庫情報を更新する
+      s.map { h =>
+        val o = h.outbound(slip)
+
+        shops.store(o)
+      }
+    }
+
     result
   }
 }

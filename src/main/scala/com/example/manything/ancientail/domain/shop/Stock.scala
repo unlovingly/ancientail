@@ -13,7 +13,16 @@ case class Stock(
   productId: ProductId,
   amount: Amount,
   price: Price
-)
+) {
+  def -(operand: Stock): Stock = {
+    import cats.implicits._
+
+    if (this === operand)
+      this.copy(amount = amount + operand.amount)
+    else
+      this
+  }
+}
 
 case class StockId(override val value: UUID) extends Identifiability[UUID] {
   override type EntityType = Stock

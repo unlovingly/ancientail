@@ -16,7 +16,9 @@ case class Shop(
    * 1. 伝票を保存して
    * 2. 在庫情報を更新する
    */
-  def storing(slip: SlipBase): Shop = {
+  def storing(slip: PurchaseSlip): Shop = inbound(slip)
+
+  def inbound(slip: SlipBase): Shop = {
     import cats.implicits._
 
     val newStocks: Seq[Stock] = convertFrom(slip.items)
@@ -30,14 +32,16 @@ case class Shop(
     this.copy(stocks = result)
   }
 
-  def inbound(slip: ExchangeSlip): Shop = {
-    storing(slip)
-  }
-
   def outbound(slip: ExchangeSlip): Shop = {
     val newStocks: Seq[Stock] = convertFrom(slip.items)
 
-    this.copy()
+    val result: Seq[Stock] = (newStocks ++ stocks)
+      .groupBy(_.pluCode)
+      .mapValues(_.reduce((x, y) => x - y))
+      .values
+      .toSeq
+
+    this.copy(stocks = result)
   }
 
   private def convertFrom(items: Seq[SlipItem]): Seq[Stock] = {
