@@ -14,11 +14,22 @@ case class Stock(
   amount: Amount,
   price: Price
 ) {
-  def -(operand: Stock): Stock = {
+  def +(operand: Stock): Stock = {
     import cats.implicits._
 
     if (this === operand)
       this.copy(amount = amount + operand.amount)
+    else
+      this
+  }
+
+  def -(operand: Stock): Stock = {
+    import cats.implicits._
+
+    // require(amount >= operand.amount)
+
+    if (this === operand)
+      this.copy(amount = amount - operand.amount)
     else
       this
   }
@@ -39,7 +50,7 @@ object Stock {
   implicit lazy val stockSemigroup: Semigroup[Stock] =
     (x: Stock, y: Stock) => {
       if (x === y)
-        x.copy(amount = x.amount + y.amount)
+        x + y
       else
         x
     }

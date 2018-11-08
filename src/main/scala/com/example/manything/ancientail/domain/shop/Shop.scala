@@ -35,7 +35,7 @@ case class Shop(
   def outbound(slip: ExchangeSlip): Shop = {
     val newStocks: Seq[Stock] = convertFrom(slip.items)
 
-    val result: Seq[Stock] = (newStocks ++ stocks)
+    val result: Seq[Stock] = (stocks ++ newStocks)
       .groupBy(_.pluCode)
       .mapValues(_.reduce((x, y) => x - y))
       .values
@@ -46,8 +46,7 @@ case class Shop(
 
   private def convertFrom(items: Seq[SlipItem]): Seq[Stock] = {
     items.map { s =>
-      Stock(pluCode =
-              PluCode.generate(v = identity.get, a = s.productId, l = s.price),
+      Stock(pluCode = PluCode.generate(v = s.productId, a = s.price),
             shopId = identity.get,
             productId = s.productId,
             amount = s.amount,

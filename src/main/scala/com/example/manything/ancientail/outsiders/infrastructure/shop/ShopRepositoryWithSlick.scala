@@ -52,7 +52,7 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     val inserter = (id: ShopId, s: Stock) => {
       (stocks returning stocks).insertOrUpdate(
         Stock(pluCode = PluCode
-                .generate(v = id, a = s.productId, l = s.price),
+                .generate(v = s.productId, a = s.price),
               shopId = id,
               productId = s.productId,
               amount = s.amount,
