@@ -2,9 +2,10 @@ package com.example.manything.ancientail.outsiders.play.components
 
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.shop.ShopRepository
-import com.example.manything.ancientail.domain.slip.SlipRepository
+import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.outsiders.infrastructure.shop.ShopRepositoryWithSlick
-import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipRepositoryWithSlick
+import com.example.manything.ancientail.outsiders.infrastructure.slip.exchange.ExchangeSlipRepositoryWithSlick
+import com.example.manything.ancientail.outsiders.infrastructure.slip.purchase.PurchaseSlipRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
 import com.example.manything.outsiders.play.components.OutsiderComponents
@@ -15,9 +16,12 @@ trait SlipComponents {
   implicit private lazy val shopRepository
     : ShopRepository[EitherAppliedFuture] =
     new ShopRepositoryWithSlick()
-  implicit private lazy val slipRepository
-    : SlipRepository[EitherAppliedFuture] =
-    new SlipRepositoryWithSlick()
+  implicit private lazy val exchangeSlipRepository
+    : ExchangeSlipRepository[EitherAppliedFuture] =
+    new ExchangeSlipRepositoryWithSlick()
+  implicit private lazy val purchaseSlipRepository
+    : PurchaseSlipRepository[EitherAppliedFuture] =
+    new PurchaseSlipRepositoryWithSlick()
   private lazy val slipUseCases =
     new SlipUseCases()
 

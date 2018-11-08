@@ -16,17 +16,10 @@ case class Shop(
    * 1. 伝票を保存して
    * 2. 在庫情報を更新する
    */
-  def storing(slip: PurchaseSlip): Shop = {
+  def storing(slip: SlipBase): Shop = {
     import cats.implicits._
 
-    val newStocks: Seq[Stock] = slip.items.map { s =>
-      Stock(pluCode =
-              PluCode.generate(v = identity.get, a = s.productId, l = s.price),
-            shopId = identity.get,
-            productId = s.productId,
-            amount = s.amount,
-            price = s.price)
-    }
+    val newStocks: Seq[Stock] = convertFrom(slip.items)
 
     val result: Seq[Stock] = (newStocks ++ stocks)
       .groupBy(_.pluCode)
@@ -37,8 +30,26 @@ case class Shop(
     this.copy(stocks = result)
   }
 
-  def inbound(slip: ExchangeSlip): Shop = ???
-  def outbound(slip: ExchangeSlip): Shop = ???
+  def inbound(slip: ExchangeSlip): Shop = {
+    storing(slip)
+  }
+
+  def outbound(slip: ExchangeSlip): Shop = {
+    val newStocks: Seq[Stock] = convertFrom(slip.items)
+
+    this.copy()
+  }
+
+  private def convertFrom(items: Seq[SlipItem]): Seq[Stock] = {
+    items.map { s =>
+      Stock(pluCode =
+              PluCode.generate(v = identity.get, a = s.productId, l = s.price),
+            shopId = identity.get,
+            productId = s.productId,
+            amount = s.amount,
+            price = s.price)
+    }
+  }
 }
 
 case class ShopId(override val value: UUID) extends Identifiability[UUID] {

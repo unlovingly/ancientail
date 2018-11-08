@@ -6,7 +6,7 @@ import com.example.manything.ancientail.domain.slip._
 /**
  * 入庫ユースケース
  */
-trait ExchangingProducts { this: SlipUseCases =>
+trait ExchangeProducts { this: SlipUseCases =>
 
   /**
    * 1. 伝票を保存して
@@ -14,11 +14,12 @@ trait ExchangingProducts { this: SlipUseCases =>
    */
   def exchange(slip: ExchangeSlip): EitherAppliedFuture[SlipBase] = {
     val productIds = slip.items.map(_.productId)
-    val shop = shops.retrieveWithStocks(slip.receiverId, productIds)
+    val receiver = shops.retrieveWithStocks(slip.receiverId, productIds)
+    val sender = shops.retrieveWithStocks(slip.senderId, productIds)
     // 1. 伝票を保存して
-    val result = slips.store(slip)
+    val result = exchangeSlips.store(slip)
 
-    shop.map { s =>
+    receiver.map { s =>
       // 2. 在庫情報を更新する
       s.map { h =>
         val o = h.inbound(slip)
