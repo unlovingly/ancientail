@@ -26,7 +26,7 @@ case class Stock(
   def -(operand: Stock): Stock = {
     import cats.implicits._
 
-    // require(amount >= operand.amount)
+    require(amount >= operand.amount)
 
     if (this === operand)
       this.copy(amount = amount - operand.amount)
