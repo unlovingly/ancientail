@@ -5,6 +5,8 @@ import java.util.UUID
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 import org.scalatest._
 
 class ShopSpec extends FlatSpec with DiagrammedAssertions {

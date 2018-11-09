@@ -14,6 +14,7 @@ object PluCode {
   }
 
   def generate(v: ProductId, a: Price): PluCode = {
+    // 本当は ShopId も含めたいが移動伝票の処理で困る
     new PluCode(v.value.toString + a.toString)
   }
 }

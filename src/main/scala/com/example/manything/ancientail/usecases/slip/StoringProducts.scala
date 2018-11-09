@@ -2,6 +2,7 @@ package com.example.manything.ancientail.usecases.slip
 
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 
 /**
  * 入庫ユースケース

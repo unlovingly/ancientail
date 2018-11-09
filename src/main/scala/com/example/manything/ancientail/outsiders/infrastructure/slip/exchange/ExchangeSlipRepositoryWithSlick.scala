@@ -1,10 +1,8 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.exchange
 
 import com.example.manything.EitherAppliedFuture
-import com.example.manything.ancientail.domain.slip.{
-  ExchangeSlipRepository,
-  SlipItem => EntityItem
-}
+import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
+import com.example.manything.ancientail.domain.slip.{SlipItem => EntityItem}
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted
 

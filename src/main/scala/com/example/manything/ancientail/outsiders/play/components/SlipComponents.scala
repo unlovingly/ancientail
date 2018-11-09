@@ -3,6 +3,8 @@ package com.example.manything.ancientail.outsiders.play.components
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.shop.ShopRepository
 import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
 import com.example.manything.ancientail.outsiders.infrastructure.shop.ShopRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.infrastructure.slip.exchange.ExchangeSlipRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.infrastructure.slip.purchase.PurchaseSlipRepositoryWithSlick

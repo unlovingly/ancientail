@@ -1,6 +1,6 @@
-package com.example.manything.ancientail.domain.slip
-
+package com.example.manything.ancientail.domain.slip.exchange
 import com.example.manything.ancientail.domain.shop.ShopId
+import com.example.manything.ancientail.domain.slip._
 
 case class ExchangeSlip(
   override val identity: Option[SlipId] = None,

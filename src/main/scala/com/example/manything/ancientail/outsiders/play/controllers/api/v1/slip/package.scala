@@ -3,6 +3,8 @@ package com.example.manything.ancientail.outsiders.play.controllers.api.v1
 import java.util.UUID
 
 import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 
 package object slip {
   import cats.syntax.either._

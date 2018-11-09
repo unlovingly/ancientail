@@ -1,10 +1,8 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
 import com.example.manything.EitherAppliedFuture
-import com.example.manything.ancientail.domain.slip.{
-  PurchaseSlipRepository,
-  SlipItem => EntityItem
-}
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
+import com.example.manything.ancientail.domain.slip.{SlipItem => EntityItem}
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted
 
@@ -16,7 +14,8 @@ class PurchaseSlipRepositoryWithSlick(
   extends PurchaseSlipRepository[EitherAppliedFuture] {
   override def retrieve(): EitherAppliedFuture[Seq[EntityType]] = ???
   override def retrieve(
-    id: Seq[Identifier]): EitherAppliedFuture[Seq[EntityType]] = ???
+    id: Seq[Identifier]): EitherAppliedFuture[Seq[EntityType]] =
+    ???
 
   override def store(entity: EntityType): EitherAppliedFuture[EntityType] = {
     import com.example.manything.ancientail.outsiders.infrastructure.slip._

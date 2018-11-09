@@ -5,6 +5,8 @@ import java.util.UUID
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
 import javax.inject._
 import play.api.i18n.I18nSupport
