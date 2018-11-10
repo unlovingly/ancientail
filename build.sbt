@@ -1,7 +1,7 @@
 organization := "com.example.manything.ancientail"
 name := """ancientail"""
 
-version := "0.4.1-SNAPSHOT"
+version := "0.4.1"
 
 resolvers += Resolver.jcenterRepo
 
