@@ -3,8 +3,8 @@ package com.example.manything.ancientail.domain.shop
 import java.util.UUID
 
 import com.example.manything.ancientail.domain.slip._
-import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
+import com.example.manything.ancientail.domain.slip.sales.SalesSlip
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class Shop(
@@ -41,7 +41,7 @@ case class Shop(
   /**
    * 出庫処理
    */
-  def outbound(slip: ExchangeSlip): Shop = {
+  def outbound(slip: SlipBase): Shop = {
     val newStocks: Seq[Stock] = convertFrom(slip.items)
 
     val result: Seq[Stock] = (stocks ++ newStocks)
@@ -52,6 +52,8 @@ case class Shop(
 
     this.copy(stocks = result)
   }
+
+  def sell(slip: SalesSlip): Shop = outbound(slip)
 
   private def convertFrom(items: Seq[SlipItem]): Seq[Stock] = {
     items.map { s =>

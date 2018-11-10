@@ -5,6 +5,7 @@ import java.util.UUID
 import com.example.manything.ancientail.domain.slip.{SlipId, SlipItemId}
 import com.example.manything.ancientail.outsiders.infrastructure.slip.exchange.ExchangeSlips
 import com.example.manything.ancientail.outsiders.infrastructure.slip.purchase.PurchaseSlips
+import com.example.manything.ancientail.outsiders.infrastructure.slip.sales.SalesSlips
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted
 
@@ -14,6 +15,9 @@ package object slip {
 
   implicit lazy val purchaseSlips: lifted.TableQuery[PurchaseSlips] =
     lifted.TableQuery[PurchaseSlips]
+
+  implicit lazy val salesSlips: lifted.TableQuery[SalesSlips] =
+    lifted.TableQuery[SalesSlips]
 
   lazy val slipItems = lifted.TableQuery[SlipItems]
 
