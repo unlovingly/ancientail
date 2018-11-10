@@ -11,7 +11,7 @@ class ProductRepositoryWithSlick(
   implicit val db: Database,
   implicit val executionContext: ExecutionContext)
   extends ProductRepository[EitherAppliedFuture] {
-  override def retrieve(): EitherAppliedFuture[Seq[Product]] = {
+  override def retrieve(): EitherAppliedFuture[Seq[EntityType]] = {
     val q = products
     val a = q.result.asTry.map { _.toEither }
 
@@ -19,7 +19,7 @@ class ProductRepositoryWithSlick(
   }
 
   override def retrieve(
-    id: Seq[ProductId]): EitherAppliedFuture[Seq[Product]] = {
+    id: Seq[Identifier]): EitherAppliedFuture[Seq[EntityType]] = {
     val q = for {
       p <- products if p.identity.inSet(id)
     } yield p
@@ -28,7 +28,7 @@ class ProductRepositoryWithSlick(
     db.run(a)
   }
 
-  override def store(entity: Product): EitherAppliedFuture[Product] = {
+  override def store(entity: EntityType): EitherAppliedFuture[EntityType] = {
     val q = (products returning products.map { _.identity }) += Product(
       entity.identity,
       entity.name,

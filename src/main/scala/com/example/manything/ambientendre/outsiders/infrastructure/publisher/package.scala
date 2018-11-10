@@ -2,11 +2,7 @@ package com.example.manything.ambientendre.outsiders.infrastructure
 
 import java.util.UUID
 
-import com.example.manything.ambientendre.domain.publisher.{
-  PublisherId,
-  Publisher => DPublisher
-}
-import com.example.manything.roundelayout.domain.Identifiability
+import com.example.manything.ambientendre.domain.publisher.PublisherId
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted
 
@@ -15,5 +11,5 @@ package object publisher {
 
   implicit lazy val publisherIdColumnType: BaseColumnType[PublisherId] =
     MappedColumnType
-      .base[PublisherId, UUID](_.value, Identifiability[UUID, DPublisher])
+      .base[PublisherId, UUID](_.value, PublisherId.apply)
 }

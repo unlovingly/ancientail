@@ -3,7 +3,6 @@ package com.example.manything.ambientendre.outsiders.play.controllers.api.v1
 import java.util.UUID
 
 import com.example.manything.ambientendre.domain.product.{Product, ProductId}
-import com.example.manything.roundelayout.domain.Identifiability
 
 package object product {
   import cats.syntax.either._
@@ -16,7 +15,7 @@ package object product {
   implicit val decodeProductId: Decoder[ProductId] = Decoder.decodeString.emap {
     str =>
       Either
-        .catchNonFatal(Identifiability[UUID, Product](UUID.fromString(str)))
+        .catchNonFatal(ProductId(UUID.fromString(str)))
         .leftMap(_ => "ProductId")
   }
 

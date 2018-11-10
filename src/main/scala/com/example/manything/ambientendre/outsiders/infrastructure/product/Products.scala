@@ -11,9 +11,6 @@ class Products(tag: Tag) extends Table[Product](tag, "products") {
   def name = column[String]("name")
   def publisherId = column[PublisherId]("publisher_id")
 
-  def publisher =
-    foreignKey("publisher_fk", publisherId, publishers)(_.identity)
-
   // https://stackoverflow.com/questions/15627981/mapped-projection-with-companion-object-in-slick
   def * =
     (identity.?, name, publisherId) <> (Product.tupled, Product.unapply)

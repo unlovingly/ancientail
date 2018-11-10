@@ -16,12 +16,20 @@ package object shop {
   implicit val decodeShopId: Decoder[ShopId] = Decoder.decodeString.emap {
     str =>
       Either
-        .catchNonFatal(Identifiability[UUID, Shop](UUID.fromString(str)))
+        .catchNonFatal(ShopId(UUID.fromString(str)))
         .leftMap(_ => "ShopId")
   }
 
+  implicit val decodePluCode: Decoder[PluCode] = Decoder.decodeString.emap {
+    str =>
+      Either
+        .catchNonFatal(PluCode(str))
+        .leftMap(_ => "PluCode")
+  }
+
   implicit val stockDecoder: Decoder[Stock] =
-    Decoder.forProduct4("shopId", "productId", "name", "price")(Stock.apply)
+    Decoder.forProduct5("pluCode", "shopId", "productId", "name", "price")(
+      Stock.apply)
 
   implicit val shopDecoder: Decoder[Shop] =
     Decoder.forProduct3("identity", "name", "stocks")(Shop.apply)

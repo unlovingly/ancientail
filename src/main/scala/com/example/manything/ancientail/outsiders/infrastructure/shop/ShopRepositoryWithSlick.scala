@@ -3,6 +3,7 @@ package com.example.manything.ancientail.outsiders.infrastructure.shop
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.shop.{
+  PluCode,
   ShopId,
   ShopRepository,
   Stock,
@@ -15,7 +16,7 @@ import scala.concurrent.ExecutionContext
 class ShopRepositoryWithSlick(implicit val db: Database,
                               implicit val executionContext: ExecutionContext)
   extends ShopRepository[EitherAppliedFuture] {
-  override def retrieve(): EitherAppliedFuture[Seq[Entity]] = {
+  override def retrieve(): EitherAppliedFuture[Seq[EntityType]] = {
     val q = shops.take(20)
     val a = q.result.asTry.map { _.toEither }
 
@@ -25,13 +26,14 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     db.run(a).map {
       _.map {
         _.map { s =>
-          Entity(s.identity, s.name, Seq.empty[Stock])
+          Entity(s.identity, s.name, Seq.empty)
         }
       }
     }
   }
 
-  override def retrieve(id: Seq[ShopId]): EitherAppliedFuture[Seq[Entity]] = {
+  override def retrieve(
+    id: Seq[Identifier]): EitherAppliedFuture[Seq[EntityType]] = {
     val q = for {
       p <- shops if p.identity.inSet(id)
     } yield p
@@ -40,16 +42,18 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     db.run(a).map {
       _.map {
         _.map { s =>
-          Entity(s.identity, s.name, Seq.empty[Stock])
+          Entity(s.identity, s.name, Seq.empty)
         }
       }
     }
   }
 
-  override def store(entity: Entity): EitherAppliedFuture[Entity] = {
+  override def store(entity: EntityType): EitherAppliedFuture[EntityType] = {
     val inserter = (id: ShopId, s: Stock) => {
       (stocks returning stocks).insertOrUpdate(
-        Stock(shopId = id,
+        Stock(pluCode = PluCode
+                .generate(v = s.productId, a = s.price),
+              shopId = id,
               productId = s.productId,
               amount = s.amount,
               price = s.price))
@@ -66,23 +70,13 @@ class ShopRepositoryWithSlick(implicit val db: Database,
       }
     } yield (shopId, ss)
 
-    val query = (shops returning shops.map { _.identity })
-      .insertOrUpdate(Shop(entity.identity, entity.name))
-      .flatMap {
-        case Some(id) =>
-          DBIO.sequence(entity.stocks.map(inserter(id, _)))
-        case None =>
-          DBIO.sequence(entity.stocks.map(inserter(entity.identity.get, _)))
-      }
-      .transactionally
-
-    // try[seq[option[(shopid, stock)]]]
     val actions = q.asTry
       .map { _.toEither }
       .map {
         _.map {
           case (optionalShopId, sequencialOptionalStocks: Seq[Option[Stock]]) =>
             val id = optionalShopId.get
+            // FIXME
             val unveiled = sequencialOptionalStocks.map {
               case Some(sss) =>
                 sss
@@ -95,27 +89,21 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     db.run(actions)
   }
 
-  override def retrieveWithStock(
-    shopId: ShopId,
-    productIds: Seq[ProductId]): EitherAppliedFuture[Seq[Entity]] = {
-
-    // val q = for {
-    //   stock <- stocks.filter(_.shopId === shopId).result
-    //   shop <- shops.filter(_.identity === shopId).result.headOption
-    // } yield (shop, stock)
+  override def retrieveWithStocks(
+    shopId: Identifier,
+    productIds: Seq[ProductId]): EitherAppliedFuture[EntityType] = {
 
     val q1 = shops.filter(_.identity === shopId).result
     val q2 = stocks.filter(_.shopId === shopId).result
 
     val a = (q1 zip q2).asTry.map { _.toEither }
 
-    // 本当は Either[_, Entity] したい
     db.run(a).map { e =>
       e.map {
         case (h, t) =>
-          h.map { o =>
-            Entity(o.identity, o.name, t)
-          }
+          val p = h.head
+
+          Entity(p.identity, p.name, t)
       }
     }
   }
