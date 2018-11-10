@@ -1,7 +1,7 @@
 organization := "com.example.manything.ancientail"
 name := """ancientail"""
 
-version := "0.4.1"
+version := "0.5.0-SNAPSHOT"
 
 resolvers += Resolver.jcenterRepo
 
@@ -9,15 +9,16 @@ lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
       filters,
-      "org.postgresql" % "postgresql" % "42.2.5",
+      // "org.postgresql" % "postgresql" % "42.2.5",
       "org.typelevel" %% "cats-core" % "1.4.0",
       "org.typelevel" %% "cats-effect" % "1.0.0",
       "com.typesafe.slick" %% "slick" % "3.2.3",
+      "com.github.tminglei" %% "slick-pg" % "0.16.3",
       "com.typesafe.play" %% "play-slick" % "3.0.3",
       "com.dripower" %% "play-circe" % "2610.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
       "org.mockito" % "mockito-core" % "2.23.0" % "test",
-      "com.example.manything" %% "roundelayout" % "0.3.1-SNAPSHOT"
+      "com.example.manything" %% "roundelayout" % "0.4.0"
     ),
     scalacOptions ++= Seq(
       "-deprecation",
