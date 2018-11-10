@@ -2,7 +2,9 @@ package com.example.manything.ancientail.domain.shop
 
 import java.util.UUID
 
-import com.example.manything.ancientail.domain.slip.Slip
+import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
+import com.example.manything.ancientail.domain.slip.sales.SalesSlip
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class Shop(
@@ -13,20 +15,19 @@ case class Shop(
   override type Identifier = ShopId
 
   /**
-   * 1. 伝票を保存して
-   * 2. 在庫情報を更新する
+   * 仕入れ処理
+   *
+   * システム上では入庫処理に相当する
    */
-  def storing(slip: Slip): Shop = {
+  def storing(slip: PurchaseSlip): Shop = inbound(slip)
+
+  /**
+   * 入庫処理
+   */
+  def inbound(slip: SlipBase): Shop = {
     import cats.implicits._
 
-    val newStocks: Seq[Stock] = slip.items.map { s =>
-      Stock(pluCode =
-              PluCode.generate(v = identity.get, a = s.productId, l = s.price),
-            shopId = identity.get,
-            productId = s.productId,
-            amount = s.amount,
-            price = s.price)
-    }
+    val newStocks: Seq[Stock] = convertFrom(slip.items)
 
     val result: Seq[Stock] = (newStocks ++ stocks)
       .groupBy(_.pluCode)
@@ -35,6 +36,33 @@ case class Shop(
       .toSeq
 
     this.copy(stocks = result)
+  }
+
+  /**
+   * 出庫処理
+   */
+  def outbound(slip: SlipBase): Shop = {
+    val newStocks: Seq[Stock] = convertFrom(slip.items)
+
+    val result: Seq[Stock] = (stocks ++ newStocks)
+      .groupBy(_.pluCode)
+      .mapValues(_.reduce((x, y) => x - y))
+      .values
+      .toSeq
+
+    this.copy(stocks = result)
+  }
+
+  def sell(slip: SalesSlip): Shop = outbound(slip)
+
+  private def convertFrom(items: Seq[SlipItem]): Seq[Stock] = {
+    items.map { s =>
+      Stock(pluCode = PluCode.generate(v = s.productId, a = s.price),
+            shopId = identity.get,
+            productId = s.productId,
+            amount = s.amount,
+            price = s.price)
+    }
   }
 }
 

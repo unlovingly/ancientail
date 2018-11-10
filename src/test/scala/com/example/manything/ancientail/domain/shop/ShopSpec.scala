@@ -5,35 +5,28 @@ import java.util.UUID
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 import org.scalatest._
 
 class ShopSpec extends FlatSpec with DiagrammedAssertions {
-  val shopId: ShopId = ShopId(
-    value = UUID.fromString("00000000-0000-0000-0000-000000000000"))
-  val publisherId: PublisherId = PublisherId(
-    value = UUID.fromString("00000000-0000-0001-0000-000000000001"))
+  val receiverId: ShopId = ShopId(value = new UUID(0, 0))
+  val senderId: ShopId = ShopId(value = new UUID(0, 1))
 
-  val productId1: ProductId = ProductId(
-    UUID.fromString("00000000-0000-0002-0000-000000000001"))
-  val productId2: ProductId = ProductId(
-    UUID.fromString("00000000-0000-0002-0000-000000000002"))
+  val publisherId: PublisherId = PublisherId(value = new UUID(1, 1))
 
-  val slipId: SlipId = SlipId(
-    UUID.fromString("00000000-0000-0003-0000-000000000001"))
+  val productId1: ProductId = ProductId(new UUID(2, 1))
+  val productId2: ProductId = ProductId(new UUID(2, 2))
 
-  val slipItem1Id: SlipItemId = SlipItemId(
-    UUID.fromString("00000000-0000-0004-0000-000000000001"))
-  val slipItem2Id: SlipItemId = SlipItemId(
-    UUID.fromString("00000000-0000-0004-0000-000000000002"))
-  val slipItem3Id: SlipItemId = SlipItemId(
-    UUID.fromString("00000000-0000-0004-0000-000000000003"))
-  val slipItem4Id: SlipItemId = SlipItemId(
-    UUID.fromString("00000000-0000-0004-0000-000000000004"))
+  val slipItem1Id: SlipItemId = SlipItemId(new UUID(4, 1))
+  val slipItem2Id: SlipItemId = SlipItemId(new UUID(4, 2))
+  val slipItem3Id: SlipItemId = SlipItemId(new UUID(4, 3))
+  val slipItem4Id: SlipItemId = SlipItemId(new UUID(4, 4))
 
-  val slip: Slip = Slip(
-    identity = Some(slipId),
+  val purchaseSlip: PurchaseSlip = PurchaseSlip(
+    identity = Some(SlipId(new UUID(3, 1))),
     senderId = publisherId,
-    receiverId = shopId,
+    receiverId = receiverId,
     items = Seq(
       SlipItem(identity = Some(slipItem1Id),
                productId = productId1,
@@ -54,30 +47,89 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
     )
   )
 
-  val suspect: Shop = Shop(
-    identity = Some(shopId),
+  val exchangeSlip: ExchangeSlip = ExchangeSlip(
+    identity = Some(SlipId(new UUID(3, 1))),
+    senderId = senderId,
+    receiverId = receiverId,
+    items = Seq(
+      SlipItem(identity = Some(slipItem1Id),
+               productId = productId1,
+               amount = 1,
+               price = 1000),
+      SlipItem(identity = Some(slipItem2Id),
+               productId = productId1,
+               amount = 2,
+               price = 2000),
+      SlipItem(identity = Some(slipItem4Id),
+               productId = productId2,
+               amount = 6,
+               price = 1000)
+    )
+  )
+
+  val suspect1: Shop = Shop(
+    identity = Some(receiverId),
+    name = "Shop One",
+    stocks = Seq(
+      Stock(pluCode = PluCode.generate(productId1, 2000),
+            shopId = receiverId,
+            productId = productId1,
+            amount = 1,
+            price = 2000),
+      Stock(pluCode = PluCode.generate(productId2, 1000),
+            shopId = receiverId,
+            productId = productId2,
+            amount = 3,
+            price = 1000)
+    )
+  )
+
+  val receiver: Shop = Shop(
+    identity = Some(receiverId),
     name = "Shop One",
     stocks = Seq.empty
   )
 
+  val sender: Shop = Shop(
+    identity = Some(senderId),
+    name = "Shop Two",
+    stocks = Seq(
+      Stock(pluCode = PluCode.generate(productId1, 1000),
+            shopId = receiverId,
+            productId = productId1,
+            amount = 2,
+            price = 1000),
+      Stock(pluCode = PluCode.generate(productId1, 2000),
+            shopId = receiverId,
+            productId = productId1,
+            amount = 4,
+            price = 2000),
+      Stock(pluCode = PluCode.generate(productId2, 1000),
+            shopId = receiverId,
+            productId = productId2,
+            amount = 12,
+            price = 1000)
+    )
+  )
+
   val expected: Shop = Shop(
-    identity = Some(shopId),
+    identity = Some(receiverId),
     name = "Shop One",
     stocks = Seq(
-      Stock(pluCode = PluCode.generate(shopId, productId1, 1000),
-            shopId = shopId,
+      Stock(pluCode = PluCode.generate(productId1, 1000),
+            shopId = receiverId,
             productId = productId1,
             amount = 1,
             price = 1000),
-      Stock(pluCode = PluCode.generate(shopId, productId1, 2000),
-            shopId = shopId,
+      Stock(pluCode = PluCode.generate(productId1, 2000),
+            shopId = receiverId,
             productId = productId1,
-            amount = 1,
+            amount = 2,
             price = 2000),
-      Stock(pluCode = PluCode.generate(shopId, productId2, 1000),
-            shopId = shopId,
+      Stock(pluCode = PluCode.generate(productId2, 1000),
+            shopId = receiverId,
             productId = productId2,
-            amount = 3,
+            amount = 6,
             price = 1000)
     )
   )
@@ -85,7 +137,26 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
   "method storing" should "update Shop.stocks" in {
     val sorter = (s: Seq[Stock]) => s.sortBy(t => t.pluCode.value)
 
-    val crime = sorter(suspect.storing(slip).stocks)
+    val crime = sorter(suspect1.storing(purchaseSlip).stocks)
+    val expect = sorter(expected.stocks)
+
+    assert(crime === expect)
+  }
+
+  "inbound" should "increase stocks" in {
+    val sorter = (s: Seq[Stock]) => s.sortBy(t => t.pluCode.value)
+
+    val crime = sorter(receiver.inbound(exchangeSlip).stocks)
+    val expect = sorter(expected.stocks)
+
+    assert(crime === expect)
+  }
+
+  "outbonud" should "decrease stocks" in {
+    val sorter =
+      (s: Seq[Stock]) => s.sortBy(t => (t.productId.value, t.price, t.amount))
+
+    val crime = sorter(sender.outbound(exchangeSlip).stocks)
     val expect = sorter(expected.stocks)
 
     assert(crime === expect)
