@@ -8,5 +8,5 @@ case class ExchangeSlip(
   override val receiverId: ShopId,
   override val items: Seq[SlipItem]
 ) extends SlipBase {
-  type SenderId = ShopId
+  type SenderIdType = ShopId
 }

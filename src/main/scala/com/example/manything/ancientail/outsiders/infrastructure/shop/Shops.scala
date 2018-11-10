@@ -1,7 +1,7 @@
 package com.example.manything.ancientail.outsiders.infrastructure.shop
 
 import com.example.manything.ancientail.domain.shop.ShopId
-import slick.jdbc.PostgresProfile.api._
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 import slick.lifted.Tag
 
 class Shops(tag: Tag) extends Table[Shop](tag, "shops") {

@@ -2,7 +2,7 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipsBase
-import slick.jdbc.PostgresProfile.api._
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 import slick.lifted.Tag
 
 class PurchaseSlips(tag: Tag)

@@ -2,7 +2,7 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.exchange
 
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipsBase
-import slick.jdbc.PostgresProfile.api._
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 import slick.lifted.Tag
 
 class ExchangeSlips(tag: Tag)
