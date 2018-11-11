@@ -2,7 +2,7 @@ package com.example.manything.ambientendre.outsiders.play.components
 
 import play.api.BuiltInComponentsFromContext
 
-import com.example.manything.EitherAppliedFuture
+import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.product.ProductRepository
 import com.example.manything.ambientendre.domain.publisher.PublisherRepository
 import com.example.manything.ambientendre.outsiders.infrastructure.product.ProductRepositoryWithSlick
@@ -15,10 +15,10 @@ import com.example.manything.outsiders.play.components.OutsiderComponents
 trait ProductComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
   implicit private lazy val productRepository
-    : ProductRepository[EitherAppliedFuture] =
+    : ProductRepository[EitherTFuture] =
     new ProductRepositoryWithSlick()
   implicit private lazy val publisherRepository
-    : PublisherRepository[EitherAppliedFuture] =
+    : PublisherRepository[EitherTFuture] =
     new PublisherRepositoryWithSlick()
   private lazy val productUseCases =
     new ProductUseCases()

@@ -4,6 +4,9 @@ import java.time.OffsetDateTime
 
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.ancientail.domain.slip.exchange.{
+  ExchangeSlip => Entity
+}
 import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipBase
 
 /**
@@ -21,4 +24,14 @@ case class ExchangeSlip(
   override val publishedAt: OffsetDateTime
 ) extends SlipBase {
   type SenderIdType = ShopId
+}
+
+object ExchangeSlip {
+  def from(e: Entity): ExchangeSlip =
+    ExchangeSlip(
+      identity = e.identity,
+      receiverId = e.receiverId,
+      senderId = e.senderId,
+      publishedAt = e.publishedAt.toOffsetDateTime
+    )
 }
