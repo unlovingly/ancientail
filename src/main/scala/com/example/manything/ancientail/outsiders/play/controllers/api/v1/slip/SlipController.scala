@@ -1,6 +1,13 @@
 package com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip
 
 import java.util.UUID
+import javax.inject._
+
+import scala.concurrent.{ExecutionContext, Future}
+
+import play.api.i18n.I18nSupport
+import play.api.libs.circe.Circe
+import play.api.mvc._
 
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.shop.ShopId
@@ -8,12 +15,6 @@ import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
-import javax.inject._
-import play.api.i18n.I18nSupport
-import play.api.libs.circe.Circe
-import play.api.mvc._
-
-import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(

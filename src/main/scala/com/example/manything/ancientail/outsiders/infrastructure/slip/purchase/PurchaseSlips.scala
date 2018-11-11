@@ -1,9 +1,10 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
+import slick.lifted.Tag
+
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipsBase
-import slick.jdbc.PostgresProfile.api._
-import slick.lifted.Tag
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class PurchaseSlips(tag: Tag)
   extends SlipsBase[PurchaseSlip](tag, "purchase_slips") {
@@ -14,5 +15,5 @@ class PurchaseSlips(tag: Tag)
   def senderId = column[PublisherId]("publisher_id")
 
   def * =
-    (identity.?, senderId, receiverId) <> (PurchaseSlip.tupled, PurchaseSlip.unapply)
+    (identity.?, senderId, receiverId, publishedAt) <> (PurchaseSlip.tupled, PurchaseSlip.unapply)
 }

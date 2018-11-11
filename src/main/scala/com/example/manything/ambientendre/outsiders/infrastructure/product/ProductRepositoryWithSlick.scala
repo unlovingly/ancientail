@@ -1,11 +1,12 @@
 package com.example.manything.ambientendre.outsiders.infrastructure.product
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ambientendre.domain.product._
-import slick.jdbc.PostgresProfile.api._
-
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
+
+import slick.jdbc.PostgresProfile.api._
+
+import com.example.manything.EitherAppliedFuture
+import com.example.manything.ambientendre.domain.product._
 
 class ProductRepositoryWithSlick(
   implicit val db: Database,

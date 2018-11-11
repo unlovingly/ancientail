@@ -4,7 +4,7 @@ import com.example.manything.ambientendre.domain.publisher.{
   Publisher,
   PublisherId
 }
-import slick.jdbc.PostgresProfile.api._
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class Publishers(tag: Tag) extends Table[Publisher](tag, "publishers") {
   def identity =

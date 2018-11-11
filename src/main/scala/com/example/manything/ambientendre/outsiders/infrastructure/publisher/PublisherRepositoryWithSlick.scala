@@ -1,11 +1,12 @@
 package com.example.manything.ambientendre.outsiders.infrastructure.publisher
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ambientendre.domain.publisher._
-import slick.jdbc.PostgresProfile.api._
-
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
+
+import slick.jdbc.PostgresProfile.api._
+
+import com.example.manything.EitherAppliedFuture
+import com.example.manything.ambientendre.domain.publisher._
 
 class PublisherRepositoryWithSlick(
   implicit val db: Database,

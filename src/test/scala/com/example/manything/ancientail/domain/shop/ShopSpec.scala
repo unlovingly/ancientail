@@ -1,13 +1,15 @@
 package com.example.manything.ancientail.domain.shop
 
+import java.time._
 import java.util.UUID
+
+import org.scalatest._
 
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
-import org.scalatest._
 
 class ShopSpec extends FlatSpec with DiagrammedAssertions {
   val receiverId: ShopId = ShopId(value = new UUID(0, 0))
@@ -44,7 +46,8 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
                productId = productId2,
                amount = 1,
                price = 1000)
-    )
+    ),
+    publishedAt = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
   )
 
   val exchangeSlip: ExchangeSlip = ExchangeSlip(
@@ -64,7 +67,8 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
                productId = productId2,
                amount = 6,
                price = 1000)
-    )
+    ),
+    publishedAt = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
   )
 
   val suspect1: Shop = Shop(

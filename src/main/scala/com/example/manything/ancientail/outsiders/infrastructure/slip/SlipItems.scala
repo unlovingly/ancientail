@@ -1,9 +1,10 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip
 
-import com.example.manything.ambientendre.domain.product.ProductId
-import com.example.manything.ancientail.domain.slip.{SlipId, SlipItemId}
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted.Tag
+
+import com.example.manything.ambientendre.domain.product.ProductId
+import com.example.manything.ancientail.domain.slip.{SlipId, SlipItemId}
 
 class SlipItems(tag: Tag) extends Table[SlipItem](tag, "slip_items") {
   import com.example.manything.ambientendre.outsiders.infrastructure.product._

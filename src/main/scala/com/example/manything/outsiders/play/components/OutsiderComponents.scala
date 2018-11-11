@@ -1,8 +1,9 @@
 package com.example.manything.outsiders.play.components
 
-import play.api.db.slick._
 import slick.basic.{BasicProfile, DatabaseConfig}
 import slick.jdbc.{JdbcBackend, JdbcProfile}
+
+import play.api.db.slick._
 
 trait OutsiderComponents extends SlickComponents {
   lazy val databaseConfigProvider: DatabaseConfigProvider =

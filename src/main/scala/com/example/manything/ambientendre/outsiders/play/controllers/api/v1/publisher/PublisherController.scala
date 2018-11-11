@@ -1,14 +1,16 @@
 package com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ambientendre.domain.publisher.Publisher
-import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import javax.inject._
+
+import scala.concurrent.{ExecutionContext, Future}
+
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import scala.concurrent.{ExecutionContext, Future}
+import com.example.manything.EitherAppliedFuture
+import com.example.manything.ambientendre.domain.publisher.Publisher
+import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 
 @Singleton
 class PublisherController(cc: ControllerComponents,

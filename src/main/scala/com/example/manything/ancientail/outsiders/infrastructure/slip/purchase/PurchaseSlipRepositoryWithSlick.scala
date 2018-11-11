@@ -1,12 +1,13 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
-import com.example.manything.ancientail.domain.slip.{SlipItem => EntityItem}
+import scala.concurrent.ExecutionContext
+
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted
 
-import scala.concurrent.ExecutionContext
+import com.example.manything.EitherAppliedFuture
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
+import com.example.manything.ancientail.domain.slip.{SlipItem => EntityItem}
 
 class PurchaseSlipRepositoryWithSlick(
   implicit val db: Database,
@@ -26,7 +27,8 @@ class PurchaseSlipRepositoryWithSlick(
       savedSlipId <- (slips returning slips.map { _.identity }) += PurchaseSlip(
         identity = entity.identity,
         receiverId = entity.receiverId,
-        senderId = entity.senderId)
+        senderId = entity.senderId,
+        publishedAt = entity.publishedAt.toOffsetDateTime)
       savedSlipItems <- (slipItems returning slipItems) ++= entity.items.map {
         e =>
           SlipItem(identity = e.identity,

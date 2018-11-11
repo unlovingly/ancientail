@@ -6,8 +6,10 @@ import com.example.manything.ambientendre.domain.product.{Product, ProductId}
 
 package object product {
   import cats.syntax.either._
-  import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.decodePublisherId
+
   import io.circe.{Decoder, Encoder}
+
+  import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.decodePublisherId
 
   implicit val encodeProductId: Encoder[ProductId] =
     Encoder.encodeString.contramap[ProductId](_.value.toString)

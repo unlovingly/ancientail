@@ -1,8 +1,9 @@
 package com.example.manything.ancientail.outsiders.play.components
 
+import play.api.BuiltInComponentsFromContext
+
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.shop.ShopRepository
-import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
 import com.example.manything.ancientail.outsiders.infrastructure.shop.ShopRepositoryWithSlick
@@ -11,7 +12,6 @@ import com.example.manything.ancientail.outsiders.infrastructure.slip.purchase.P
 import com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
 import com.example.manything.outsiders.play.components.OutsiderComponents
-import play.api.BuiltInComponentsFromContext
 
 trait SlipComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>

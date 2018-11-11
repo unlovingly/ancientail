@@ -5,5 +5,5 @@ import com.example.manything.ambientendre.domain.product.Product
 
 trait ListingProducts {
   this: ProductUseCases =>
-  def list(): EitherAppliedFuture[Seq[Product]] = products.retrieve
+  def list(): EitherAppliedFuture[Seq[Product]] = products.retrieve()
 }

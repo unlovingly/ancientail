@@ -3,7 +3,7 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-POST    /storing  com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.storing
-POST    /exchange com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.exchange
+POST    /storing    com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.storing
+POST    /exchange   com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.exchange
 
-# GET    /         com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.detail
+GET     /detail/:id com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.detail(id: SlipId)

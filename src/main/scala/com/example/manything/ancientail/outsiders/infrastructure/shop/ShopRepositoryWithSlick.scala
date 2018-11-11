@@ -1,5 +1,9 @@
 package com.example.manything.ancientail.outsiders.infrastructure.shop
 
+import scala.concurrent.ExecutionContext
+
+import slick.jdbc.PostgresProfile.api._
+
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.shop.{
@@ -9,9 +13,6 @@ import com.example.manything.ancientail.domain.shop.{
   Stock,
   Shop => Entity
 }
-import slick.jdbc.PostgresProfile.api._
-
-import scala.concurrent.ExecutionContext
 
 class ShopRepositoryWithSlick(implicit val db: Database,
                               implicit val executionContext: ExecutionContext)
@@ -77,10 +78,7 @@ class ShopRepositoryWithSlick(implicit val db: Database,
           case (optionalShopId, sequencialOptionalStocks: Seq[Option[Stock]]) =>
             val id = optionalShopId.get
             // FIXME
-            val unveiled = sequencialOptionalStocks.map {
-              case Some(sss) =>
-                sss
-            }
+            val unveiled = sequencialOptionalStocks.flatten
 
             entity.copy(identity = Some(id), stocks = unveiled)
         }
@@ -106,5 +104,21 @@ class ShopRepositoryWithSlick(implicit val db: Database,
           Entity(p.identity, p.name, t)
       }
     }
+  }
+
+  /**
+   * 棚卸し処理、理論在庫状態を保存する
+   * TODO
+   * @return
+   */
+  override def inventory(copyTo: String): EitherAppliedFuture[Unit] = {
+    val startedAt = "2018/01/01"
+    val finishedAt = "2018/03/31"
+    val creater =
+      sqlu"create table $copyTo partition of snapshots for values from ('$startedAt') to ('$finishedAt')"
+    val inserter =
+      sqlu"insert into $copyTo (c1, c2) select (c1, c2) from stocks where amount > 0"
+
+    db.run(DBIO.seq(creater, inserter).transactionally.asTry.map { _.toEither })
   }
 }

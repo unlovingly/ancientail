@@ -9,6 +9,7 @@ import com.example.manything.ambientendre.domain.publisher.{
 
 package object publisher {
   import cats.syntax.either._
+
   import io.circe.{Decoder, Encoder}
 
   implicit val encodePublisherId: Encoder[PublisherId] =
