@@ -2,7 +2,7 @@ package com.example.manything.ancientail.outsiders.play.components
 
 import play.api.BuiltInComponentsFromContext
 
-import com.example.manything.EitherAppliedFuture
+import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.shop.ShopRepository
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
@@ -15,14 +15,13 @@ import com.example.manything.outsiders.play.components.OutsiderComponents
 
 trait SlipComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
-  implicit private lazy val shopRepository
-    : ShopRepository[EitherAppliedFuture] =
+  implicit private lazy val shopRepository: ShopRepository[EitherTFuture] =
     new ShopRepositoryWithSlick()
   implicit private lazy val exchangeSlipRepository
-    : ExchangeSlipRepository[EitherAppliedFuture] =
+    : ExchangeSlipRepository[EitherTFuture] =
     new ExchangeSlipRepositoryWithSlick()
   implicit private lazy val purchaseSlipRepository
-    : PurchaseSlipRepository[EitherAppliedFuture] =
+    : PurchaseSlipRepository[EitherTFuture] =
     new PurchaseSlipRepositoryWithSlick()
   private lazy val slipUseCases =
     new SlipUseCases()

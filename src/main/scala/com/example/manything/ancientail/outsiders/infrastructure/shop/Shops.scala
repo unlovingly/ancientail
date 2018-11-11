@@ -10,5 +10,5 @@ class Shops(tag: Tag) extends Table[Shop](tag, "shops") {
   def name = column[String]("name")
 
   def * =
-    (identity.?, name) <> (Shop.tupled, Shop.unapply)
+    (identity.?, name) <> ((Shop.apply _).tupled, Shop.unapply)
 }

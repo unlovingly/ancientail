@@ -2,9 +2,9 @@ package com.example.manything.ancientail.outsiders.infrastructure.shop
 
 import scala.concurrent.ExecutionContext
 
-import slick.jdbc.PostgresProfile.api._
+import cats.data.EitherT
 
-import com.example.manything.EitherAppliedFuture
+import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.shop.{
   PluCode,
@@ -13,96 +13,81 @@ import com.example.manything.ancientail.domain.shop.{
   Stock,
   Shop => Entity
 }
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class ShopRepositoryWithSlick(implicit val db: Database,
                               implicit val executionContext: ExecutionContext)
-  extends ShopRepository[EitherAppliedFuture] {
-  override def retrieve(): EitherAppliedFuture[Seq[EntityType]] = {
+  extends ShopRepository[EitherTFuture] {
+  override def retrieve(): EitherTFuture[Seq[EntityType]] = {
+    import cats.implicits._
+
     val q = shops.take(20)
     val a = q.result.asTry.map { _.toEither }
 
-    // TODO:
-    // https://stackoverflow.com/a/52623098/1764794
-    // https://stackoverflow.com/a/31285681/1764794
-    db.run(a).map {
-      _.map {
-        _.map { s =>
-          Entity(s.identity, s.name, Seq.empty)
-        }
-      }
-    }
+    EitherT(db.run(a)).map { _.map { _.to() } }
   }
 
-  override def retrieve(
-    id: Seq[Identifier]): EitherAppliedFuture[Seq[EntityType]] = {
+  override def retrieve(id: Seq[Identifier]): EitherTFuture[Seq[EntityType]] = {
+    import cats.implicits._
+
     val q = for {
       p <- shops if p.identity.inSet(id)
     } yield p
     val a = q.result.asTry.map { _.toEither }
 
-    db.run(a).map {
-      _.map {
-        _.map { s =>
-          Entity(s.identity, s.name, Seq.empty)
-        }
-      }
+    EitherT(db.run(a)).map { _.map { _.to() } }
+  }
+
+  override def store(entity: EntityType): EitherTFuture[EntityType] = {
+    import cats.implicits._
+
+    val q1 = (shops returning shops.map { _.identity }) +=
+      Shop(identity = entity.identity, name = entity.name)
+    val q2 = q1.flatMap { id =>
+      store(id, entity.stocks)
+
+      q1
+    }
+
+    val a = q2.asTry.map { _.toEither }
+
+    EitherT(db.run(a)).map { id =>
+      entity.copy(identity = Some(id))
     }
   }
 
-  override def store(entity: EntityType): EitherAppliedFuture[EntityType] = {
-    val inserter = (id: ShopId, s: Stock) => {
-      (stocks returning stocks).insertOrUpdate(
-        Stock(pluCode = PluCode
-                .generate(v = s.productId, a = s.price),
-              shopId = id,
-              productId = s.productId,
-              amount = s.amount,
-              price = s.price))
+  private def store(id: ShopId, ss: Seq[Stock]) = {
+    val targets = ss.map { s =>
+      Stock(pluCode = PluCode
+              .generate(v = s.productId, a = s.price),
+            shopId = id,
+            productId = s.productId,
+            amount = s.amount,
+            price = s.price)
     }
 
-    val q = for {
-      shopId <- (shops returning shops.map { _.identity })
-        .insertOrUpdate(Shop(entity.identity, entity.name))
-      ss <- shopId match {
-        case Some(id) =>
-          DBIO.sequence(entity.stocks.map(inserter(id, _)))
-        case None =>
-          DBIO.sequence(entity.stocks.map(inserter(entity.identity.get, _)))
+    DBIO.sequence {
+      targets.map { t =>
+        (stocks returning stocks).insertOrUpdate(t)
       }
-    } yield (shopId, ss)
-
-    val actions = q.asTry
-      .map { _.toEither }
-      .map {
-        _.map {
-          case (optionalShopId, sequencialOptionalStocks: Seq[Option[Stock]]) =>
-            val id = optionalShopId.get
-            // FIXME
-            val unveiled = sequencialOptionalStocks.flatten
-
-            entity.copy(identity = Some(id), stocks = unveiled)
-        }
-      }
-
-    db.run(actions)
+    }
   }
 
   override def retrieveWithStocks(
     shopId: Identifier,
-    productIds: Seq[ProductId]): EitherAppliedFuture[EntityType] = {
+    productIds: Seq[ProductId]): EitherTFuture[EntityType] = {
+    import cats.implicits._
 
     val q1 = shops.filter(_.identity === shopId).result
     val q2 = stocks.filter(_.shopId === shopId).result
 
     val a = (q1 zip q2).asTry.map { _.toEither }
 
-    db.run(a).map { e =>
-      e.map {
-        case (h, t) =>
-          val p = h.head
+    EitherT(db.run(a)).map {
+      case (h, t) =>
+        val p = h.head
 
-          Entity(p.identity, p.name, t)
-      }
+        Entity(p.identity, p.name, t)
     }
   }
 
@@ -111,7 +96,7 @@ class ShopRepositoryWithSlick(implicit val db: Database,
    * TODO
    * @return
    */
-  override def inventory(copyTo: String): EitherAppliedFuture[Unit] = {
+  override def inventory(copyTo: String): EitherTFuture[Unit] = {
     val startedAt = "2018/01/01"
     val finishedAt = "2018/03/31"
     val creater =
@@ -119,6 +104,8 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     val inserter =
       sqlu"insert into $copyTo (c1, c2) select (c1, c2) from stocks where amount > 0"
 
-    db.run(DBIO.seq(creater, inserter).transactionally.asTry.map { _.toEither })
+    val q = DBIO.seq(creater, inserter).transactionally.asTry.map { _.toEither }
+
+    EitherT(db.run(q))
   }
 }

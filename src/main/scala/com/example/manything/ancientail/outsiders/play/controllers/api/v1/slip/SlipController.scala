@@ -9,7 +9,7 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import com.example.manything.EitherAppliedFuture
+import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
@@ -27,35 +27,49 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
 
   def detail(id: SlipId) =
     Action.async { implicit request =>
-      val slips: EitherAppliedFuture[SlipBase] =
+      import cats.implicits._
+
+      import io.circe.syntax._
+
+      val slips: EitherTFuture[SlipBase] =
         slipUseCases.retrieve(shopId, id)
 
-      eitherToResult(slips)
+      val result: Future[Result] = slips
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
+              right => Ok(right.toString.asJson.spaces2))
+
+      result
     }
 
   def exchange() =
     Action(circe.tolerantJson[ExchangeSlip]).async { implicit request =>
-      val result =
+      import cats.implicits._
+
+      import io.circe.syntax._
+
+      val slip =
         slipUseCases.exchange(request.body)
 
-      eitherToResult(result)
+      val result: Future[Result] = slip
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
+              right => Ok(right.toString.asJson.spaces2))
+
+      result
     }
 
   def storing() =
     Action(circe.tolerantJson[PurchaseSlip]).async { implicit request =>
-      val result: EitherAppliedFuture[SlipBase] =
+      import cats.implicits._
+
+      import io.circe.syntax._
+
+      val slip: EitherTFuture[PurchaseSlip] =
         slipUseCases.storing(request.body)
 
-      eitherToResult(result)
-    }
+      val result: Future[Result] = slip
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
+              right => Ok(right.toString.asJson.spaces2))
 
-  private def eitherToResult(
-    e: EitherAppliedFuture[SlipBase]): Future[Result] = {
-    import io.circe.syntax._
-
-    e.map {
-      case Right(r) => Ok(r.asJson.spaces2)
-      case Left(l) => BadRequest(l.toString.asJson.spaces2)
+      result
     }
-  }
 }

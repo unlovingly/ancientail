@@ -2,6 +2,8 @@ package com.example
 
 import scala.concurrent.Future
 
+import cats.data.EitherT
+
 package object manything {
-  type EitherAppliedFuture[A] = Future[Either[Throwable, A]]
+  type EitherTFuture[A] = EitherT[Future, Throwable, A]
 }

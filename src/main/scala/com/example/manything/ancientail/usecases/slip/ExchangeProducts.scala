@@ -1,7 +1,6 @@
 package com.example.manything.ancientail.usecases.slip
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ancientail.domain.slip._
+import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
 
 /**
@@ -13,7 +12,9 @@ trait ExchangeProducts { this: SlipUseCases =>
    * 1. 伝票を保存して
    * 2. 在庫情報を更新する
    */
-  def exchange(slip: ExchangeSlip): EitherAppliedFuture[SlipBase] = {
+  def exchange(slip: ExchangeSlip): EitherTFuture[ExchangeSlip] = {
+    import cats.implicits._
+
     val productIds = slip.items.map(_.productId)
     val receiver = shops.retrieveWithStocks(slip.receiverId, productIds)
     val sender = shops.retrieveWithStocks(slip.senderId, productIds)
@@ -21,21 +22,15 @@ trait ExchangeProducts { this: SlipUseCases =>
     val result = exchangeSlips.store(slip)
 
     receiver.map { s =>
-      // 2. 在庫情報を更新する
-      s.map { h =>
-        val o = h.inbound(slip)
+      val h = s.inbound(slip)
 
-        shops.store(o)
-      }
+      shops.store(h)
     }
 
     sender.map { s =>
-      // 2. 在庫情報を更新する
-      s.map { h =>
-        val o = h.outbound(slip)
+      val h = s.outbound(slip)
 
-        shops.store(o)
-      }
+      shops.store(h)
     }
 
     result

@@ -8,7 +8,7 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import com.example.manything.EitherAppliedFuture
+import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.shop.Shop
 import com.example.manything.ancientail.usecases.shop.ShopUseCases
 
@@ -18,32 +18,34 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
-  def index() = Action.async { implicit request: Request[AnyContent] =>
-    import io.circe.generic.auto._
+  def index() = Action.async { implicit request =>
+    import cats.implicits._
+
     import io.circe.syntax._
 
-    val shops: EitherAppliedFuture[Seq[Shop]] =
+    val shops: EitherTFuture[Seq[Shop]] =
       shopUseCases.list()
 
-    shops
-      .map {
-        case Right(r) =>
-          r.asJson.spaces2
-        case Left(l) => l.toString.asJson.spaces2
-      }
-      .map { r =>
-        Ok(r)
-      }
+    val result = shops
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.toString.asJson.spaces2))
+
+    result
   }
 
   def performCreation() =
     Action(circe.tolerantJson[Shop]).async { implicit request =>
-      val result: EitherAppliedFuture[Shop] =
+      import cats.implicits._
+
+      import io.circe.syntax._
+
+      val shop: EitherTFuture[Shop] =
         shopUseCases.create(request.body)
 
-      result.map {
-        case Right(r) => Ok(r.name)
-        case Left(l) => BadRequest(l.toString)
-      }
+      val result = shop
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
+              right => Ok(right.toString.asJson.spaces2))
+
+      result
     }
 }
