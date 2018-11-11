@@ -78,10 +78,7 @@ class ShopRepositoryWithSlick(implicit val db: Database,
           case (optionalShopId, sequencialOptionalStocks: Seq[Option[Stock]]) =>
             val id = optionalShopId.get
             // FIXME
-            val unveiled = sequencialOptionalStocks.map {
-              case Some(sss) =>
-                sss
-            }
+            val unveiled = sequencialOptionalStocks.flatten
 
             entity.copy(identity = Some(id), stocks = unveiled)
         }
