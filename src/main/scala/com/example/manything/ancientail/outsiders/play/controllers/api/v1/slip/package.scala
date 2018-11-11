@@ -31,6 +31,15 @@ package object slip {
         .leftMap(_ => "SlipId")
     }
 
+  implicit def pathBinder(
+    implicit uuidBinder: PathBindable[UUID]): PathBindable[SlipId] =
+    new PathBindable[SlipId] {
+      override def bind(key: String, value: String): Either[String, SlipId] =
+        uuidBinder.bind(key, value).map(SlipId.apply)
+      override def unbind(key: String, value: SlipId): String =
+        value.value.toString
+    }
+
   implicit val slipBaseEncoder: Encoder[SlipBase] = Encoder.instance {
     case e @ ExchangeSlip(_, _, _, _) => e.asJson
     case e @ PurchaseSlip(_, _, _, _) => e.asJson

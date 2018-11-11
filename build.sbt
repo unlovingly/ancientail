@@ -26,6 +26,10 @@ lazy val root = (project in file("."))
       "-language:existentials",
       "-language:higherKinds",
       "-Ypartial-unification"
+    ),
+    routesImport ++= Seq(
+      "com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip._",
+      "com.example.manything.ancientail.domain.slip._"
     )
   )
   .enablePlugins(PlayScala)
