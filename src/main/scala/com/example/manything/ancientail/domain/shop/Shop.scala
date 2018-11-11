@@ -15,13 +15,6 @@ case class Shop(
   override type Identifier = ShopId
 
   /**
-   * 仕入れ処理
-   *
-   * システム上では入庫処理に相当する
-   */
-  def storing(slip: PurchaseSlip): Shop = inbound(slip)
-
-  /**
    * 入庫処理
    */
   def inbound(slip: SlipBase): Shop = {
@@ -54,6 +47,13 @@ case class Shop(
   }
 
   def sell(slip: SalesSlip): Shop = outbound(slip)
+
+  /**
+   * 仕入れ処理
+   *
+   * システム上では入庫処理に相当する
+   */
+  def storing(slip: PurchaseSlip): Shop = inbound(slip)
 
   private def convertFrom(items: Seq[SlipItem]): Seq[Stock] = {
     items.map { s =>

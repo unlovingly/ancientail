@@ -5,5 +5,5 @@ import com.example.manything.ambientendre.domain.publisher._
 
 trait ListingPublishers {
   this: PublisherUseCases =>
-  def list(): EitherAppliedFuture[Seq[Publisher]] = publishers.retrieve
+  def list(): EitherAppliedFuture[Seq[Publisher]] = publishers.retrieve()
 }

@@ -11,7 +11,6 @@ class Stocks(tag: Tag) extends Table[Stock](tag, "stocks") {
   import com.example.manything.ambientendre.outsiders.infrastructure.product._
 
   def pluCode = column[PluCode]("plu_code", O.PrimaryKey)
-  // https://github.com/slick/slick/issues/966#issuecomment-379232820
   def shopId = column[ShopId]("shop_id")
   def productId = column[ProductId]("product_id")
   def amount = column[Amount]("amount")

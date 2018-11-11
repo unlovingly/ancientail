@@ -108,4 +108,20 @@ class ShopRepositoryWithSlick(implicit val db: Database,
       }
     }
   }
+
+  /**
+   * 棚卸し処理、理論在庫状態を保存する
+   * TODO
+   * @return
+   */
+  override def inventory(copyTo: String): EitherAppliedFuture[Unit] = {
+    val startedAt = "2018/01/01"
+    val finishedAt = "2018/03/31"
+    val creater =
+      sqlu"create table $copyTo partition of snapshots for values from ('$startedAt') to ('$finishedAt')"
+    val inserter =
+      sqlu"insert into $copyTo (c1, c2) select (c1, c2) from stocks where amount > 0"
+
+    db.run(DBIO.seq(creater, inserter).transactionally.asTry.map { _.toEither })
+  }
 }
