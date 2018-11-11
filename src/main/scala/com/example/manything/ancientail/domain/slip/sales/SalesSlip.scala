@@ -7,12 +7,10 @@ import com.example.manything.ancientail.domain.slip._
 
 /**
  * 売上伝票
- *
  * @param identity
  * @param senderId
  * @param receiverId
  * @param items
- * @param approvedAt ZonedDateTime 伝票登録日
  * @param publishedAt ZonedDateTime 発行日
  */
 case class SalesSlip(
@@ -23,6 +21,4 @@ case class SalesSlip(
   override val publishedAt: ZonedDateTime
 ) extends SlipBase {
   type SenderIdType = ShopId
-
-  override val approvedAt: ZonedDateTime = ???
 }

@@ -7,7 +7,7 @@ import com.example.manything.ancientail.domain.slip.{Amount, Price}
 
 /**
  * 店舗在庫
- * @param pluCode PluCode Product Look UP Code, 商品と価格のペアになる。プライマリキーに相当する
+ * @param pluCode PluCode Product Look UP Code, 商品と価格のペアから生成される。プライマリキーに相当する
  * @param shopId ShopId 在庫を抱える店舗
  * @param productId ProductId 商品情報
  * @param amount Amount 数量

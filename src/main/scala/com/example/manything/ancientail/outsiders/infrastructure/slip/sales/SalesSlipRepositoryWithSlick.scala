@@ -27,7 +27,8 @@ class SalesSlipRepositoryWithSlick(
       savedSlipId <- (slips returning slips.map { _.identity }) += SalesSlip(
         identity = entity.identity,
         receiverId = entity.receiverId,
-        senderId = entity.senderId)
+        senderId = entity.senderId,
+        publishedAt = entity.publishedAt.toOffsetDateTime)
       savedSlipItems <- (slipItems returning slipItems) ++= entity.items.map {
         e =>
           SlipItem(identity = e.identity,

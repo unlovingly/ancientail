@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
-import java.time.{OffsetDateTime, ZoneId}
+import java.time.OffsetDateTime
 
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.shop.ShopId
@@ -19,7 +19,8 @@ import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipBase
 case class PurchaseSlip(
   override val identity: Option[SlipId] = None,
   override val senderId: PublisherId,
-  override val receiverId: ShopId
+  override val receiverId: ShopId,
+  override val publishedAt: OffsetDateTime
 ) extends SlipBase {
   type SenderIdType = PublisherId
 }

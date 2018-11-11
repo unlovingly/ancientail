@@ -41,8 +41,8 @@ package object slip {
     }
 
   implicit val slipBaseEncoder: Encoder[SlipBase] = Encoder.instance {
-    case e @ ExchangeSlip(_, _, _, _) => e.asJson
-    case e @ PurchaseSlip(_, _, _, _) => e.asJson
+    case e @ ExchangeSlip(_, _, _, _, _) => e.asJson
+    case e @ PurchaseSlip(_, _, _, _, _) => e.asJson
   }
 
   implicit lazy val slipItemIdOptionDecoder: Decoder[Option[SlipItemId]] =
@@ -60,10 +60,23 @@ package object slip {
       SlipItem.apply)
 
   implicit lazy val purchaseSlipDecoder: Decoder[PurchaseSlip] =
-    Decoder.forProduct4("identity", "senderId", "receiverId", "items")(
-      PurchaseSlip.apply)
+    Decoder.forProduct5("identity",
+                        "senderId",
+                        "receiverId",
+                        "items",
+                        "publishedAt")(PurchaseSlip.apply)
+
+  implicit lazy val salesSlipDecoder: Decoder[SalesSlip] =
+    Decoder.forProduct5("identity",
+                        "senderId",
+                        "receiverId",
+                        "items",
+                        "publishedAt")(SalesSlip.apply)
 
   implicit lazy val exchangeSlipDecoder: Decoder[ExchangeSlip] =
-    Decoder.forProduct4("identity", "senderId", "receiverId", "items")(
-      ExchangeSlip.apply)
+    Decoder.forProduct5("identity",
+                        "senderId",
+                        "receiverId",
+                        "items",
+                        "publishedAt")(ExchangeSlip.apply)
 }

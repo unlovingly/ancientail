@@ -26,7 +26,7 @@ trait SlipBase extends Entity {
   /**
    * 処理日
    */
-  val approvedAt: ZonedDateTime
+  val approvedAt: ZonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
 
   /**
    * 発行日
