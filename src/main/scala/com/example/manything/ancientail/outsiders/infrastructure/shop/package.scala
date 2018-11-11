@@ -2,10 +2,10 @@ package com.example.manything.ancientail.outsiders.infrastructure
 
 import java.util.UUID
 
-import com.example.manything.ancientail.domain.shop.{PluCode, ShopId}
-import com.example.manything.roundelayout.domain.Identifiability
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted
+
+import com.example.manything.ancientail.domain.shop.{PluCode, ShopId}
 
 package object shop {
   lazy val shops = lifted.TableQuery[Shops]

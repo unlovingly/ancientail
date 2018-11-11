@@ -1,6 +1,7 @@
 package com.example.manything.ancientail.domain.shop
 
 import cats.Eq
+
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.slip.Price
 

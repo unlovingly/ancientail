@@ -2,10 +2,11 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip
 
 import java.time.OffsetDateTime
 
+import slick.lifted.Tag
+
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.SlipId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
-import slick.lifted.Tag
 
 abstract class SlipsBase[EntityType](tag: Tag, _tableName: String)
   extends Table[EntityType](tag, _tableName) {

@@ -1,12 +1,11 @@
 package com.example.manything.ancientail.usecases.slip
 
+import scala.concurrent.ExecutionContext
+
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ancientail.domain.shop.ShopRepository
-import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
-
-import scala.concurrent.ExecutionContext
 
 class SlipUseCases(
   implicit val shops: ShopRepository[EitherAppliedFuture],

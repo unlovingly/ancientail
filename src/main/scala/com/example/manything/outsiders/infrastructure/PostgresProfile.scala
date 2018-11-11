@@ -1,8 +1,9 @@
 package com.example.manything.outsiders.infrastructure
 
-import com.github.tminglei.slickpg._
 import slick.basic.Capability
 import slick.jdbc.JdbcCapabilities
+
+import com.github.tminglei.slickpg._
 
 trait PostgresProfile
   extends ExPostgresProfile

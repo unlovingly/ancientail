@@ -1,9 +1,10 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
+import slick.lifted.Tag
+
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipsBase
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
-import slick.lifted.Tag
 
 class PurchaseSlips(tag: Tag)
   extends SlipsBase[PurchaseSlip](tag, "purchase_slips") {

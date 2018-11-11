@@ -1,14 +1,16 @@
 package com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ancientail.domain.shop.Shop
-import com.example.manything.ancientail.usecases.shop.ShopUseCases
 import javax.inject._
+
+import scala.concurrent.ExecutionContext
+
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import scala.concurrent.ExecutionContext
+import com.example.manything.EitherAppliedFuture
+import com.example.manything.ancientail.domain.shop.Shop
+import com.example.manything.ancientail.usecases.shop.ShopUseCases
 
 @Singleton
 class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(

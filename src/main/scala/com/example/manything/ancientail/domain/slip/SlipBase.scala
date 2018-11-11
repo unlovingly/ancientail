@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.domain.slip
 
-import java.time.ZonedDateTime
+import java.time.{ZoneId, ZonedDateTime}
 import java.util.UUID
 
 import com.example.manything.ancientail.domain.shop.ShopId

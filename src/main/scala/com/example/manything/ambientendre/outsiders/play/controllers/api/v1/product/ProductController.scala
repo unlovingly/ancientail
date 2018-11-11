@@ -1,15 +1,17 @@
 package com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ambientendre.domain.product.Product
-import com.example.manything.ambientendre.usecases.product.ProductUseCases
-import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import javax.inject._
+
+import scala.concurrent.ExecutionContext
+
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import scala.concurrent.ExecutionContext
+import com.example.manything.EitherAppliedFuture
+import com.example.manything.ambientendre.domain.product.Product
+import com.example.manything.ambientendre.usecases.product.ProductUseCases
+import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 
 @Singleton
 class ProductController(cc: ControllerComponents,

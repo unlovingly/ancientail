@@ -1,12 +1,13 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.sales
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ancientail.domain.slip.sales.SalesSlipRepository
-import com.example.manything.ancientail.domain.slip.{SlipItem => EntityItem}
+import scala.concurrent.ExecutionContext
+
 import slick.jdbc.PostgresProfile.api._
 import slick.lifted
 
-import scala.concurrent.ExecutionContext
+import com.example.manything.EitherAppliedFuture
+import com.example.manything.ancientail.domain.slip.sales.SalesSlipRepository
+import com.example.manything.ancientail.domain.slip.{SlipItem => EntityItem}
 
 class SalesSlipRepositoryWithSlick(
   implicit val db: Database,

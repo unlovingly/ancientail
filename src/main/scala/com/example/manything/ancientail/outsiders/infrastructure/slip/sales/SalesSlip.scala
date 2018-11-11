@@ -1,5 +1,7 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.sales
 
+import java.time.{OffsetDateTime, ZoneId}
+
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.SlipId
 import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipBase

@@ -1,5 +1,10 @@
 package com.example.manything.outsiders.play.components
 
+import play.api.ApplicationLoader.Context
+import play.api.BuiltInComponentsFromContext
+import play.filters.HttpFiltersComponents
+import router.Routes
+
 import com.example.manything.ambientendre.outsiders.play.components.{
   ProductComponents,
   PublisherComponents
@@ -8,10 +13,6 @@ import com.example.manything.ancientail.outsiders.play.components.{
   ShopComponents,
   SlipComponents
 }
-import play.api.ApplicationLoader.Context
-import play.api.BuiltInComponentsFromContext
-import play.filters.HttpFiltersComponents
-import router.Routes
 
 class ApplicationComponents(context: Context)
   extends BuiltInComponentsFromContext(context)

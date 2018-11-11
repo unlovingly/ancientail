@@ -1,5 +1,9 @@
 package com.example.manything.ancientail.outsiders.infrastructure.shop
 
+import scala.concurrent.ExecutionContext
+
+import slick.jdbc.PostgresProfile.api._
+
 import com.example.manything.EitherAppliedFuture
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.shop.{
@@ -9,9 +13,6 @@ import com.example.manything.ancientail.domain.shop.{
   Stock,
   Shop => Entity
 }
-import slick.jdbc.PostgresProfile.api._
-
-import scala.concurrent.ExecutionContext
 
 class ShopRepositoryWithSlick(implicit val db: Database,
                               implicit val executionContext: ExecutionContext)
