@@ -2,10 +2,10 @@ package com.example.manything.ambientendre.outsiders.infrastructure
 
 import java.util.UUID
 
-import slick.jdbc.PostgresProfile.api._
 import slick.lifted
 
 import com.example.manything.ambientendre.domain.publisher.PublisherId
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 package object publisher {
   lazy val publishers = lifted.TableQuery[Publishers]

@@ -4,7 +4,6 @@ import scala.concurrent.ExecutionContext
 
 import cats.data.EitherT
 
-import slick.jdbc.PostgresProfile.api._
 import slick.lifted
 
 import com.example.manything.EitherTFuture
@@ -13,6 +12,7 @@ import com.example.manything.ancientail.domain.slip.{
   SlipId,
   SlipItem => EntityItem
 }
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class ExchangeSlipRepositoryWithSlick(
   implicit val db: Database,
@@ -27,21 +27,21 @@ class ExchangeSlipRepositoryWithSlick(
 
     import com.example.manything.ancientail.outsiders.infrastructure.slip._
 
-    val slips = implicitly[lifted.TableQuery[ExchangeSlips]]
+    val slips = lifted.TableQuery[ExchangeSlips]
 
-    val q1 = (slips returning slips.map { _.identity }) += ExchangeSlip.from(
-      entity)
-    val q2 = q1.flatMap { id =>
-      store(id, entity.items)
+    val query = for {
+      q1 <- (slips returning slips.map { _.identity }) += ExchangeSlip.from(
+        entity)
+      q2 <- store(q1, entity.items)
+    } yield (q1, q2)
 
-      q1
-    }
+    val a = query.asTry.map { _.toEither }
 
-    val a = q2.asTry.map { _.toEither }
+    EitherT(db.run(a)).map {
+      case (id, items) =>
+        val i: Seq[EntityItem] = items.flatten.map(_.to())
 
-    // items も更新しないと
-    EitherT(db.run(a)).map { id =>
-      entity.copy(identity = Some(id))
+        entity.copy(identity = Some(id), items = i)
     }
   }
 

@@ -2,10 +2,9 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
 import scala.concurrent.ExecutionContext
 
-import slick.jdbc.PostgresProfile.api._
-
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class PurchaseSlipRepositoryWithSlick(
   implicit val db: Database,
