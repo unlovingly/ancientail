@@ -10,7 +10,7 @@ class SalesSlips(tag: Tag) extends SlipsBase[SalesSlip](tag, "purchase_slips") {
   import com.example.manything.ancientail.outsiders.infrastructure.shop._
   import com.example.manything.ancientail.outsiders.infrastructure.slip._
 
-  def senderId = column[ShopId]("shop_id")
+  def senderId = column[ShopId]("sender_id")
 
   def * =
     (identity.?, senderId, receiverId, publishedAt) <> (SalesSlip.tupled, SalesSlip.unapply)
