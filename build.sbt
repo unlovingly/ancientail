@@ -5,7 +5,7 @@ version := "0.5.0-SNAPSHOT"
 
 resolvers += Resolver.jcenterRepo
 
-lazy val root = project
+lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
       filters,
