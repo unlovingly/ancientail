@@ -19,7 +19,7 @@ class ExchangeSlipRepositoryWithSlick(
   implicit val executionContext: ExecutionContext)
   extends ExchangeSlipRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = ???
-  override def retrieve(id: Seq[Identifier]): EitherTFuture[Seq[EntityType]] =
+  override def retrieve(id: Identifier): EitherTFuture[EntityType] =
     ???
 
   override def store(entity: EntityType): EitherTFuture[EntityType] = {

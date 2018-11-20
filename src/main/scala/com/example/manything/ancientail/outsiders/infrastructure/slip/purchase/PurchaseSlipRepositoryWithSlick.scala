@@ -7,11 +7,11 @@ import cats.data.EitherT
 import slick.lifted
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
 import com.example.manything.ancientail.domain.slip.purchase.{
   PurchaseSlipRepository,
   PurchaseSlip => Entity
 }
+import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
 import com.example.manything.ancientail.outsiders.infrastructure.slip.{
   SlipObject,
   SlipRepositoryWithSlick
@@ -41,6 +41,25 @@ class PurchaseSlipRepositoryWithSlick(
 
     EitherT(db.run(a)).map { _.map { _.to() } }
   }
+
+  override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
+    import cats.implicits._
+
+    import com.example.manything.ancientail.outsiders.infrastructure.slip.{
+      slipIdColumnType,
+      slipItems
+    }
+
+    val q = slips filter (_.identity === id) join slipItems on (_.identity === _.slipId)
+    val a = q.result.asTry.map { _.toEither }
+
+    val result = EitherT(db.run(a)).map { p =>
+      p.head._1.to(p.map(_._2.to()))
+    }
+
+    result
+  }
+
   override def updateEntity(entity: Entity,
                             id: Option[SlipId],
                             items: Seq[SlipItem]): Entity = {

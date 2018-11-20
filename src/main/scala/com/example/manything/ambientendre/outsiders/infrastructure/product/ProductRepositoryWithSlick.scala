@@ -19,13 +19,15 @@ class ProductRepositoryWithSlick(
     EitherT(db.run(a))
   }
 
-  override def retrieve(id: Seq[Identifier]): EitherTFuture[Seq[EntityType]] = {
+  override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
+    import cats.implicits._
+
     val q = for {
-      p <- products if p.identity.inSet(id)
+      p <- products if p.identity === id
     } yield p
     val a = q.result.asTry.map { _.toEither }
 
-    EitherT(db.run(a))
+    EitherT(db.run(a)).map { _.head }
   }
 
   override def store(entity: EntityType): EitherTFuture[EntityType] = {

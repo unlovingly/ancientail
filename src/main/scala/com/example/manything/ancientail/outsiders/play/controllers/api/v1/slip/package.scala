@@ -13,10 +13,15 @@ package object slip {
   import cats.syntax.either._
 
   import io.circe.generic.auto._
+  import io.circe.generic.semiauto._
   import io.circe.syntax._
   import io.circe.{Decoder, Encoder}
 
+  import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.encodeProductId
   import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.decodeProductId
+
+  implicit lazy val slipItemIdEncoder: Encoder[SlipItemId] =
+    Encoder.encodeString.contramap[SlipItemId](_.value.toString)
 
   implicit lazy val slipIdEncoder: Encoder[SlipId] =
     Encoder.encodeString.contramap[SlipId](_.value.toString)
@@ -31,6 +36,9 @@ package object slip {
         .leftMap(_ => "SlipId")
     }
 
+  implicit lazy val slipItemEncoder: Encoder[SlipItem] =
+    deriveEncoder
+
   implicit def pathBinder(
     implicit uuidBinder: PathBindable[UUID]): PathBindable[SlipId] =
     new PathBindable[SlipId] {
@@ -39,11 +47,6 @@ package object slip {
       override def unbind(key: String, value: SlipId): String =
         value.value.toString
     }
-
-  implicit lazy val slipBaseEncoder: Encoder[SlipBase] = Encoder.instance {
-    case e @ ExchangeSlip(_, _, _, _, _) => e.asJson
-    case e @ PurchaseSlip(_, _, _, _, _) => e.asJson
-  }
 
   implicit lazy val slipItemIdOptionDecoder: Decoder[Option[SlipItemId]] =
     Decoder.decodeOption
@@ -60,23 +63,26 @@ package object slip {
       SlipItem.apply)
 
   implicit lazy val purchaseSlipDecoder: Decoder[PurchaseSlip] =
-    Decoder.forProduct5("identity",
+    Decoder.forProduct6("identity",
                         "senderId",
                         "receiverId",
                         "items",
-                        "publishedAt")(PurchaseSlip.apply)
+                        "publishedAt",
+                        "approvedAt")(PurchaseSlip.apply)
 
   implicit lazy val salesSlipDecoder: Decoder[SalesSlip] =
-    Decoder.forProduct5("identity",
+    Decoder.forProduct6("identity",
                         "senderId",
                         "receiverId",
                         "items",
-                        "publishedAt")(SalesSlip.apply)
+                        "publishedAt",
+                        "approvedAt")(SalesSlip.apply)
 
   implicit lazy val exchangeSlipDecoder: Decoder[ExchangeSlip] =
-    Decoder.forProduct5("identity",
+    Decoder.forProduct6("identity",
                         "senderId",
                         "receiverId",
                         "items",
-                        "publishedAt")(ExchangeSlip.apply)
+                        "publishedAt",
+                        "approvedAt")(ExchangeSlip.apply)
 }

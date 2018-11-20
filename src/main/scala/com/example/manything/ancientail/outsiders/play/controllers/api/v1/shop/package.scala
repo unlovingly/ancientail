@@ -11,15 +11,15 @@ package object shop {
 
   import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.decodeProductId
 
-  implicit lazy val encodeShopId: Encoder[ShopId] =
+  implicit lazy val shopIdEncoder: Encoder[ShopId] =
     Encoder.encodeString.contramap[ShopId](_.value.toString)
 
-  implicit lazy val decodeShopId: Decoder[ShopId] = Decoder.decodeString.emap {
-    str =>
+  implicit lazy val shopIdDecoder: Decoder[ShopId] =
+    Decoder.decodeString.emap { str =>
       Either
         .catchNonFatal(ShopId(UUID.fromString(str)))
         .leftMap(_ => "ShopId")
-  }
+    }
 
   implicit lazy val decodePluCode: Decoder[PluCode] =
     Decoder.decodeString.emap { str =>

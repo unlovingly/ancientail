@@ -32,12 +32,12 @@ case class PurchaseSlip(
   type SenderIdType = PublisherId
   override type EntityType = Entity
 
-  override def to(): EntityType =
+  override def to(items: Seq[slip.SlipItem] = Seq.empty): EntityType =
     Entity.apply(
       identity = identity,
       senderId = senderId,
       receiverId = receiverId,
-      items = Seq.empty,
+      items = items,
       publishedAt = publishedAt.toZonedDateTime,
       approvedAt = approvedAt.toZonedDateTime
     )

@@ -1,9 +1,12 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip
 
-import java.time.{OffsetDateTime, ZoneId}
+import java.time.OffsetDateTime
 
 import com.example.manything.ancientail.domain.shop.ShopId
-import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.ancientail.domain.slip.{
+  SlipId,
+  SlipItem => EntityItem
+}
 
 /**
  * 伝票
@@ -34,5 +37,5 @@ trait SlipBase {
    */
   val publishedAt: OffsetDateTime
 
-  def to(): EntityType
+  def to(items: Seq[EntityItem] = Seq.empty): EntityType
 }

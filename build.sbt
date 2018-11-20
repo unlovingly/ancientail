@@ -17,7 +17,7 @@ lazy val root = (project in file("."))
       "com.dripower"           %% "play-circe"         % "2610.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
       "org.mockito"            % "mockito-core"        % "2.23.0" % "test",
-      "com.example.manything"  %% "roundelayout"       % "0.4.0"
+      "com.example.manything"  %% "roundelayout"       % "0.4.1-SNAPSHOT"
     ),
     scalacOptions ++= Seq(
       "-deprecation",

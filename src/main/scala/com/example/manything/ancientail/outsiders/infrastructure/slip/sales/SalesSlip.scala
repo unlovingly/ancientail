@@ -3,7 +3,10 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.sales
 import java.time.OffsetDateTime
 
 import com.example.manything.ancientail.domain.shop.ShopId
-import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.ancientail.domain.slip.{
+  SlipId,
+  SlipItem => EntityItem
+}
 import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipBase
 import com.example.manything.ancientail.domain.slip.sales.{SalesSlip => Entity}
 
@@ -26,7 +29,7 @@ case class SalesSlip(
   type SenderIdType = ShopId
   override type EntityType = Entity
 
-  override def to(): EntityType =
+  override def to(items: Seq[EntityItem] = Seq.empty): EntityType =
     Entity.apply(
       identity = identity,
       senderId = senderId,
