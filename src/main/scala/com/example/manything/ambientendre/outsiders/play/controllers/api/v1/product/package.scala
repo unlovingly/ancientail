@@ -9,18 +9,23 @@ package object product {
 
   import io.circe.{Decoder, Encoder}
 
-  import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.decodePublisherId
+  import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.publisherIdDecoder
+  import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.publisherIdEncoder
 
-  implicit val encodeProductId: Encoder[ProductId] =
+  implicit lazy val encodeProductId: Encoder[ProductId] =
     Encoder.encodeString.contramap[ProductId](_.value.toString)
 
-  implicit val decodeProductId: Decoder[ProductId] = Decoder.decodeString.emap {
-    str =>
+  implicit lazy val decodeProductId: Decoder[ProductId] =
+    Decoder.decodeString.emap { str =>
       Either
         .catchNonFatal(ProductId(UUID.fromString(str)))
         .leftMap(_ => "ProductId")
-  }
+    }
 
-  implicit val productDecoder: Decoder[Product] =
+  implicit lazy val productDecoder: Decoder[Product] =
     Decoder.forProduct3("identity", "name", "publisherId")(Product.apply)
+
+  implicit lazy val productEncoder: Encoder[Product] =
+    Encoder.forProduct3("id", "name", "publisherId")(p =>
+      (p.identity, p.name, p.publisherId))
 }

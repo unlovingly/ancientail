@@ -31,7 +31,7 @@ class ProductController(cc: ControllerComponents,
 
     val result = products
       .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.toString.asJson.spaces2))
+            right => Ok(right.asJson.spaces2))
 
     result
   }
@@ -47,7 +47,7 @@ class ProductController(cc: ControllerComponents,
 
       val result: Future[Result] = publisher
         .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.toString.asJson.spaces2))
+              right => Ok(right.asJson.spaces2))
 
       result
     }

@@ -12,17 +12,19 @@ package object publisher {
 
   import io.circe.{Decoder, Encoder}
 
-  implicit val encodePublisherId: Encoder[PublisherId] =
+  implicit lazy val publisherIdEncoder: Encoder[PublisherId] =
     Encoder.encodeString.contramap[PublisherId](_.value.toString)
 
-  implicit val decodePublisherId: Decoder[PublisherId] =
+  implicit lazy val publisherIdDecoder: Decoder[PublisherId] =
     Decoder.decodeString.emap { str =>
       Either
         .catchNonFatal(PublisherId(UUID.fromString(str)))
         .leftMap(_ => "PublisherId")
     }
 
-  implicit val publisherDecoder: Decoder[Publisher] =
+  implicit lazy val publisherDecoder: Decoder[Publisher] =
     Decoder.forProduct2("identity", "name")(Publisher.apply)
 
+  implicit lazy val publisherEncoder: Encoder[Publisher] =
+    Encoder.forProduct2("id", "name")(p => (p.identity, p.name))
 }
