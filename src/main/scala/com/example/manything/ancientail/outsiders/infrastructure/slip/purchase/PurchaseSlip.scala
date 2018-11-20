@@ -4,8 +4,11 @@ import java.time.OffsetDateTime
 
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.shop.ShopId
-import com.example.manything.ancientail.domain.slip.SlipId
-import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipBase
+import com.example.manything.ancientail.domain.slip
+import com.example.manything.ancientail.outsiders.infrastructure.slip.{
+  SlipBase,
+  SlipObject
+}
 
 /**
  * 購入伝票
@@ -17,10 +20,14 @@ import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipBase
  * @see SlipBase
  */
 case class PurchaseSlip(
-  override val identity: Option[SlipId] = None,
+  override val identity: Option[slip.SlipId] = None,
   override val senderId: PublisherId,
   override val receiverId: ShopId,
   override val publishedAt: OffsetDateTime
 ) extends SlipBase {
   type SenderIdType = PublisherId
+}
+
+object PurchaseSlip extends SlipObject[PurchaseSlip] {
+  override def from(e: slip.SlipBase): PurchaseSlip = ???
 }

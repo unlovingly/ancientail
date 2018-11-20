@@ -2,17 +2,31 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
 import scala.concurrent.ExecutionContext
 
+import slick.lifted
+
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
+import com.example.manything.ancientail.domain.slip.purchase.{
+  PurchaseSlipRepository,
+  PurchaseSlip => Entity
+}
+import com.example.manything.ancientail.outsiders.infrastructure.slip.{
+  SlipObject,
+  SlipRepositoryWithSlick
+}
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class PurchaseSlipRepositoryWithSlick(
-  implicit val db: Database,
-  implicit val executionContext: ExecutionContext)
-  extends PurchaseSlipRepository[EitherTFuture] {
-  override def retrieve(): EitherTFuture[Seq[EntityType]] = ???
-  override def retrieve(id: Seq[Identifier]): EitherTFuture[Seq[EntityType]] =
-    ???
+  implicit override val db: Database,
+  implicit override val executionContext: ExecutionContext)
+  extends SlipRepositoryWithSlick[PurchaseSlip]
+  with PurchaseSlipRepository[EitherTFuture] {
+  import com.example.manything.ancientail.outsiders.infrastructure.slip.purchase.PurchaseSlip.self
 
-  override def store(entity: EntityType): EitherTFuture[EntityType] = ???
+  override type TableType = PurchaseSlips
+  override type EntityType = Entity
+
+  protected val companion: SlipObject[PurchaseSlip] =
+    implicitly[SlipObject[PurchaseSlip]]
+  protected val slips: lifted.TableQuery[PurchaseSlips] =
+    lifted.TableQuery[PurchaseSlips]
 }

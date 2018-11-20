@@ -15,5 +15,5 @@ class PurchaseSlips(tag: Tag)
   def senderId = column[PublisherId]("sender_id")
 
   def * =
-    (identity.?, senderId, receiverId, publishedAt) <> (PurchaseSlip.tupled, PurchaseSlip.unapply)
+    (identity.?, senderId, receiverId, publishedAt) <> ((PurchaseSlip.apply _).tupled, PurchaseSlip.unapply)
 }

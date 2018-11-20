@@ -32,6 +32,14 @@ trait SlipBase extends Entity {
    * 発行日
    */
   val publishedAt: ZonedDateTime
+
+  // FIXME
+  def copy[A](identity: Option[SlipId] = identity,
+              senderId: SenderIdType = senderId,
+              receiverId: ShopId = receiverId,
+              items: Seq[SlipItem] = items,
+              approvedAt: ZonedDateTime = approvedAt,
+              publishedAt: ZonedDateTime = publishedAt): A = ???
 }
 
 case class SlipId(override val value: UUID) extends Identifiability[UUID] {
