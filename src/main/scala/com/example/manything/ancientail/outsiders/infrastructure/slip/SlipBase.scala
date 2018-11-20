@@ -9,6 +9,7 @@ import com.example.manything.ancientail.domain.slip.SlipId
  * 伝票
  */
 trait SlipBase {
+  type EntityType
   type SenderIdType
 
   val identity: Option[SlipId] = None
@@ -26,10 +27,12 @@ trait SlipBase {
   /**
    * 処理日
    */
-  val approvedAt: OffsetDateTime = OffsetDateTime.now(ZoneId.of("Asia/Tokyo"))
+  val approvedAt: OffsetDateTime
 
   /**
    * 発行日
    */
   val publishedAt: OffsetDateTime
+
+  def to(): EntityType
 }

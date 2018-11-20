@@ -14,5 +14,5 @@ class ExchangeSlips(tag: Tag)
   def senderId = column[ShopId]("sender_id")
 
   def * =
-    (identity.?, senderId, receiverId, publishedAt) <> ((ExchangeSlip.apply _).tupled, ExchangeSlip.unapply)
+    (identity.?, senderId, receiverId, publishedAt, approvedAt) <> ((ExchangeSlip.apply _).tupled, ExchangeSlip.unapply)
 }

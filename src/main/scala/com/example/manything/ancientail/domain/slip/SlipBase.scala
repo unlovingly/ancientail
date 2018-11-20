@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.domain.slip
 
-import java.time.{ZoneId, ZonedDateTime}
+import java.time.ZonedDateTime
 import java.util.UUID
 
 import com.example.manything.ancientail.domain.shop.ShopId
@@ -26,20 +26,12 @@ trait SlipBase extends Entity {
   /**
    * 処理日
    */
-  val approvedAt: ZonedDateTime = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
+  val approvedAt: ZonedDateTime
 
   /**
    * 発行日
    */
   val publishedAt: ZonedDateTime
-
-  // FIXME
-  def copy[A](identity: Option[SlipId] = identity,
-              senderId: SenderIdType = senderId,
-              receiverId: ShopId = receiverId,
-              items: Seq[SlipItem] = items,
-              approvedAt: ZonedDateTime = approvedAt,
-              publishedAt: ZonedDateTime = publishedAt): A = ???
 }
 
 case class SlipId(override val value: UUID) extends Identifiability[UUID] {

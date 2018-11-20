@@ -25,6 +25,25 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
   // TODO
   val shopId: ShopId = ShopId(new UUID(0, 0))
 
+  def index() = Action.async { implicit request =>
+    import cats.implicits._
+
+    import io.circe.generic.auto._
+    import io.circe.syntax._
+
+    import com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.encodeShopId
+    import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.publisherIdEncoder
+
+    val slips: EitherTFuture[Seq[PurchaseSlip]] =
+      slipUseCases.retrieve()
+
+    val result = slips
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.asJson.spaces2))
+
+    result
+  }
+
   def detail(id: SlipId) =
     Action.async { implicit request =>
       import cats.implicits._

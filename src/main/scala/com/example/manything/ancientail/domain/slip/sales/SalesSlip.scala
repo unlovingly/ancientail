@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.domain.slip.sales
 
-import java.time.ZonedDateTime
+import java.time.{ZoneId, ZonedDateTime}
 
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip._
@@ -18,7 +18,9 @@ case class SalesSlip(
   override val senderId: ShopId,
   override val receiverId: ShopId,
   override val items: Seq[SlipItem],
-  override val publishedAt: ZonedDateTime
+  override val publishedAt: ZonedDateTime,
+  override val approvedAt: ZonedDateTime =
+    ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
 ) extends SlipBase {
   type SenderIdType = ShopId
 }

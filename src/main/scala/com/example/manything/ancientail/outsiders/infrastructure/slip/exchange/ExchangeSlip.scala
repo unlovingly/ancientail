@@ -21,9 +21,21 @@ case class ExchangeSlip(
   override val identity: Option[SlipId] = None,
   override val senderId: ShopId,
   override val receiverId: ShopId,
-  override val publishedAt: OffsetDateTime
+  override val publishedAt: OffsetDateTime,
+  override val approvedAt: OffsetDateTime
 ) extends SlipBase {
   type SenderIdType = ShopId
+  override type EntityType = Entity
+
+  override def to(): EntityType =
+    Entity.apply(
+      identity = identity,
+      senderId = senderId,
+      receiverId = receiverId,
+      items = Seq.empty,
+      publishedAt = publishedAt.toZonedDateTime,
+      approvedAt = approvedAt.toZonedDateTime
+    )
 }
 
 object ExchangeSlip {
@@ -32,6 +44,7 @@ object ExchangeSlip {
       identity = e.identity,
       receiverId = e.receiverId,
       senderId = e.senderId,
-      publishedAt = e.publishedAt.toOffsetDateTime
+      publishedAt = e.publishedAt.toOffsetDateTime,
+      approvedAt = e.approvedAt.toOffsetDateTime
     )
 }

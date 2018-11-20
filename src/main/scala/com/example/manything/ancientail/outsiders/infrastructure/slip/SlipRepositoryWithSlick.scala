@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 import cats.data.EitherT
 
@@ -24,6 +24,7 @@ abstract class SlipRepositoryWithSlick[A <: SlipBase](
   protected val slips: lifted.TableQuery[TableType]
 
   override def retrieve(): EitherTFuture[Seq[EntityType]] = ???
+
   override def retrieve(id: Seq[Identifier]): EitherTFuture[Seq[EntityType]] =
     ???
 
@@ -38,12 +39,17 @@ abstract class SlipRepositoryWithSlick[A <: SlipBase](
     val a = query.asTry.map { _.toEither }
 
     EitherT(db.run(a)).map {
-      case (id, items) =>
+      case (id, items) => {
         val i: Seq[EntityItem] = items.flatten.map(_.to())
 
-        entity.copy(identity = Some(id), items = i)
+        updateEntity(entity, Some(id), i)
+      }
     }
   }
+
+  def updateEntity(entity: EntityType,
+                   id: Option[SlipId],
+                   items: Seq[EntityItem]): EntityType
 
   private def store(slipId: SlipId, ss: Seq[EntityItem]) = {
 

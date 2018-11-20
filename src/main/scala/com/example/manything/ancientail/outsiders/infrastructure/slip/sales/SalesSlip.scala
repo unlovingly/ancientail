@@ -5,6 +5,7 @@ import java.time.OffsetDateTime
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.SlipId
 import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipBase
+import com.example.manything.ancientail.domain.slip.sales.{SalesSlip => Entity}
 
 /**
  * 売上伝票
@@ -19,7 +20,19 @@ case class SalesSlip(
   override val identity: Option[SlipId] = None,
   override val senderId: ShopId,
   override val receiverId: ShopId,
-  override val publishedAt: OffsetDateTime
+  override val publishedAt: OffsetDateTime,
+  override val approvedAt: OffsetDateTime
 ) extends SlipBase {
   type SenderIdType = ShopId
+  override type EntityType = Entity
+
+  override def to(): EntityType =
+    Entity.apply(
+      identity = identity,
+      senderId = senderId,
+      receiverId = receiverId,
+      items = Seq.empty,
+      publishedAt = publishedAt.toZonedDateTime,
+      approvedAt = approvedAt.toZonedDateTime
+    )
 }

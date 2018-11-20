@@ -40,7 +40,7 @@ package object slip {
         value.value.toString
     }
 
-  implicit val slipBaseEncoder: Encoder[SlipBase] = Encoder.instance {
+  implicit lazy val slipBaseEncoder: Encoder[SlipBase] = Encoder.instance {
     case e @ ExchangeSlip(_, _, _, _, _) => e.asJson
     case e @ PurchaseSlip(_, _, _, _, _) => e.asJson
   }
