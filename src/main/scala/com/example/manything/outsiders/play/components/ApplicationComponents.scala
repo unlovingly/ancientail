@@ -2,7 +2,6 @@ package com.example.manything.outsiders.play.components
 
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.filters.HttpFiltersComponents
 import router.Routes
 
 import com.example.manything.ambientendre.outsiders.play.components.{
@@ -21,7 +20,7 @@ class ApplicationComponents(context: Context)
   with PublisherComponents
   with ShopComponents
   with SlipComponents
-  with HttpFiltersComponents
+  with FiltersComponents
   with controllers.AssetsComponents {
   override lazy val router: Routes =
     new Routes(httpErrorHandler,
