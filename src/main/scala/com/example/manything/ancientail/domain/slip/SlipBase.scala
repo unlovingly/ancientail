@@ -8,9 +8,14 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 trait SlipBase extends Entity {
   override type Identifier = SlipId
-  type SenderIdType
+  type SenderIdType <: Identifiability[UUID]
 
   override val identity: Option[SlipId] = None
+
+  /**
+   * 伝票番号
+   */
+  val number: String
 
   /**
    * 発行者
@@ -21,6 +26,10 @@ trait SlipBase extends Entity {
    * 受領者
    */
   val receiverId: ShopId
+
+  /**
+   * 対象商品
+   */
   val items: Seq[SlipItem]
 
   /**

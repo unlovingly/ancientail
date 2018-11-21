@@ -34,11 +34,12 @@ abstract class SlipRepositoryWithSlick[A <: SlipBase](
       q2 <- store(q1, entity.items)
     } yield (q1, q2)
 
-    val a = query.asTry.map { _.toEither }
+    val a = query.transactionally.asTry.map { _.toEither }
 
     EitherT(db.run(a)).map {
       case (id, items) => {
-        val i: Seq[EntityItem] = items.flatten.map(_.to())
+        //val i: Seq[EntityItem] = items.flatten.map(_.to())
+        val i: Seq[EntityItem] = items.map(_.to())
 
         updateEntity(entity, Some(id), i)
       }
@@ -50,7 +51,6 @@ abstract class SlipRepositoryWithSlick[A <: SlipBase](
                    items: Seq[EntityItem]): EntityType
 
   private def store(slipId: SlipId, ss: Seq[EntityItem]) = {
-
     val targets = ss.map { i =>
       SlipItem(identity = i.identity,
                productId = i.productId,
@@ -61,7 +61,8 @@ abstract class SlipRepositoryWithSlick[A <: SlipBase](
 
     DBIO.sequence {
       targets.map { t =>
-        (slipItems returning slipItems).insertOrUpdate(t)
+        //(slipItems returning slipItems).insertOrUpdate(t)
+        (slipItems returning slipItems) += t
       }
     }
   }

@@ -18,6 +18,11 @@ trait SlipBase {
   val identity: Option[SlipId] = None
 
   /**
+   * 伝票番号
+   */
+  val number: String
+
+  /**
    * 発行者
    */
   val senderId: SenderIdType

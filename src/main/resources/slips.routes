@@ -6,5 +6,5 @@
 POST    /storing    com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.storing
 POST    /exchange   com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.exchange
 
-GET     /index      com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.index
+GET     /           com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.index
 GET     /detail/:id com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController.detail(id: SlipId)

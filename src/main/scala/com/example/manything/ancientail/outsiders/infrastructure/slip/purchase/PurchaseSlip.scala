@@ -24,6 +24,7 @@ import com.example.manything.ancientail.outsiders.infrastructure.slip.{
  */
 case class PurchaseSlip(
   override val identity: Option[slip.SlipId] = None,
+  override val number: String,
   override val senderId: PublisherId,
   override val receiverId: ShopId,
   override val publishedAt: OffsetDateTime,
@@ -35,6 +36,7 @@ case class PurchaseSlip(
   override def to(items: Seq[slip.SlipItem] = Seq.empty): EntityType =
     Entity.apply(
       identity = identity,
+      number = number,
       senderId = senderId,
       receiverId = receiverId,
       items = items,
@@ -44,5 +46,13 @@ case class PurchaseSlip(
 }
 
 object PurchaseSlip extends SlipObject[PurchaseSlip] {
-  override def from(e: slip.SlipBase): PurchaseSlip = ???
+  override def from(e: slip.SlipBase): PurchaseSlip =
+    PurchaseSlip(
+      identity = e.identity,
+      number = e.number,
+      senderId = PublisherId(e.senderId.value), // FIXME
+      receiverId = e.receiverId,
+      publishedAt = e.publishedAt.toOffsetDateTime,
+      approvedAt = e.approvedAt.toOffsetDateTime
+    )
 }

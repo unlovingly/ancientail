@@ -13,5 +13,5 @@ class SalesSlips(tag: Tag) extends SlipsBase[SalesSlip](tag, "purchase_slips") {
   def senderId = column[ShopId]("sender_id")
 
   def * =
-    (identity.?, senderId, receiverId, publishedAt) <> (SalesSlip.tupled, SalesSlip.unapply)
+    (identity.?, number, senderId, receiverId, publishedAt, approvedAt) <> (SalesSlip.tupled, SalesSlip.unapply)
 }

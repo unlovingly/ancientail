@@ -19,6 +19,9 @@ package object slip {
 
   import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.encodeProductId
   import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.decodeProductId
+  import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.publisherIdDecoder
+  import com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.shopIdDecoder
+  import io.circe.java8.time.decodeZonedDateTime
 
   implicit lazy val slipItemIdEncoder: Encoder[SlipItemId] =
     Encoder.encodeString.contramap[SlipItemId](_.value.toString)
@@ -59,11 +62,11 @@ package object slip {
     }
 
   implicit lazy val slipItemDecoder: Decoder[SlipItem] =
-    Decoder.forProduct4("identity", "productId", "amount", "price")(
-      SlipItem.apply)
+    Decoder.forProduct4("id", "productId", "amount", "price")(SlipItem.apply)
 
   implicit lazy val purchaseSlipDecoder: Decoder[PurchaseSlip] =
-    Decoder.forProduct6("identity",
+    Decoder.forProduct7("identity",
+                        "number",
                         "senderId",
                         "receiverId",
                         "items",
@@ -71,7 +74,8 @@ package object slip {
                         "approvedAt")(PurchaseSlip.apply)
 
   implicit lazy val salesSlipDecoder: Decoder[SalesSlip] =
-    Decoder.forProduct6("identity",
+    Decoder.forProduct7("identity",
+                        "number",
                         "senderId",
                         "receiverId",
                         "items",
@@ -79,7 +83,8 @@ package object slip {
                         "approvedAt")(SalesSlip.apply)
 
   implicit lazy val exchangeSlipDecoder: Decoder[ExchangeSlip] =
-    Decoder.forProduct6("identity",
+    Decoder.forProduct7("identity",
+                        "number",
                         "senderId",
                         "receiverId",
                         "items",

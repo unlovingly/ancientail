@@ -23,7 +23,7 @@ package object product {
     }
 
   implicit lazy val productDecoder: Decoder[Product] =
-    Decoder.forProduct3("identity", "name", "publisherId")(Product.apply)
+    Decoder.forProduct3("id", "name", "publisherId")(Product.apply)
 
   implicit lazy val productEncoder: Encoder[Product] =
     Encoder.forProduct3("id", "name", "publisherId")(p =>

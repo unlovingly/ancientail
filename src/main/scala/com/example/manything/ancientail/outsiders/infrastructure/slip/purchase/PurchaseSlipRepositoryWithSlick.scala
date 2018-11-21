@@ -64,6 +64,7 @@ class PurchaseSlipRepositoryWithSlick(
                             id: Option[SlipId],
                             items: Seq[SlipItem]): Entity = {
     Entity(identity = id,
+           number = entity.number,
            senderId = entity.senderId,
            receiverId = entity.receiverId,
            items = items,
