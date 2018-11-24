@@ -10,7 +10,7 @@ import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 class Stocks(tag: Tag) extends Table[Stock](tag, "stocks") {
   import com.example.manything.ambientendre.outsiders.infrastructure.product._
 
-  def pluCode = column[PluCode]("plu_code", O.PrimaryKey)
+  def pluCode = column[PluCode]("plu_code", O.PrimaryKey, O.AutoInc)
   def shopId = column[ShopId]("shop_id")
   def productId = column[ProductId]("product_id")
   def amount = column[Amount]("amount")

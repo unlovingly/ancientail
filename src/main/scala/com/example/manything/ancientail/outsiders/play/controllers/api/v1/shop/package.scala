@@ -7,9 +7,17 @@ import com.example.manything.ancientail.domain.shop._
 package object shop {
   import cats.syntax.either._
 
+  import io.circe.generic.semiauto._
   import io.circe.{Decoder, Encoder}
 
   import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.decodeProductId
+  import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.encodeProductId
+
+  implicit lazy val stockEncoder: Encoder[Stock] =
+    deriveEncoder
+
+  implicit lazy val pluCodeEncoder: Encoder[PluCode] =
+    Encoder.encodeString.contramap[PluCode](_.value.toString)
 
   implicit lazy val shopIdEncoder: Encoder[ShopId] =
     Encoder.encodeString.contramap[ShopId](_.value.toString)

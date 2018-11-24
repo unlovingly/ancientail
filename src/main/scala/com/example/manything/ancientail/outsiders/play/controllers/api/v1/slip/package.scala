@@ -17,6 +17,7 @@ package object slip {
   import io.circe.syntax._
   import io.circe.{Decoder, Encoder}
 
+  // a la carte にすればマシになるのでは？
   import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.encodeProductId
   import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.decodeProductId
   import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.publisherIdDecoder

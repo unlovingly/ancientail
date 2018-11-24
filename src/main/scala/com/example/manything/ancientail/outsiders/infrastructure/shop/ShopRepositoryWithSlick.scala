@@ -5,7 +5,10 @@ import scala.concurrent.ExecutionContext
 import cats.data.EitherT
 
 import com.example.manything.EitherTFuture
+import com.example.manything.ambientendre.domain.product
 import com.example.manything.ambientendre.domain.product.ProductId
+import com.example.manything.ambientendre.outsiders.infrastructure.product.Products
+import com.example.manything.ancientail.domain.shop
 import com.example.manything.ancientail.domain.shop.{
   PluCode,
   ShopId,
@@ -31,7 +34,7 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     import cats.implicits._
 
     val q = for {
-      p <- shops if p.identity === id
+      p <- shops if p.identity === id.bind
     } yield p
     val a = q.result.asTry.map { _.toEither }
 
@@ -41,15 +44,16 @@ class ShopRepositoryWithSlick(implicit val db: Database,
   override def store(entity: EntityType): EitherTFuture[EntityType] = {
     import cats.implicits._
 
-    val q1 = (shops returning shops.map { _.identity }) +=
-      Shop(identity = entity.identity, name = entity.name)
-    val q2 = q1.flatMap { id =>
-      store(id, entity.stocks)
+    val test = (shops returning shops.map { _.identity })
+      .insertOrUpdate(Shop(identity = entity.identity, name = entity.name))
 
-      q1
-    }
+    val q = for {
+      q1 <- (shops returning shops.map { _.identity })
+        .+=(Shop(identity = entity.identity, name = entity.name))
+      _ <- store(q1, entity.stocks)
+    } yield q1
 
-    val a = q2.asTry.map { _.toEither }
+    val a = q.asTry.map { _.toEither }
 
     EitherT(db.run(a)).map { id =>
       entity.copy(identity = Some(id))
@@ -68,7 +72,8 @@ class ShopRepositoryWithSlick(implicit val db: Database,
 
     DBIO.sequence {
       targets.map { t =>
-        (stocks returning stocks).insertOrUpdate(t)
+        //(slipItems returning slipItems).insertOrUpdate(t)
+        (stocks returning stocks) += t
       }
     }
   }
@@ -78,8 +83,8 @@ class ShopRepositoryWithSlick(implicit val db: Database,
     productIds: Seq[ProductId]): EitherTFuture[EntityType] = {
     import cats.implicits._
 
-    val q1 = shops.filter(_.identity === shopId).result
-    val q2 = stocks.filter(_.shopId === shopId).result
+    val q1 = shops.filter(_.identity === shopId.bind).result
+    val q2 = stocks.filter(_.shopId === shopId.bind).result
 
     val a = (q1 zip q2).asTry.map { _.toEither }
 
@@ -88,6 +93,37 @@ class ShopRepositoryWithSlick(implicit val db: Database,
         val p = h.head
 
         Entity(p.identity, p.name, t)
+    }
+  }
+
+  override def retrieveWithStocks(q: String): EitherTFuture[Seq[EntityType]] = {
+    import cats.implicits._
+
+    import com.example.manything.ambientendre.outsiders.infrastructure.product._
+
+    val query = for {
+      p <- products if p.name like s"%$q%".bind
+      t <- stocks if p.identity === t.productId
+      h <- shops if t.shopId === h.identity
+    } yield (h, t)
+
+    val a = query.result.asTry.map { _.toEither }
+
+    EitherT(db.run(a)).map { tup =>
+      val test =
+        tup
+          .groupBy(_._1.identity)
+          .mapValues { tuples =>
+            val ss = tuples.head._1
+            val sss = tuples.map {
+              _._2
+            }
+
+            Entity(ss.identity, ss.name, sss)
+          }
+          .values
+
+      test.toSeq
     }
   }
 

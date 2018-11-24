@@ -33,6 +33,22 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
     result
   }
 
+  def stocks(q: String) = Action.async { implicit request =>
+    import cats.implicits._
+
+    import io.circe.generic.auto._
+    import io.circe.syntax._
+
+    val shops: EitherTFuture[Seq[Shop]] =
+      shopUseCases.retrieveWithStocks(q)
+
+    val result = shops
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.asJson.spaces2))
+
+    result
+  }
+
   def performCreation() =
     Action(circe.tolerantJson[Shop]).async { implicit request =>
       import cats.implicits._
