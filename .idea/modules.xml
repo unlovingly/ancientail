@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ancientail.iml" filepath="$PROJECT_DIR$/.idea/modules/ancientail.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ancientail-build.iml" filepath="$PROJECT_DIR$/.idea/modules/ancientail-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/database-flyway.iml" filepath="$PROJECT_DIR$/.idea/modules/database-flyway.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/project-flyway-build.iml" filepath="$PROJECT_DIR$/.idea/modules/project-flyway-build.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/root-build.iml" filepath="$PROJECT_DIR$/.idea/modules/root-build.iml" />
     </modules>
   </component>
 </project>
