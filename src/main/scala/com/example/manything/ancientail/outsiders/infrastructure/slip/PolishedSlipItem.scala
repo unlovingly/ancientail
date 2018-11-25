@@ -4,7 +4,7 @@ import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.domain.slip.{SlipItem => EntityItem}
 
-case class SlipItem(
+case class PolishedSlipItem(
   identity: Option[SlipItemId] = None,
   productId: ProductId,
   amount: Amount,

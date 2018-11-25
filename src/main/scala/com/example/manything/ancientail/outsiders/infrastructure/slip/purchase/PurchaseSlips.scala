@@ -1,19 +1,27 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
+import java.time.OffsetDateTime
+
 import slick.lifted.Tag
 
 import com.example.manything.ambientendre.domain.publisher.PublisherId
-import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipsBase
+import com.example.manything.ancientail.domain.shop.ShopId
+import com.example.manything.ancientail.domain.slip.SlipId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class PurchaseSlips(tag: Tag)
-  extends SlipsBase[PurchaseSlip](tag, "purchase_slips") {
+  extends Table[PolishedPurchaseSlip](tag, "purchase_slips") {
   import com.example.manything.ambientendre.outsiders.infrastructure.publisher._
   import com.example.manything.ancientail.outsiders.infrastructure.shop._
   import com.example.manything.ancientail.outsiders.infrastructure.slip._
 
+  def identity = column[SlipId]("slip_id", O.PrimaryKey, O.AutoInc)
+  def number = column[String]("number")
   def senderId = column[PublisherId]("sender_id")
+  def receiverId = column[ShopId]("shop_id")
+  def approvedAt = column[OffsetDateTime]("approved_at")
+  def publishedAt = column[OffsetDateTime]("published_at")
 
   def * =
-    (identity.?, number, senderId, receiverId, publishedAt, approvedAt) <> ((PurchaseSlip.apply _).tupled, PurchaseSlip.unapply)
+    (identity.?, number, senderId, receiverId, publishedAt, approvedAt) <> ((PolishedPurchaseSlip.apply _).tupled, PolishedPurchaseSlip.unapply)
 }

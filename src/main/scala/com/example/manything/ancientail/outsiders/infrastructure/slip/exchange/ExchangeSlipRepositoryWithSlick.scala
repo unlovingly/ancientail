@@ -8,10 +8,7 @@ import slick.lifted
 
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
-import com.example.manything.ancientail.domain.slip.{
-  SlipId,
-  SlipItem => EntityItem
-}
+import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class ExchangeSlipRepositoryWithSlick(
@@ -25,13 +22,19 @@ class ExchangeSlipRepositoryWithSlick(
   override def store(entity: EntityType): EitherTFuture[EntityType] = {
     import cats.implicits._
 
-    import com.example.manything.ancientail.outsiders.infrastructure.slip._
+    import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
 
     val slips = lifted.TableQuery[ExchangeSlips]
 
     val query = for {
-      q1 <- (slips returning slips.map { _.identity }) += ExchangeSlip.from(
-        entity)
+      q1 <- (slips returning slips.map { _.identity }) += PolishedExchangeSlip(
+        identity = entity.identity,
+        number = entity.number,
+        senderId = entity.senderId,
+        receiverId = entity.receiverId,
+        publishedAt = entity.publishedAt.toOffsetDateTime,
+        approvedAt = entity.approvedAt.toOffsetDateTime
+      )
       q2 <- store(q1, entity.items)
     } yield (q1, q2)
 
@@ -39,21 +42,21 @@ class ExchangeSlipRepositoryWithSlick(
 
     EitherT(db.run(a)).map {
       case (id, items) =>
-        val i: Seq[EntityItem] = items.flatten.map(_.to())
+        val i: Seq[SlipItem] = items.flatten.map(_.to())
 
         entity.copy(identity = Some(id), items = i)
     }
   }
 
-  private def store(slipId: SlipId, ss: Seq[EntityItem]) = {
+  private def store(slipId: SlipId, ss: Seq[SlipItem]) = {
     import com.example.manything.ancientail.outsiders.infrastructure.slip._
 
     val targets = ss.map { i =>
-      SlipItem(identity = i.identity,
-               productId = i.productId,
-               amount = i.amount,
-               price = i.price,
-               slipId = slipId)
+      PolishedSlipItem(identity = i.identity,
+                       productId = i.productId,
+                       amount = i.amount,
+                       price = i.price,
+                       slipId = slipId)
     }
 
     DBIO.sequence {

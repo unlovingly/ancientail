@@ -6,7 +6,8 @@ import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.slip.{SlipId, SlipItemId}
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-class SlipItems(tag: Tag) extends Table[SlipItem](tag, "purchase_slip_items") {
+class SlipItems(tag: Tag)
+  extends Table[PolishedSlipItem](tag, "purchase_slip_items") {
   import com.example.manything.ambientendre.outsiders.infrastructure.product._
 
   def identity = column[SlipItemId]("slip_item_id", O.PrimaryKey, O.AutoInc)
@@ -17,5 +18,5 @@ class SlipItems(tag: Tag) extends Table[SlipItem](tag, "purchase_slip_items") {
   def slipId = column[SlipId]("slip_id")
 
   def * =
-    (identity.?, productId, amount, price, slipId) <> (SlipItem.tupled, SlipItem.unapply)
+    (identity.?, productId, amount, price, slipId) <> (PolishedSlipItem.tupled, PolishedSlipItem.unapply)
 }

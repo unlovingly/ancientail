@@ -1,7 +1,11 @@
 package com.example.manything.ancientail.domain.slip.purchase
 
-import com.example.manything.ancientail.domain.slip.SlipRepository
+import java.util.UUID
 
-trait PurchaseSlipRepository[A[_]] extends SlipRepository[A] {
+import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.roundelayout.domain.Repository
+
+trait PurchaseSlipRepository[A[_]] extends Repository[UUID, A] {
   override type EntityType = PurchaseSlip
+  override type Identifier = SlipId
 }

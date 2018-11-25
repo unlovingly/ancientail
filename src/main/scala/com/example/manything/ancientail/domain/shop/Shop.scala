@@ -17,7 +17,7 @@ case class Shop(
   /**
    * 入庫処理
    */
-  def inbound(slip: SlipBase): Shop = {
+  def inbound(slip: Slip): Shop = {
     import cats.implicits._
 
     val newStocks: Seq[Stock] = convertFrom(slip.items)
@@ -34,7 +34,7 @@ case class Shop(
   /**
    * 出庫処理
    */
-  def outbound(slip: SlipBase): Shop = {
+  def outbound(slip: Slip): Shop = {
     val newStocks: Seq[Stock] = convertFrom(slip.items)
 
     val result: Seq[Stock] = (stocks ++ newStocks)
