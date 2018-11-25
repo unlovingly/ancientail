@@ -21,6 +21,8 @@ class ProductController(cc: ControllerComponents,
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
+  import com.example.manything.ambientendre.outsiders.infrastructure.product.circe.ProductCodec._
+
   def index() = Action.async { implicit request: Request[AnyContent] =>
     import cats.implicits._
 

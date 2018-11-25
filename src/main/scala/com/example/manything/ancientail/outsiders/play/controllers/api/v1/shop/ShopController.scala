@@ -18,6 +18,8 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
+  import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.ShopCodec._
+
   def index() = Action.async { implicit request =>
     import cats.implicits._
 

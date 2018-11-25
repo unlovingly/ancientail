@@ -1,4 +1,4 @@
-package com.example.manything.ambientendre.outsiders.play.controllers.api.v1
+package com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe
 
 import java.util.UUID
 
@@ -7,13 +7,10 @@ import com.example.manything.ambientendre.domain.publisher.{
   PublisherId
 }
 
-package object publisher {
+trait PublisherDecoder {
   import cats.syntax.either._
 
-  import io.circe.{Decoder, Encoder}
-
-  implicit lazy val publisherIdEncoder: Encoder[PublisherId] =
-    Encoder.encodeString.contramap[PublisherId](_.value.toString)
+  import io.circe.Decoder
 
   implicit lazy val publisherIdDecoder: Decoder[PublisherId] =
     Decoder.decodeString.emap { str =>
@@ -24,7 +21,4 @@ package object publisher {
 
   implicit lazy val publisherDecoder: Decoder[Publisher] =
     Decoder.forProduct2("identity", "name")(Publisher.apply)
-
-  implicit lazy val publisherEncoder: Encoder[Publisher] =
-    Encoder.forProduct2("id", "name")(p => (p.identity, p.name))
 }

@@ -23,6 +23,8 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
+  import com.example.manything.ancientail.outsiders.infrastructure.slip.circe.SlipCodec._
+
   // TODO
   val shopId: ShopId = ShopId(new UUID(0, 0))
 
@@ -31,9 +33,6 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
 
     import io.circe.generic.auto._
     import io.circe.syntax._
-
-    import com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.shopIdEncoder
-    import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.publisherIdEncoder
 
     val slips: EitherTFuture[Seq[PurchaseSlip]] =
       slipUseCases.retrieve()
@@ -51,9 +50,6 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
 
       import io.circe.generic.auto._
       import io.circe.syntax._
-
-      import com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.shopIdEncoder
-      import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.publisherIdEncoder
 
       val slips: EitherTFuture[PurchaseSlip] =
         slipUseCases.retrieve(shopId, id)

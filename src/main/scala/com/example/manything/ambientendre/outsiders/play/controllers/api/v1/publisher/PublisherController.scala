@@ -19,6 +19,8 @@ class PublisherController(cc: ControllerComponents,
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
+  import com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe.PublisherCodec._
+
   def index() = Action.async { implicit request =>
     import cats.implicits._
 
