@@ -53,6 +53,7 @@ class PurchaseSlipRepositoryWithSlick(
     val q = slips filter (_.identity === id) join slipItems on (_.identity === _.slipId)
     val a = q.result.asTry.map { _.toEither }
 
+    // FIXME
     val result = EitherT(db.run(a)).map { p =>
       p.head._1.to(p.map(_._2.to()))
     }

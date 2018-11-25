@@ -14,6 +14,7 @@ import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
+import com.example.manything.ancientail.domain.slip.sales.SalesSlip
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
 
 @Singleton
@@ -72,6 +73,22 @@ class SlipController(cc: ControllerComponents, slipUseCases: SlipUseCases)(
 
       val slip =
         slipUseCases.exchange(request.body)
+
+      val result: Future[Result] = slip
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
+              right => Ok(right.toString.asJson.spaces2))
+
+      result
+    }
+
+  def sales() =
+    Action(circe.tolerantJson[SalesSlip]).async { implicit request =>
+      import cats.implicits._
+
+      import io.circe.syntax._
+
+      val slip: EitherTFuture[SalesSlip] =
+        slipUseCases.sell(request.body)
 
       val result: Future[Result] = slip
         .fold(left => BadRequest(left.toString.asJson.spaces2),

@@ -3,12 +3,16 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.sales
 import java.time.OffsetDateTime
 
 import com.example.manything.ancientail.domain.shop.ShopId
+import com.example.manything.ancientail.domain.slip
+import com.example.manything.ancientail.domain.slip.sales.{SalesSlip => Entity}
 import com.example.manything.ancientail.domain.slip.{
   SlipId,
   SlipItem => EntityItem
 }
-import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipBase
-import com.example.manything.ancientail.domain.slip.sales.{SalesSlip => Entity}
+import com.example.manything.ancientail.outsiders.infrastructure.slip.{
+  SlipBase,
+  SlipObject
+}
 
 /**
  * 売上伝票
@@ -39,5 +43,17 @@ case class SalesSlip(
       items = Seq.empty,
       publishedAt = publishedAt.toZonedDateTime,
       approvedAt = approvedAt.toZonedDateTime
+    )
+}
+
+object SalesSlip extends SlipObject[SalesSlip] {
+  override def from(e: slip.SlipBase): SalesSlip =
+    SalesSlip(
+      identity = e.identity,
+      number = e.number,
+      senderId = ShopId(e.senderId.value), // FIXME
+      receiverId = e.receiverId,
+      publishedAt = e.publishedAt.toOffsetDateTime,
+      approvedAt = e.approvedAt.toOffsetDateTime
     )
 }

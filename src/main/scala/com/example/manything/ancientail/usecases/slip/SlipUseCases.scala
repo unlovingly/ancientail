@@ -16,3 +16,4 @@ class SlipUseCases(
   with RetrieveOneSlip
   with StoringProducts
   with ExchangeProducts
+  with SaleProducts
