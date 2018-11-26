@@ -10,6 +10,7 @@ import com.example.manything.ancientail.domain.slip.SlipId
  * 購入伝票
  *
  * 販売者 (メーカー) が発行する伝票。納品書などに相当する
+ *
  * @param identity
  * @param senderId SenderId
  * @param receiverId ReceiverId

@@ -16,7 +16,12 @@ trait ShopRepository[A[_]] extends Repository[UUID, A] {
 
   /**
    * 棚卸し処理、理論在庫状態を保存する
+   *
    * @return
    */
   def inventory(copyTo: String): A[Unit]
+
+  def retrieve(): A[Seq[EntityType]]
+  def retrieve(id: Identifier): A[EntityType]
+  def store(entity: EntityType): A[EntityType]
 }

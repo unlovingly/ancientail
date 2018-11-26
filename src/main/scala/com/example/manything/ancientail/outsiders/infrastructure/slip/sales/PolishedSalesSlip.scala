@@ -9,6 +9,7 @@ import com.example.manything.ancientail.domain.slip.SlipId
  * 売上伝票
  *
  * 顧客への販売時に店舗が発行する。一人に対して
+ *
  * @param identity
  * @param senderId SenderId 販売店
  * @param receiverId ReceiverId 正確には受領者だが販売店とする

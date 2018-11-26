@@ -127,6 +127,7 @@ class ShopRepositoryWithSlick(val db: Database)(
   /**
    * 棚卸し処理、理論在庫状態を保存する
    * TODO
+   *
    * @return
    */
   override def inventory(copyTo: String): EitherTFuture[Unit] = {

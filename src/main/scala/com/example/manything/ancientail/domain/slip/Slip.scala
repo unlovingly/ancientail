@@ -6,6 +6,11 @@ import java.util.UUID
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
+/**
+ * 伝票
+ *
+ * @note 入出庫履歴を別途用意すべきかもしれない
+ */
 trait Slip extends Entity {
   override type Identifier = SlipId
 

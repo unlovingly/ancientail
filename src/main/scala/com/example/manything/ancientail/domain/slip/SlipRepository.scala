@@ -1,12 +1,12 @@
-package com.example.manything.ambientendre.domain.publisher
+package com.example.manything.ancientail.domain.slip
 
 import java.util.UUID
 
 import com.example.manything.roundelayout.domain.Repository
 
-trait PublisherRepository[A[_]] extends Repository[UUID, A] {
-  override type EntityType = Publisher
-  override type Identifier = PublisherId
+trait SlipRepository[A[_]] extends Repository[UUID, A] {
+  override type EntityType <: Slip
+  override type Identifier = SlipId
 
   def retrieve(): A[Seq[EntityType]]
   def retrieve(id: Identifier): A[EntityType]
