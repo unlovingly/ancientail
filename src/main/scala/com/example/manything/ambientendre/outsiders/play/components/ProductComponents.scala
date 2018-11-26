@@ -14,16 +14,14 @@ import com.example.manything.outsiders.play.components.OutsiderComponents
 
 trait ProductComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
-  implicit private lazy val productRepository
-    : ProductRepository[EitherTFuture] =
-    new ProductRepositoryWithSlick()
-  implicit private lazy val publisherRepository
-    : PublisherRepository[EitherTFuture] =
-    new PublisherRepositoryWithSlick()
+  private lazy val productRepository: ProductRepository[EitherTFuture] =
+    new ProductRepositoryWithSlick(db = db)
+  private lazy val publisherRepository: PublisherRepository[EitherTFuture] =
+    new PublisherRepositoryWithSlick(db = db)
   private lazy val productUseCases =
-    new ProductUseCases()
+    new ProductUseCases(products = productRepository)
   private lazy val publisherUseCases =
-    new PublisherUseCases()
+    new PublisherUseCases(publishers = publisherRepository)
 
   lazy val productController =
     new ProductController(

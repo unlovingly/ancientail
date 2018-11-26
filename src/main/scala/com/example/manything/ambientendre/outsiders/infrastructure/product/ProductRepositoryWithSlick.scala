@@ -8,8 +8,7 @@ import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.product._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-class ProductRepositoryWithSlick(
-  implicit val db: Database,
+class ProductRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
   extends ProductRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {

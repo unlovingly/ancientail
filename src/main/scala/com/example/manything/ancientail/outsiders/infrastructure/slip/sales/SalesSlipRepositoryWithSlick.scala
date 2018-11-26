@@ -8,8 +8,7 @@ import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.slip.sales.SalesSlipRepository
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-class SalesSlipRepositoryWithSlick(
-  implicit val db: Database,
+class SalesSlipRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
   extends SalesSlipRepository[EitherTFuture] {
   protected val slips: lifted.TableQuery[SalesSlips] =

@@ -8,8 +8,7 @@ import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.publisher._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-class PublisherRepositoryWithSlick(
-  implicit val db: Database,
+class PublisherRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
   extends PublisherRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {

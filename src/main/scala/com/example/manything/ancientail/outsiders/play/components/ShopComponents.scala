@@ -11,10 +11,10 @@ import com.example.manything.outsiders.play.components.OutsiderComponents
 
 trait ShopComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
-  implicit private lazy val shopRepository: ShopRepository[EitherTFuture] =
-    new ShopRepositoryWithSlick()
+  private lazy val shopRepository: ShopRepository[EitherTFuture] =
+    new ShopRepositoryWithSlick(db = db)
   private lazy val shopUseCases =
-    new ShopUseCases()
+    new ShopUseCases(shops = shopRepository)
 
   lazy val shopController =
     new ShopController(cc = controllerComponents, shopUseCases = shopUseCases)(

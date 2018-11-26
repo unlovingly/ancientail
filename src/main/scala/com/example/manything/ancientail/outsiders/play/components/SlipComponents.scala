@@ -17,19 +17,21 @@ import com.example.manything.outsiders.play.components.OutsiderComponents
 
 trait SlipComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
-  implicit private lazy val shopRepository: ShopRepository[EitherTFuture] =
-    new ShopRepositoryWithSlick()
-  implicit private lazy val exchangeSlipRepository
+  private lazy val shopRepository: ShopRepository[EitherTFuture] =
+    new ShopRepositoryWithSlick(db = db)
+  private lazy val exchangeSlipRepository
     : ExchangeSlipRepository[EitherTFuture] =
-    new ExchangeSlipRepositoryWithSlick()
-  implicit private lazy val purchaseSlipRepository
+    new ExchangeSlipRepositoryWithSlick(db = db)
+  private lazy val purchaseSlipRepository
     : PurchaseSlipRepository[EitherTFuture] =
-    new PurchaseSlipRepositoryWithSlick()
-  implicit private lazy val salesSlipRepository
-    : SalesSlipRepository[EitherTFuture] =
-    new SalesSlipRepositoryWithSlick()
+    new PurchaseSlipRepositoryWithSlick(db = db)
+  private lazy val salesSlipRepository: SalesSlipRepository[EitherTFuture] =
+    new SalesSlipRepositoryWithSlick(db = db)
   private lazy val slipUseCases =
-    new SlipUseCases()
+    new SlipUseCases(shops = shopRepository,
+                     exchangeSlips = exchangeSlipRepository,
+                     purchaseSlips = purchaseSlipRepository,
+                     salesSlips = salesSlipRepository)
 
   lazy val slipController =
     new SlipController(cc = controllerComponents, slipUseCases = slipUseCases)(

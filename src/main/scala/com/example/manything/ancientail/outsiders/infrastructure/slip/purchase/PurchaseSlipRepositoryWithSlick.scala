@@ -14,8 +14,7 @@ import com.example.manything.ancientail.domain.slip.purchase.{
 }
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-class PurchaseSlipRepositoryWithSlick(
-  implicit val db: Database,
+class PurchaseSlipRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
   extends PurchaseSlipRepository[EitherTFuture] {
   protected val slips: lifted.TableQuery[PurchaseSlips] =

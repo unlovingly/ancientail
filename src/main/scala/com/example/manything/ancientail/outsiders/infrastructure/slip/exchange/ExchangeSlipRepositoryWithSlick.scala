@@ -11,8 +11,7 @@ import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipReposit
 import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-class ExchangeSlipRepositoryWithSlick(
-  implicit val db: Database,
+class ExchangeSlipRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
   extends ExchangeSlipRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = ???

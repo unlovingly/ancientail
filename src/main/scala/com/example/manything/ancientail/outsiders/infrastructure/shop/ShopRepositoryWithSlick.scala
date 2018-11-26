@@ -5,10 +5,7 @@ import scala.concurrent.ExecutionContext
 import cats.data.EitherT
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.product
 import com.example.manything.ambientendre.domain.product.ProductId
-import com.example.manything.ambientendre.outsiders.infrastructure.product.Products
-import com.example.manything.ancientail.domain.shop
 import com.example.manything.ancientail.domain.shop.{
   PluCode,
   ShopId,
@@ -18,8 +15,8 @@ import com.example.manything.ancientail.domain.shop.{
 }
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-class ShopRepositoryWithSlick(implicit val db: Database,
-                              implicit val executionContext: ExecutionContext)
+class ShopRepositoryWithSlick(val db: Database)(
+  implicit val executionContext: ExecutionContext)
   extends ShopRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
     import cats.implicits._
