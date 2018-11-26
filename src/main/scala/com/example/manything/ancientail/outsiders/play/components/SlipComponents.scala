@@ -11,7 +11,12 @@ import com.example.manything.ancientail.outsiders.infrastructure.shop.ShopReposi
 import com.example.manything.ancientail.outsiders.infrastructure.slip.exchange.ExchangeSlipRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.infrastructure.slip.purchase.PurchaseSlipRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.infrastructure.slip.sales.SalesSlipRepositoryWithSlick
-import com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController
+import com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.{
+  ExchangeSlipController,
+  PurchaseSlipController,
+  SalesSlipController,
+  SlipController
+}
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
 import com.example.manything.outsiders.play.components.OutsiderComponents
 
@@ -27,15 +32,33 @@ trait SlipComponents {
     new PurchaseSlipRepositoryWithSlick(db = db)
   private lazy val salesSlipRepository: SalesSlipRepository[EitherTFuture] =
     new SalesSlipRepositoryWithSlick(db = db)
+
   private lazy val slipUseCases =
     new SlipUseCases(shops = shopRepository,
                      exchangeSlips = exchangeSlipRepository,
                      purchaseSlips = purchaseSlipRepository,
                      salesSlips = salesSlipRepository)
 
-  lazy val slipController =
-    new SlipController(cc = controllerComponents, slipUseCases = slipUseCases)(
-      executionContext)
+  lazy val exchangeSlipController =
+    new ExchangeSlipController(cc = controllerComponents,
+                               slipUseCases = slipUseCases)(executionContext)
+  lazy val purchaseSlipController =
+    new PurchaseSlipController(cc = controllerComponents,
+                               slipUseCases = slipUseCases)(executionContext)
+  lazy val salesSlipController =
+    new SalesSlipController(cc = controllerComponents,
+                            slipUseCases = slipUseCases)(executionContext)
+
+  lazy val exchangeSlipsRoutes =
+    new exchangeSlips.Routes(httpErrorHandler, exchangeSlipController)
+  lazy val purchaseSlipsRoutes =
+    new purchaseSlips.Routes(httpErrorHandler, purchaseSlipController)
+  lazy val salesSlipsRoutes =
+    new salesSlips.Routes(httpErrorHandler, salesSlipController)
+
   lazy val slipRoutes =
-    new slips.Routes(httpErrorHandler, slipController)
+    new slips.Routes(httpErrorHandler,
+                     exchangeSlipsRoutes,
+                     purchaseSlipsRoutes,
+                     salesSlipsRoutes)
 }

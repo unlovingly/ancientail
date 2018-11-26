@@ -4,11 +4,11 @@ import java.util.UUID
 
 import com.example.manything.roundelayout.domain.Repository
 
-trait SlipRepository[A[_]] extends Repository[UUID, A] {
-  override type EntityType <: Slip
+trait SlipRepository[SlipType <: Slip, A[_]] extends Repository[UUID, A] {
+  override type EntityType = SlipType
   override type Identifier = SlipId
 
-  def retrieve(): A[Seq[EntityType]]
-  def retrieve(id: Identifier): A[EntityType]
-  def store(entity: EntityType): A[EntityType]
+  def retrieve(): A[Seq[SlipType]] = ???
+  def retrieve(id: Identifier): A[SlipType] = ???
+  def store(entity: EntityType): A[SlipType] = ???
 }

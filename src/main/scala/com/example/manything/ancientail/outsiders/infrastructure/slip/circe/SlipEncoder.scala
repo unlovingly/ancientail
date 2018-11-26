@@ -1,7 +1,9 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.circe
 
+import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
-import com.example.manything.ancientail.domain.slip.{Slip, SlipId}
+import com.example.manything.ancientail.domain.slip.sales.SalesSlip
+import com.example.manything.ancientail.domain.slip.SlipId
 
 trait SlipEncoder {
   import io.circe._
@@ -16,6 +18,12 @@ trait SlipEncoder {
   implicit lazy val slipIdEncoder: Encoder[SlipId] =
     Encoder.encodeString.contramap[SlipId](_.value.toString)
 
-  implicit lazy val slipEncoder: Encoder[PurchaseSlip] =
+  implicit lazy val exchangeSlipEncoder: Encoder[ExchangeSlip] =
+    deriveEncoder
+
+  implicit lazy val purchaseSlipEncoder: Encoder[PurchaseSlip] =
+    deriveEncoder
+
+  implicit lazy val salesSlipEncoder: Encoder[SalesSlip] =
     deriveEncoder
 }
