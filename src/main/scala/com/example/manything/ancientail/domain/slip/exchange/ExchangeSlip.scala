@@ -18,5 +18,6 @@ case class ExchangeSlip(
   override val approvedAt: ZonedDateTime =
     ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
 ) extends Slip {
+  override type ReceiverIdType = ShopId
   override type SenderIdType = ShopId
 }
