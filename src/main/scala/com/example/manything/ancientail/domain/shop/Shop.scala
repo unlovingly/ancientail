@@ -15,16 +15,9 @@ case class Shop(
   override type Identifier = ShopId
 
   /**
-   * 仕入れ処理
-   *
-   * システム上では入庫処理に相当する
-   */
-  def storing(slip: PurchaseSlip): Shop = inbound(slip)
-
-  /**
    * 入庫処理
    */
-  def inbound(slip: SlipBase): Shop = {
+  def inbound(slip: Slip): Shop = {
     import cats.implicits._
 
     val newStocks: Seq[Stock] = convertFrom(slip.items)
@@ -41,7 +34,7 @@ case class Shop(
   /**
    * 出庫処理
    */
-  def outbound(slip: SlipBase): Shop = {
+  def outbound(slip: Slip): Shop = {
     val newStocks: Seq[Stock] = convertFrom(slip.items)
 
     val result: Seq[Stock] = (stocks ++ newStocks)
@@ -54,6 +47,13 @@ case class Shop(
   }
 
   def sell(slip: SalesSlip): Shop = outbound(slip)
+
+  /**
+   * 仕入れ処理
+   *
+   * システム上では入庫処理に相当する
+   */
+  def storing(slip: PurchaseSlip): Shop = inbound(slip)
 
   private def convertFrom(items: Seq[SlipItem]): Seq[Stock] = {
     items.map { s =>

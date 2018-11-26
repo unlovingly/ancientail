@@ -1,14 +1,16 @@
 package com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ancientail.domain.shop.Shop
-import com.example.manything.ancientail.usecases.shop.ShopUseCases
 import javax.inject._
+
+import scala.concurrent.ExecutionContext
+
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import scala.concurrent.ExecutionContext
+import com.example.manything.EitherTFuture
+import com.example.manything.ancientail.domain.shop.Shop
+import com.example.manything.ancientail.usecases.shop.ShopUseCases
 
 @Singleton
 class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
@@ -16,32 +18,52 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
-  def index() = Action.async { implicit request: Request[AnyContent] =>
+  import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.ShopCodec._
+
+  def index() = Action.async { implicit request =>
+    import cats.implicits._
+
+    import io.circe.syntax._
+
+    val shops: EitherTFuture[Seq[Shop]] =
+      shopUseCases.list()
+
+    val result = shops
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.toString.asJson.spaces2))
+
+    result
+  }
+
+  def stocks(q: String) = Action.async { implicit request =>
+    import cats.implicits._
+
     import io.circe.generic.auto._
     import io.circe.syntax._
 
-    val shops: EitherAppliedFuture[Seq[Shop]] =
-      shopUseCases.list()
+    val shops: EitherTFuture[Seq[Shop]] =
+      shopUseCases.retrieveWithStocks(q)
 
-    shops
-      .map {
-        case Right(r) =>
-          r.asJson.spaces2
-        case Left(l) => l.toString.asJson.spaces2
-      }
-      .map { r =>
-        Ok(r)
-      }
+    val result = shops
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.asJson.spaces2))
+
+    result
   }
 
   def performCreation() =
     Action(circe.tolerantJson[Shop]).async { implicit request =>
-      val result: EitherAppliedFuture[Shop] =
+      import cats.implicits._
+
+      import io.circe.syntax._
+
+      val shop: EitherTFuture[Shop] =
         shopUseCases.create(request.body)
 
-      result.map {
-        case Right(r) => Ok(r.name)
-        case Left(l) => BadRequest(l.toString)
-      }
+      val result = shop
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
+              right => Ok(right.toString.asJson.spaces2))
+
+      result
     }
 }

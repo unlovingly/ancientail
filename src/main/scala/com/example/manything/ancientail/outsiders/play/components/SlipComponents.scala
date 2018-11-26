@@ -1,29 +1,33 @@
 package com.example.manything.ancientail.outsiders.play.components
 
-import com.example.manything.EitherAppliedFuture
+import play.api.BuiltInComponentsFromContext
+
+import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.shop.ShopRepository
-import com.example.manything.ancientail.domain.slip._
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
+import com.example.manything.ancientail.domain.slip.sales.SalesSlipRepository
 import com.example.manything.ancientail.outsiders.infrastructure.shop.ShopRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.infrastructure.slip.exchange.ExchangeSlipRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.infrastructure.slip.purchase.PurchaseSlipRepositoryWithSlick
+import com.example.manything.ancientail.outsiders.infrastructure.slip.sales.SalesSlipRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SlipController
 import com.example.manything.ancientail.usecases.slip.SlipUseCases
 import com.example.manything.outsiders.play.components.OutsiderComponents
-import play.api.BuiltInComponentsFromContext
 
 trait SlipComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
-  implicit private lazy val shopRepository
-    : ShopRepository[EitherAppliedFuture] =
+  implicit private lazy val shopRepository: ShopRepository[EitherTFuture] =
     new ShopRepositoryWithSlick()
   implicit private lazy val exchangeSlipRepository
-    : ExchangeSlipRepository[EitherAppliedFuture] =
+    : ExchangeSlipRepository[EitherTFuture] =
     new ExchangeSlipRepositoryWithSlick()
   implicit private lazy val purchaseSlipRepository
-    : PurchaseSlipRepository[EitherAppliedFuture] =
+    : PurchaseSlipRepository[EitherTFuture] =
     new PurchaseSlipRepositoryWithSlick()
+  implicit private lazy val salesSlipRepository
+    : SalesSlipRepository[EitherTFuture] =
+    new SalesSlipRepositoryWithSlick()
   private lazy val slipUseCases =
     new SlipUseCases()
 

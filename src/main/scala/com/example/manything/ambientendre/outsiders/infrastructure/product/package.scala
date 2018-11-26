@@ -2,9 +2,10 @@ package com.example.manything.ambientendre.outsiders.infrastructure
 
 import java.util.UUID
 
-import com.example.manything.ambientendre.domain.product.ProductId
-import slick.jdbc.PostgresProfile.api._
 import slick.lifted
+
+import com.example.manything.ambientendre.domain.product.ProductId
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 package object product {
   lazy val products = lifted.TableQuery[Products]

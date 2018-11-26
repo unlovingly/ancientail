@@ -1,15 +1,17 @@
 package com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ambientendre.domain.product.Product
-import com.example.manything.ambientendre.usecases.product.ProductUseCases
-import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 import javax.inject._
+
+import scala.concurrent.{ExecutionContext, Future}
+
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import scala.concurrent.ExecutionContext
+import com.example.manything.EitherTFuture
+import com.example.manything.ambientendre.domain.product.Product
+import com.example.manything.ambientendre.usecases.product.ProductUseCases
+import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 
 @Singleton
 class ProductController(cc: ControllerComponents,
@@ -19,26 +21,36 @@ class ProductController(cc: ControllerComponents,
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
+  import com.example.manything.ambientendre.outsiders.infrastructure.product.circe.ProductCodec._
+
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    import io.circe.generic.auto._
+    import cats.implicits._
+
     import io.circe.syntax._
 
-    val products: EitherAppliedFuture[Seq[Product]] =
+    val products: EitherTFuture[Seq[Product]] =
       productUseCases.list()
 
-    products
-      .map {
-        case Right(r) =>
-          r.asJson.spaces2
-        case Left(l) => l.toString.asJson.spaces2
-      }
-      .map { r =>
-        Ok(r)
-      }
+    val result = products
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.asJson.spaces2))
+
+    result
   }
 
   def performCreation() =
-    Action(circe.tolerantJson[Product]) { implicit request =>
-      Ok("")
+    Action(circe.tolerantJson[Product]).async { implicit request =>
+      import cats.implicits._
+
+      import io.circe.syntax._
+
+      val publisher: EitherTFuture[Product] =
+        productUseCases.create(request.body)
+
+      val result: Future[Result] = publisher
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
+              right => Ok(right.asJson.spaces2))
+
+      result
     }
 }

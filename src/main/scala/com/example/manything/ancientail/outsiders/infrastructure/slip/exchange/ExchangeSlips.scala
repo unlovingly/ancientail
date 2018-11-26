@@ -1,17 +1,25 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.exchange
 
-import com.example.manything.ancientail.domain.shop.ShopId
-import com.example.manything.ancientail.outsiders.infrastructure.slip.SlipsBase
-import slick.jdbc.PostgresProfile.api._
+import java.time.OffsetDateTime
+
 import slick.lifted.Tag
 
-class ExchangeSlips(tag: Tag)
-  extends SlipsBase[ExchangeSlip](tag, "exchange_slips") {
-  import com.example.manything.ancientail.outsiders.infrastructure.shop._
-  import com.example.manything.ancientail.outsiders.infrastructure.slip._
+import com.example.manything.ancientail.domain.shop.ShopId
+import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-  def senderId = column[ShopId]("shop_id")
+class ExchangeSlips(tag: Tag)
+  extends Table[PolishedExchangeSlip](tag, "exchange_slips") {
+  import com.example.manything.ancientail.outsiders.infrastructure.shop.shopIdColumnType
+  import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
+
+  def identity = column[SlipId]("slip_id", O.PrimaryKey, O.AutoInc)
+  def number = column[String]("number")
+  def senderId = column[ShopId]("sender_id")
+  def receiverId = column[ShopId]("shop_id")
+  def approvedAt = column[OffsetDateTime]("approved_at")
+  def publishedAt = column[OffsetDateTime]("published_at")
 
   def * =
-    (identity.?, senderId, receiverId) <> (ExchangeSlip.tupled, ExchangeSlip.unapply)
+    (identity.?, number, senderId, receiverId, publishedAt, approvedAt) <> (PolishedExchangeSlip.tupled, PolishedExchangeSlip.unapply)
 }

@@ -1,54 +1,91 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 
-import com.example.manything.EitherAppliedFuture
-import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
-import com.example.manything.ancientail.domain.slip.{SlipItem => EntityItem}
-import slick.jdbc.PostgresProfile.api._
+import scala.concurrent.ExecutionContext
+
+import cats.data.EitherT
+
 import slick.lifted
 
-import scala.concurrent.ExecutionContext
+import com.example.manything.EitherTFuture
+import com.example.manything.ancientail.domain.slip.SlipItem
+import com.example.manything.ancientail.domain.slip.purchase.{
+  PurchaseSlip,
+  PurchaseSlipRepository
+}
+import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class PurchaseSlipRepositoryWithSlick(
   implicit val db: Database,
   implicit val executionContext: ExecutionContext)
-  extends PurchaseSlipRepository[EitherAppliedFuture] {
-  override def retrieve(): EitherAppliedFuture[Seq[EntityType]] = ???
-  override def retrieve(
-    id: Seq[Identifier]): EitherAppliedFuture[Seq[EntityType]] =
-    ???
+  extends PurchaseSlipRepository[EitherTFuture] {
+  protected val slips: lifted.TableQuery[PurchaseSlips] =
+    lifted.TableQuery[PurchaseSlips]
 
-  override def store(entity: EntityType): EitherAppliedFuture[EntityType] = {
-    import com.example.manything.ancientail.outsiders.infrastructure.slip._
+  override def retrieve(): EitherTFuture[Seq[EntityType]] = {
+    import cats.implicits._
 
-    val slips = implicitly[lifted.TableQuery[PurchaseSlips]]
+    val q = slips.take(20)
+    val a = q.result.asTry.map { _.toEither }
 
-    val queries = for {
-      savedSlipId <- (slips returning slips.map { _.identity }) += PurchaseSlip(
-        identity = entity.identity,
-        receiverId = entity.receiverId,
-        senderId = entity.senderId)
-      savedSlipItems <- (slipItems returning slipItems) ++= entity.items.map {
-        e =>
-          SlipItem(identity = e.identity,
-                   productId = e.productId,
-                   amount = e.amount,
-                   price = e.price,
-                   slipId = savedSlipId)
-      }
-    } yield (savedSlipId, savedSlipItems)
-
-    val actions = queries.asTry.map { _.toEither }.map {
-      _.map {
-        case (slipId, newSlipItems) =>
-          entity.copy(
-            identity = Some(slipId),
-            items = newSlipItems.map { i =>
-              EntityItem(i.identity, i.productId, i.amount, i.price)
-            }
-          )
+    EitherT(db.run(a)).map {
+      _.map { s =>
+        PurchaseSlip(
+          identity = s.identity,
+          number = s.number,
+          senderId = s.senderId,
+          receiverId = s.receiverId,
+          publishedAt = s.publishedAt.toZonedDateTime,
+          approvedAt = s.approvedAt.toZonedDateTime,
+          items = Seq.empty
+        )
       }
     }
-
-    db.run(actions)
   }
+
+  override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
+    import cats.implicits._
+
+    import com.example.manything.ancientail.outsiders.infrastructure.slip.{
+      slipIdColumnType,
+      slipItems
+    }
+
+    val q = for {
+      s <- slips if s.identity === id.bind
+      i <- slipItems if i.slipId === s.identity
+    } yield (s, i)
+    val a = q.result.asTry.map { _.toEither }
+
+    // FIXME
+    val result = EitherT(db.run(a)).map { tuple =>
+      tuple
+        .groupBy(_._1)
+        .mapValues(_.map(_._2))
+        .map {
+          case (slip, items) =>
+            PurchaseSlip(
+              identity = slip.identity,
+              number = slip.number,
+              senderId = slip.senderId,
+              receiverId = slip.receiverId,
+              publishedAt = slip.publishedAt.toZonedDateTime,
+              approvedAt = slip.approvedAt.toZonedDateTime,
+              items = items.map { i =>
+                SlipItem(
+                  identity = i.identity,
+                  productId = i.productId,
+                  amount = i.amount,
+                  price = i.price
+                )
+              }
+            )
+        }
+        .toSeq
+        .head
+    }
+
+    result
+  }
+
+  override def store(entity: EntityType): EitherTFuture[EntityType] = ???
 }
