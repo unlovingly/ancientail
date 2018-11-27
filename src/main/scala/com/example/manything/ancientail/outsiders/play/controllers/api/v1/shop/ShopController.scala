@@ -30,7 +30,7 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
 
     val result = shops
       .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.toString.asJson.spaces2))
+            right => Ok(right.asJson.spaces2))
 
     result
   }
@@ -62,7 +62,7 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
 
       val result = shop
         .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.toString.asJson.spaces2))
+              right => Ok(right.asJson.spaces2))
 
       result
     }

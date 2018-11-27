@@ -69,7 +69,7 @@ class SalesSlipController(
 
       val result: Future[Result] = slip
         .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.toString.asJson.spaces2))
+              right => Ok(right.asJson.spaces2))
 
       result
     }
