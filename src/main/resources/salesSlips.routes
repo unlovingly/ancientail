@@ -1,0 +1,3 @@
+GET   /           com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SalesSlipController.index
+GET   /detail/:id com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SalesSlipController.detail(id: SlipId)
+POST  /sales      com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.SalesSlipController.sales
