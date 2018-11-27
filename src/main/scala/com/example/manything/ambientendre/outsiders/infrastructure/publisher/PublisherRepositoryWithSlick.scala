@@ -19,7 +19,7 @@ class PublisherRepositoryWithSlick(val db: Database)(
   }
 
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val q = for {
       p <- publishers if p.identity === id
@@ -30,7 +30,7 @@ class PublisherRepositoryWithSlick(val db: Database)(
   }
 
   override def store(entity: EntityType): EitherTFuture[EntityType] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val q = (publishers returning publishers.map { _.identity }) += Publisher(
       entity.identity,

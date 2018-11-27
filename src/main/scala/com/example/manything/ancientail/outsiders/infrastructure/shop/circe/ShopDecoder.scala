@@ -5,7 +5,8 @@ import java.util.UUID
 import com.example.manything.ancientail.domain.shop.{Shop, ShopId}
 
 trait ShopDecoder {
-  import cats.syntax.either._
+  import cats.syntax.either.catsSyntaxEither
+  import cats.syntax.either.catsSyntaxEitherObject
 
   import io.circe.Decoder
 

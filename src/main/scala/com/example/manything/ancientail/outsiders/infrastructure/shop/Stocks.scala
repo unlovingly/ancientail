@@ -8,7 +8,7 @@ import com.example.manything.ancientail.domain.slip.{Amount, Price}
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class Stocks(tag: Tag) extends Table[Stock](tag, "stocks") {
-  import com.example.manything.ambientendre.outsiders.infrastructure.product._
+  import com.example.manything.ambientendre.outsiders.infrastructure.product.productIdColumnType
 
   def pluCode = column[PluCode]("plu_code", O.PrimaryKey, O.AutoInc)
   def shopId = column[ShopId]("shop_id")

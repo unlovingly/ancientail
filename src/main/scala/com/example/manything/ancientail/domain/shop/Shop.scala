@@ -18,7 +18,7 @@ case class Shop(
    * 入庫処理
    */
   def inbound(slip: Slip): Shop = {
-    import cats.implicits._
+    import cats.syntax.monoid.catsSyntaxSemigroup
 
     val newStocks: Seq[Stock] = convertFrom(slip.items)
 

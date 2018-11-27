@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop
 
-import javax.inject._
+import javax.inject.Singleton
 
 import scala.concurrent.ExecutionContext
 
@@ -21,9 +21,9 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
   import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.ShopCodec._
 
   def index() = Action.async { implicit request =>
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
-    import io.circe.syntax._
+    import io.circe.syntax.EncoderOps
 
     val shops: EitherTFuture[Seq[Shop]] =
       shopUseCases.list()
@@ -36,10 +36,9 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
   }
 
   def stocks(q: String) = Action.async { implicit request =>
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
-    import io.circe.generic.auto._
-    import io.circe.syntax._
+    import io.circe.syntax.EncoderOps
 
     val shops: EitherTFuture[Seq[Shop]] =
       shopUseCases.retrieveWithStocks(q)
@@ -53,9 +52,9 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
 
   def performCreation() =
     Action(circe.tolerantJson[Shop]).async { implicit request =>
-      import cats.implicits._
+      import cats.implicits.catsStdInstancesForFuture
 
-      import io.circe.syntax._
+      import io.circe.syntax.EncoderOps
 
       val shop: EitherTFuture[Shop] =
         shopUseCases.create(request.body)

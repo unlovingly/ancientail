@@ -6,10 +6,10 @@ import com.example.manything.ancientail.domain.slip.sales.SalesSlip
 import com.example.manything.ancientail.domain.slip.SlipId
 
 trait SlipEncoder {
-  import io.circe._
+  import io.circe.Encoder
   import io.circe.java8.time.decodeZonedDateTime
   import io.circe.generic.auto._
-  import io.circe.generic.semiauto._
+  import io.circe.generic.semiauto.deriveEncoder
 
   import com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe.PublisherCodec.publisherIdEncoder
   import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.ShopCodec.shopIdEncoder

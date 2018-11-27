@@ -19,7 +19,7 @@ class ExchangeSlipRepositoryWithSlick(val db: Database)(
   val slipItems = lifted.TableQuery[SlipItems]
 
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val q = slips.take(20)
     val a = q.result.asTry.map { _.toEither }
@@ -30,7 +30,7 @@ class ExchangeSlipRepositoryWithSlick(val db: Database)(
   }
 
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
 
@@ -57,7 +57,7 @@ class ExchangeSlipRepositoryWithSlick(val db: Database)(
   }
 
   override def store(entity: EntityType): EitherTFuture[EntityType] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
 

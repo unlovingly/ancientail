@@ -1,6 +1,6 @@
 package com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product
 
-import javax.inject._
+import javax.inject.Singleton
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -24,9 +24,9 @@ class ProductController(cc: ControllerComponents,
   import com.example.manything.ambientendre.outsiders.infrastructure.product.circe.ProductCodec._
 
   def index() = Action.async { implicit request: Request[AnyContent] =>
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
-    import io.circe.syntax._
+    import io.circe.syntax.EncoderOps
 
     val products: EitherTFuture[Seq[Product]] =
       productUseCases.list()
@@ -40,9 +40,9 @@ class ProductController(cc: ControllerComponents,
 
   def performCreation() =
     Action(circe.tolerantJson[Product]).async { implicit request =>
-      import cats.implicits._
+      import cats.implicits.catsStdInstancesForFuture
 
-      import io.circe.syntax._
+      import io.circe.syntax.EncoderOps
 
       val publisher: EitherTFuture[Product] =
         productUseCases.create(request.body)

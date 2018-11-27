@@ -17,7 +17,7 @@ class ExchangeSlipUseCases(val shops: ShopRepository[EitherTFuture],
   override type EntityType = ExchangeSlip
 
   override def exchange(slip: ExchangeSlip): EitherTFuture[ExchangeSlip] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val productIds = slip.items.map(_.productId)
     val receiver = shops.retrieveWithStocks(slip.receiverId, productIds)

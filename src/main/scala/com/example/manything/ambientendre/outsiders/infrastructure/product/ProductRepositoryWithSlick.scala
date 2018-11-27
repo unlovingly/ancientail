@@ -19,7 +19,7 @@ class ProductRepositoryWithSlick(val db: Database)(
   }
 
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val q = for {
       p <- products if p.identity === id
@@ -30,7 +30,7 @@ class ProductRepositoryWithSlick(val db: Database)(
   }
 
   override def store(entity: EntityType): EitherTFuture[EntityType] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val q = (products returning products.map { _.identity }) += Product(
       entity.identity,

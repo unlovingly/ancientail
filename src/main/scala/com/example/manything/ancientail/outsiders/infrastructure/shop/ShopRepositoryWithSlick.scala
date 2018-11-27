@@ -19,7 +19,7 @@ class ShopRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
   extends ShopRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val q = shops.take(20)
     val a = q.result.asTry.map { _.toEither }
@@ -28,7 +28,7 @@ class ShopRepositoryWithSlick(val db: Database)(
   }
 
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val q = for {
       p <- shops if p.identity === id.bind
@@ -78,7 +78,7 @@ class ShopRepositoryWithSlick(val db: Database)(
   override def retrieveWithStocks(
     shopId: Identifier,
     productIds: Seq[ProductId]): EitherTFuture[EntityType] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val q1 = shops.filter(_.identity === shopId.bind).result
     val q2 = stocks.filter(_.shopId === shopId.bind).result
@@ -94,7 +94,7 @@ class ShopRepositoryWithSlick(val db: Database)(
   }
 
   override def retrieveWithStocks(q: String): EitherTFuture[Seq[EntityType]] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     import com.example.manything.ambientendre.outsiders.infrastructure.product._
 

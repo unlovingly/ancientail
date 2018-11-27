@@ -9,7 +9,8 @@ case class PluCode(value: String) {}
 
 object PluCode {
   implicit lazy val pluCodeEq: Eq[PluCode] = (x: PluCode, y: PluCode) => {
-    import cats.implicits._
+    import cats.implicits.catsKernelStdOrderForString
+    import cats.syntax.eq.catsSyntaxEq
 
     x.value === y.value
   }

@@ -17,7 +17,7 @@ class SalesSlipUseCases(val shops: ShopRepository[EitherTFuture],
   override type EntityType = SalesSlip
 
   override def sell(slip: SalesSlip): EitherTFuture[SalesSlip] = {
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
     val productIds = slip.items.map(_.productId)
     val shop = shops.retrieveWithStocks(slip.senderId, productIds)

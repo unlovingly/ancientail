@@ -4,7 +4,7 @@ import com.example.manything.ancientail.domain.slip._
 
 trait SlipItemEncoder {
   import io.circe.Encoder
-  import io.circe.generic.semiauto._
+  import io.circe.generic.semiauto.deriveEncoder
 
   import com.example.manything.ambientendre.outsiders.infrastructure.product.circe.ProductCodec.productIdEncoder
 

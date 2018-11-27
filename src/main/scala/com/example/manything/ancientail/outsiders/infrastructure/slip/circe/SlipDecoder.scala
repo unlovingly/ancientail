@@ -8,7 +8,8 @@ import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.domain.slip.sales.SalesSlip
 
 trait SlipDecoder {
-  import cats.syntax.either._
+  import cats.syntax.either.catsSyntaxEither
+  import cats.syntax.either.catsSyntaxEitherObject
 
   import io.circe.generic.auto._
   import io.circe.Decoder

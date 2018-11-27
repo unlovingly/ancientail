@@ -1,7 +1,7 @@
 package com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip
 
 import java.util.UUID
-import javax.inject._
+import javax.inject.Singleton
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -28,9 +28,9 @@ class SalesSlipController(
   val shopId: ShopId = ShopId(new UUID(0, 0))
 
   def index() = Action.async { implicit request =>
-    import cats.implicits._
+    import cats.implicits.catsStdInstancesForFuture
 
-    import io.circe.syntax._
+    import io.circe.syntax.EncoderOps
 
     val slips: EitherTFuture[Seq[SalesSlip]] =
       slipUseCases.retrieve()
@@ -44,9 +44,9 @@ class SalesSlipController(
 
   def detail(id: SlipId) =
     Action.async { implicit request =>
-      import cats.implicits._
+      import cats.implicits.catsStdInstancesForFuture
 
-      import io.circe.syntax._
+      import io.circe.syntax.EncoderOps
 
       val slips: EitherTFuture[SalesSlip] =
         slipUseCases.retrieve(shopId, id)
@@ -60,9 +60,9 @@ class SalesSlipController(
 
   def sales() =
     Action(circe.tolerantJson[SalesSlip]).async { implicit request =>
-      import cats.implicits._
+      import cats.implicits.catsStdInstancesForFuture
 
-      import io.circe.syntax._
+      import io.circe.syntax.EncoderOps
 
       val slip: EitherTFuture[SalesSlip] =
         slipUseCases.sell(request.body)

@@ -3,7 +3,8 @@ package com.example.manything.ancientail.outsiders.infrastructure.shop.circe
 import com.example.manything.ancientail.domain.shop.PluCode
 
 trait PluCodeDecoder {
-  import cats.syntax.either._
+  import cats.syntax.either.catsSyntaxEither
+  import cats.syntax.either.catsSyntaxEitherObject
 
   import io.circe.Decoder
 
