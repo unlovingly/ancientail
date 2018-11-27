@@ -2,7 +2,6 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip
 
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.slip._
-import com.example.manything.ancientail.domain.slip.{SlipItem => EntityItem}
 
 case class PolishedSlipItem(
   identity: Option[SlipItemId] = None,
@@ -11,9 +10,19 @@ case class PolishedSlipItem(
   price: Price,
   slipId: SlipId
 ) {
-  def to(): EntityItem =
-    EntityItem(identity = identity,
-               productId = productId,
-               amount = amount,
-               price = price)
+  def to(): SlipItem =
+    SlipItem(identity = identity,
+             productId = productId,
+             amount = amount,
+             price = price)
+}
+
+object PolishedSlipItem {
+  def from(slipId: SlipId, entity: SlipItem): PolishedSlipItem = {
+    PolishedSlipItem(identity = entity.identity,
+                     productId = entity.productId,
+                     amount = entity.amount,
+                     price = entity.price,
+                     slipId = slipId)
+  }
 }

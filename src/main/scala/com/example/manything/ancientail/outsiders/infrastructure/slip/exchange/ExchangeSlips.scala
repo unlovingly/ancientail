@@ -21,5 +21,5 @@ class ExchangeSlips(tag: Tag)
   def publishedAt = column[OffsetDateTime]("published_at")
 
   def * =
-    (identity.?, number, senderId, receiverId, publishedAt, approvedAt) <> (PolishedExchangeSlip.tupled, PolishedExchangeSlip.unapply)
+    (identity.?, number, senderId, receiverId, publishedAt, approvedAt) <> ((PolishedExchangeSlip.apply _).tupled, PolishedExchangeSlip.unapply)
 }

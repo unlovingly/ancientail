@@ -11,10 +11,6 @@ import com.example.manything.blessedict.domain.customer.CustomerId
  * 売上伝票
  *
  * 顧客への販売時に店舗が発行する。一人に対して
- *
- * @param identity
- * @param senderId SenderId 販売店
- * @param receiverId ReceiverId 正確には受領者だが販売店とする
  */
 case class PolishedSalesSlip(
   identity: Option[SlipId] = None,
@@ -23,4 +19,29 @@ case class PolishedSalesSlip(
   receiverId: CustomerId,
   publishedAt: OffsetDateTime,
   approvedAt: OffsetDateTime
-)
+) {
+  def to(items: Seq[SlipItem] = Seq.empty): SalesSlip = {
+    SalesSlip(
+      identity = identity,
+      number = number,
+      senderId = senderId,
+      receiverId = receiverId,
+      publishedAt = publishedAt.toZonedDateTime,
+      approvedAt = approvedAt.toZonedDateTime,
+      items = items
+    )
+  }
+}
+
+object PolishedSalesSlip {
+  def from(entity: SalesSlip): PolishedSalesSlip = {
+    PolishedSalesSlip(
+      identity = entity.identity,
+      number = entity.number,
+      senderId = entity.senderId,
+      receiverId = entity.receiverId,
+      publishedAt = entity.publishedAt.toOffsetDateTime,
+      approvedAt = entity.approvedAt.toOffsetDateTime
+    )
+  }
+}

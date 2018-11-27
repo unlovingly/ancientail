@@ -7,18 +7,16 @@ import cats.data.EitherT
 import slick.lifted
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.slip.SlipItem
-import com.example.manything.ancientail.domain.slip.purchase.{
-  PurchaseSlip,
-  PurchaseSlipRepository
-}
+import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
+import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
+import com.example.manything.ancientail.outsiders.infrastructure.slip.PolishedSlipItem
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class PurchaseSlipRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
   extends PurchaseSlipRepository[EitherTFuture] {
-  protected val slips: lifted.TableQuery[PurchaseSlips] =
-    lifted.TableQuery[PurchaseSlips]
+  val slips = lifted.TableQuery[PurchaseSlips]
+  val slipItems = lifted.TableQuery[SlipItems]
 
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
     import cats.implicits._
@@ -27,27 +25,14 @@ class PurchaseSlipRepositoryWithSlick(val db: Database)(
     val a = q.result.asTry.map { _.toEither }
 
     EitherT(db.run(a)).map {
-      _.map { s =>
-        PurchaseSlip(
-          identity = s.identity,
-          number = s.number,
-          senderId = s.senderId,
-          receiverId = s.receiverId,
-          publishedAt = s.publishedAt.toZonedDateTime,
-          approvedAt = s.approvedAt.toZonedDateTime,
-          items = Seq.empty
-        )
-      }
+      _.map(_.to())
     }
   }
 
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
     import cats.implicits._
 
-    import com.example.manything.ancientail.outsiders.infrastructure.slip.{
-      slipIdColumnType,
-      slipItems
-    }
+    import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
 
     val q = for {
       s <- slips if s.identity === id.bind
@@ -62,22 +47,7 @@ class PurchaseSlipRepositoryWithSlick(val db: Database)(
         .mapValues(_.map(_._2))
         .map {
           case (slip, items) =>
-            PurchaseSlip(
-              identity = slip.identity,
-              number = slip.number,
-              senderId = slip.senderId,
-              receiverId = slip.receiverId,
-              publishedAt = slip.publishedAt.toZonedDateTime,
-              approvedAt = slip.approvedAt.toZonedDateTime,
-              items = items.map { i =>
-                SlipItem(
-                  identity = i.identity,
-                  productId = i.productId,
-                  amount = i.amount,
-                  price = i.price
-                )
-              }
-            )
+            slip.to(items.map(_.to()))
         }
         .toSeq
         .head
@@ -86,5 +56,34 @@ class PurchaseSlipRepositoryWithSlick(val db: Database)(
     result
   }
 
-  override def store(entity: EntityType): EitherTFuture[EntityType] = ???
+  override def store(entity: EntityType): EitherTFuture[EntityType] = {
+    import cats.implicits._
+
+    import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
+
+    val query = for {
+      q1 <- (slips returning slips.map { _.identity }) += PolishedPurchaseSlip
+        .from(entity)
+      q2 <- store(q1, entity.items)
+    } yield (q1, q2)
+
+    val a = query.asTry.map { _.toEither }
+
+    EitherT(db.run(a)).map {
+      case (id, items) =>
+        val i: Seq[SlipItem] = items.flatten.map(_.to())
+
+        entity.copy(identity = Some(id), items = i)
+    }
+  }
+
+  private def store(slipId: SlipId, ss: Seq[SlipItem]) = {
+    val targets = ss.map(PolishedSlipItem.from(slipId, _))
+
+    DBIO.sequence {
+      targets.map { t =>
+        (slipItems returning slipItems).insertOrUpdate(t)
+      }
+    }
+  }
 }

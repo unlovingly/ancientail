@@ -8,8 +8,6 @@ import com.example.manything.ancientail.domain.slip.{SlipId, SlipItemId}
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 package object slip {
-  lazy val slipItems = lifted.TableQuery[SlipItems]
-
   implicit lazy val slipIdColumnType: BaseColumnType[SlipId] =
     MappedColumnType
       .base[SlipId, UUID](_.value, SlipId.apply)

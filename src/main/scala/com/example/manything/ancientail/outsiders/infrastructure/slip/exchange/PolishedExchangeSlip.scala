@@ -3,7 +3,8 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.exchange
 import java.time.OffsetDateTime
 
 import com.example.manything.ancientail.domain.shop.ShopId
-import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
+import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
 
 /**
  * 移動伝票
@@ -17,4 +18,29 @@ case class PolishedExchangeSlip(
   receiverId: ShopId,
   publishedAt: OffsetDateTime,
   approvedAt: OffsetDateTime
-)
+) {
+  def to(items: Seq[SlipItem] = Seq.empty): ExchangeSlip = {
+    ExchangeSlip(
+      identity = identity,
+      number = number,
+      senderId = senderId,
+      receiverId = receiverId,
+      publishedAt = publishedAt.toZonedDateTime,
+      approvedAt = approvedAt.toZonedDateTime,
+      items = items
+    )
+  }
+}
+
+object PolishedExchangeSlip {
+  def from(entity: ExchangeSlip): PolishedExchangeSlip = {
+    PolishedExchangeSlip(
+      identity = entity.identity,
+      number = entity.number,
+      senderId = entity.senderId,
+      receiverId = entity.receiverId,
+      publishedAt = entity.publishedAt.toOffsetDateTime,
+      approvedAt = entity.approvedAt.toOffsetDateTime
+    )
+  }
+}
