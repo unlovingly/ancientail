@@ -6,13 +6,7 @@ import cats.data.EitherT
 
 import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.product.ProductId
-import com.example.manything.ancientail.domain.shop.{
-  PluCode,
-  ShopId,
-  ShopRepository,
-  Stock,
-  Shop => Entity
-}
+import com.example.manything.ancientail.domain.shop._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class ShopRepositoryWithSlick(val db: Database)(
@@ -39,14 +33,12 @@ class ShopRepositoryWithSlick(val db: Database)(
   }
 
   override def store(entity: EntityType): EitherTFuture[EntityType] = {
-    import cats.implicits._
-
-    val test = (shops returning shops.map { _.identity })
-      .insertOrUpdate(Shop(identity = entity.identity, name = entity.name))
+    import cats.implicits.catsStdInstancesForFuture
 
     val q = for {
-      q1 <- (shops returning shops.map { _.identity })
-        .+=(Shop(identity = entity.identity, name = entity.name))
+      q1 <- (shops returning shops.map { _.identity }) += PolishedShop(
+        identity = entity.identity,
+        name = entity.name)
       _ <- store(q1, entity.stocks)
     } yield q1
 
@@ -89,7 +81,7 @@ class ShopRepositoryWithSlick(val db: Database)(
       case (h, t) =>
         val p = h.head
 
-        Entity(p.identity, p.name, t)
+        Shop(p.identity, p.name, t)
     }
   }
 
@@ -116,7 +108,7 @@ class ShopRepositoryWithSlick(val db: Database)(
               _._2
             }
 
-            Entity(ss.identity, ss.name, sss)
+            Shop(ss.identity, ss.name, sss)
           }
           .values
 
