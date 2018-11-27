@@ -13,8 +13,8 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 trait Slip extends Entity {
   override type Identifier = SlipId
 
-  type ReceiverIdType <: Identifiability[UUID]
-  type SenderIdType <: Identifiability[UUID]
+  type ReceiverIdType <: Identifiability[_, UUID]
+  type SenderIdType <: Identifiability[_, UUID]
 
   /**
    * 伝票番号
@@ -48,6 +48,4 @@ trait Slip extends Entity {
   val publishedAt: ZonedDateTime
 }
 
-case class SlipId(value: UUID) extends Identifiability[UUID] {
-  override type EntityType = Slip
-}
+case class SlipId(value: UUID) extends Identifiability[Slip, UUID]

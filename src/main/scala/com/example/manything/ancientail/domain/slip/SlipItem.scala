@@ -6,7 +6,7 @@ import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class SlipItem(
-  identity: Option[SlipItemId] = None,
+  override val identity: Option[SlipItemId] = None,
   productId: ProductId,
   amount: Amount,
   price: Price
@@ -14,6 +14,5 @@ case class SlipItem(
   override type Identifier = SlipItemId
 }
 
-case class SlipItemId(override val value: UUID) extends Identifiability[UUID] {
-  override type EntityType = SlipItem
-}
+case class SlipItemId(override val value: UUID)
+  extends Identifiability[SlipItem, UUID]

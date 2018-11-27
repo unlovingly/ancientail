@@ -13,6 +13,5 @@ case class Product(
   override type Identifier = ProductId
 }
 
-case class ProductId(override val value: UUID) extends Identifiability[UUID] {
-  override type EntityType = Product
-}
+case class ProductId(override val value: UUID)
+  extends Identifiability[Product, UUID]

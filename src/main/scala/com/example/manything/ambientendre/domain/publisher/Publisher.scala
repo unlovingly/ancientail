@@ -11,6 +11,5 @@ case class Publisher(
   override type Identifier = PublisherId
 }
 
-case class PublisherId(override val value: UUID) extends Identifiability[UUID] {
-  override type EntityType = Publisher
-}
+case class PublisherId(override val value: UUID)
+  extends Identifiability[Publisher, UUID]

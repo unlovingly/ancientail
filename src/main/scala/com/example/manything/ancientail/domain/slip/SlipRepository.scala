@@ -1,10 +1,8 @@
 package com.example.manything.ancientail.domain.slip
 
-import java.util.UUID
-
 import com.example.manything.roundelayout.domain.Repository
 
-trait SlipRepository[SlipType <: Slip, A[_]] extends Repository[UUID, A] {
+trait SlipRepository[SlipType <: Slip, A[_]] extends Repository[Slip] {
   override type EntityType = SlipType
   override type Identifier = SlipId
 

@@ -5,7 +5,7 @@ import cats.Eq
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.slip.Price
 
-case class PluCode(value: String) {}
+case class PluCode(value: String)
 
 object PluCode {
   implicit lazy val pluCodeEq: Eq[PluCode] = (x: PluCode, y: PluCode) => {
