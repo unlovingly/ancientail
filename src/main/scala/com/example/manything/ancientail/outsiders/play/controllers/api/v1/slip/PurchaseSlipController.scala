@@ -11,14 +11,14 @@ import play.api.mvc._
 
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.shop.ShopId
-import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.slip.SlipId
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
-import com.example.manything.ancientail.usecases.slip.SlipUseCases
+import com.example.manything.ancientail.usecases.slip.PurchaseSlipUseCases
 
 @Singleton
-class PurchaseSlipController(
-  cc: ControllerComponents,
-  slipUseCases: SlipUseCases)(implicit executionContext: ExecutionContext)
+class PurchaseSlipController(cc: ControllerComponents,
+                             slipUseCases: PurchaseSlipUseCases)(
+  implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
@@ -33,7 +33,7 @@ class PurchaseSlipController(
     import io.circe.syntax._
 
     val slips: EitherTFuture[Seq[PurchaseSlip]] =
-      slipUseCases.retrieve()(slipUseCases.purchaseSlips)
+      slipUseCases.retrieve()
 
     val result = slips
       .fold(left => BadRequest(left.toString.asJson.spaces2),
@@ -49,7 +49,7 @@ class PurchaseSlipController(
       import io.circe.syntax._
 
       val slips: EitherTFuture[PurchaseSlip] =
-        slipUseCases.retrieve(shopId, id)(slipUseCases.purchaseSlips)
+        slipUseCases.retrieve(shopId, id)
 
       val result: Future[Result] = slips
         .fold(left => BadRequest(left.toString.asJson.spaces2),

@@ -1,31 +1,15 @@
 package com.example.manything.ancientail.usecases.slip
 
-import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 
 /**
  * 入庫ユースケース
  */
-trait StoringProducts { this: SlipUseCases =>
+trait StoringProducts[A[_]] {
 
   /**
    * 1. 伝票を保存して
    * 2. 在庫情報を更新する
    */
-  def storing(slip: PurchaseSlip): EitherTFuture[PurchaseSlip] = {
-    import cats.implicits._
-
-    val productIds = slip.items.map(_.productId)
-    val shop = shops.retrieveWithStocks(slip.receiverId, productIds)
-    // 1. 伝票を保存して
-    val result = purchaseSlips.store(slip)
-
-    shop.map { s =>
-      val h = s.inbound(slip)
-
-      shops.store(h)
-    }
-
-    result
-  }
+  def storing(slip: PurchaseSlip): A[PurchaseSlip]
 }

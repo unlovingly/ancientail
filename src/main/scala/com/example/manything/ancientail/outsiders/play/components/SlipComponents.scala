@@ -14,10 +14,9 @@ import com.example.manything.ancientail.outsiders.infrastructure.slip.sales.Sale
 import com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.{
   ExchangeSlipController,
   PurchaseSlipController,
-  SalesSlipController,
-  SlipController
+  SalesSlipController
 }
-import com.example.manything.ancientail.usecases.slip.SlipUseCases
+import com.example.manything.ancientail.usecases.slip._
 import com.example.manything.outsiders.play.components.OutsiderComponents
 
 trait SlipComponents {
@@ -33,21 +32,28 @@ trait SlipComponents {
   private lazy val salesSlipRepository: SalesSlipRepository[EitherTFuture] =
     new SalesSlipRepositoryWithSlick(db = db)
 
-  private lazy val slipUseCases =
-    new SlipUseCases(shops = shopRepository,
-                     exchangeSlips = exchangeSlipRepository,
-                     purchaseSlips = purchaseSlipRepository,
-                     salesSlips = salesSlipRepository)
+  private lazy val exchangeSlipUseCases =
+    new ExchangeSlipUseCases(shops = shopRepository,
+                             slips = exchangeSlipRepository)
+
+  private lazy val purchaseSlipUseCases =
+    new PurchaseSlipUseCases(shops = shopRepository,
+                             slips = purchaseSlipRepository)
+
+  private lazy val salesSlipUseCases =
+    new SalesSlipUseCases(shops = shopRepository, slips = salesSlipRepository)
 
   lazy val exchangeSlipController =
-    new ExchangeSlipController(cc = controllerComponents,
-                               slipUseCases = slipUseCases)(executionContext)
+    new ExchangeSlipController(
+      cc = controllerComponents,
+      slipUseCases = exchangeSlipUseCases)(executionContext)
   lazy val purchaseSlipController =
-    new PurchaseSlipController(cc = controllerComponents,
-                               slipUseCases = slipUseCases)(executionContext)
+    new PurchaseSlipController(
+      cc = controllerComponents,
+      slipUseCases = purchaseSlipUseCases)(executionContext)
   lazy val salesSlipController =
     new SalesSlipController(cc = controllerComponents,
-                            slipUseCases = slipUseCases)(executionContext)
+                            slipUseCases = salesSlipUseCases)(executionContext)
 
   lazy val exchangeSlipsRoutes =
     new exchangeSlips.Routes(httpErrorHandler, exchangeSlipController)
