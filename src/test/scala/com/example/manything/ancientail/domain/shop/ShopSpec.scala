@@ -27,6 +27,7 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
 
   val purchaseSlip: PurchaseSlip = PurchaseSlip(
     identity = Some(SlipId(new UUID(3, 1))),
+    number = "00001",
     senderId = publisherId,
     receiverId = receiverId,
     items = Seq(
@@ -52,6 +53,7 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
 
   val exchangeSlip: ExchangeSlip = ExchangeSlip(
     identity = Some(SlipId(new UUID(3, 1))),
+    number = "00001",
     senderId = senderId,
     receiverId = receiverId,
     items = Seq(
