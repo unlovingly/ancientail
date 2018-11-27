@@ -18,7 +18,7 @@ class SalesSlips(tag: Tag)
   def identity = column[SlipId]("slip_id", O.PrimaryKey, O.AutoInc)
   def number = column[String]("number")
   def senderId = column[ShopId]("sender_id")
-  def receiverId = column[CustomerId]("shop_id")
+  def receiverId = column[Option[CustomerId]]("receiver_id")
   def approvedAt = column[OffsetDateTime]("approved_at")
   def publishedAt = column[OffsetDateTime]("published_at")
 

@@ -16,7 +16,7 @@ case class PolishedSalesSlip(
   identity: Option[SlipId] = None,
   number: String,
   senderId: ShopId,
-  receiverId: CustomerId,
+  receiverId: Option[CustomerId],
   publishedAt: OffsetDateTime,
   approvedAt: OffsetDateTime
 ) {
