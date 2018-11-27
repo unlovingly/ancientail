@@ -3,7 +3,9 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.sales
 import java.time.OffsetDateTime
 
 import com.example.manything.ancientail.domain.shop.ShopId
-import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.ancientail.domain.slip.sales.SalesSlip
+import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
+import com.example.manything.blessedict.domain.customer.CustomerId
 
 /**
  * 売上伝票
@@ -18,7 +20,7 @@ case class PolishedSalesSlip(
   identity: Option[SlipId] = None,
   number: String,
   senderId: ShopId,
-  receiverId: ShopId,
+  receiverId: CustomerId,
   publishedAt: OffsetDateTime,
   approvedAt: OffsetDateTime
 )
