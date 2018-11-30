@@ -37,12 +37,11 @@ lazy val root = (project in file("."))
       "-language:higherKinds",
       "-Ypartial-unification"
     ),
-    routesImport ++= Seq(
-      "com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip._",
-      "com.example.manything.ancientail.domain.slip._"
-    )
+    dockerBaseImage := "openjdk",
+    dockerEntrypoint := Seq("/opt/docker/bin/play2docker"),
+    dockerExposedPorts := Seq(9000),
   )
-  .enablePlugins(PlayScala)
+  .enablePlugins(DockerPlugin, PlayScala)
   .disablePlugins(PlayLayoutPlugin)
 
 PlayKeys.playMonitoredFiles ++= (sourceDirectories in (Compile, TwirlKeys.compileTemplates)).value
