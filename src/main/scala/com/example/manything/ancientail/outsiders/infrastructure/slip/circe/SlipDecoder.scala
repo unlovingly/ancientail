@@ -14,6 +14,10 @@ trait SlipDecoder {
   import io.circe.generic.auto._
   import io.circe.Decoder
 
+  import com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe.PublisherCodec.publisherIdDecoder
+  import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.ShopCodec.shopIdDecoder
+  import com.example.manything.ancientail.outsiders.infrastructure.slip.circe.SlipItemCodec.slipItemDecoder
+
   implicit lazy val slipIdDecoder: Decoder[SlipId] =
     Decoder.decodeString.emap { str =>
       Either

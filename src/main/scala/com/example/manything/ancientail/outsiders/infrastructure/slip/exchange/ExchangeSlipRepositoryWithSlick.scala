@@ -40,17 +40,11 @@ class ExchangeSlipRepositoryWithSlick(val db: Database)(
     } yield (s, i)
     val a = q.result.asTry.map { _.toEither }
 
-    // FIXME
-    val result = EitherT(db.run(a)).map { tuple =>
-      tuple
-        .groupBy(_._1)
-        .mapValues(_.map(_._2))
-        .map {
-          case (slip, items) =>
-            slip.to(items.map(_.to()))
-        }
-        .toSeq
-        .head
+    val result = EitherT(db.run(a)).map {
+      _.groupBy(_._1).map {
+        case (slip, items) =>
+          slip.to(items.map(_._2.to()))
+      }.head
     }
 
     result

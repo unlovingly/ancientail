@@ -11,6 +11,7 @@ trait ShopRepository[A[_]] extends Repository[Shop] {
                          productId: Seq[ProductId]): A[EntityType]
 
   def retrieveWithStocks(q: String): A[Seq[EntityType]]
+  def retrieveWithStocks(shopId: ShopId, code: PluCode): A[EntityType]
 
   /**
    * 棚卸し処理、理論在庫状態を保存する

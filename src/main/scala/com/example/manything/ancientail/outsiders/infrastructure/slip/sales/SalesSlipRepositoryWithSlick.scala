@@ -71,7 +71,7 @@ class SalesSlipRepositoryWithSlick(val db: Database)(
 
     EitherT(db.run(a)).map {
       case (id, items) =>
-        val i: Seq[SlipItem] = items.flatten.map(_.to())
+        val i = items.flatten.map(_.to())
 
         entity.copy(identity = Some(id), items = i)
     }

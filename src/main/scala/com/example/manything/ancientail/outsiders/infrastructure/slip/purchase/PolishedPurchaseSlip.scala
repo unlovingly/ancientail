@@ -37,7 +37,7 @@ object PolishedPurchaseSlip {
   def from(entity: PurchaseSlip): PolishedPurchaseSlip = {
     PolishedPurchaseSlip(
       identity = entity.identity,
-      number = entity.number,
+      number = entity.senderId.toString + entity.publishedAt.toString,
       senderId = entity.senderId,
       receiverId = entity.receiverId,
       publishedAt = entity.publishedAt.toOffsetDateTime,

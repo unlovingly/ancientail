@@ -1,5 +1,6 @@
 package com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop
 
+import java.util.UUID
 import javax.inject.Singleton
 
 import scala.concurrent.ExecutionContext
@@ -9,7 +10,7 @@ import play.api.libs.circe.Circe
 import play.api.mvc._
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.shop.Shop
+import com.example.manything.ancientail.domain.shop._
 import com.example.manything.ancientail.usecases.shop.ShopUseCases
 
 @Singleton
@@ -19,6 +20,8 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
   with I18nSupport
   with Circe {
   import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.ShopCodec._
+
+  val shopId: ShopId = ShopId(new UUID(0, 0))
 
   def index() = Action.async { implicit request =>
     import cats.implicits.catsStdInstancesForFuture
@@ -42,6 +45,21 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
 
     val shops: EitherTFuture[Seq[Shop]] =
       shopUseCases.retrieveWithStocks(q)
+
+    val result = shops
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.asJson.spaces2))
+
+    result
+  }
+
+  def show(code: PluCode) = Action.async { implicit request =>
+    import cats.implicits.catsStdInstancesForFuture
+
+    import io.circe.syntax.EncoderOps
+
+    val shops: EitherTFuture[Shop] =
+      shopUseCases.retrieve(shopId, code)
 
     val result = shops
       .fold(left => BadRequest(left.toString.asJson.spaces2),
