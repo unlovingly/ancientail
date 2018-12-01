@@ -59,30 +59,43 @@ class SalesSlipRepositoryWithSlick(val db: Database)(
   override def store(entity: EntityType): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
-    import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
-
     val query = for {
-      q1 <- (slips returning slips.map { _.identity }) += PolishedSalesSlip
-        .from(entity)
-      q2 <- store(q1, entity.items)
+      q1 <- storeSlip(PolishedSalesSlip.from(entity))
+      q2 <- storeItems(q1, entity.items)
     } yield (q1, q2)
 
     val a = query.asTry.map { _.toEither }
 
     EitherT(db.run(a)).map {
       case (id, items) =>
-        val i = items.flatten.map(_.to())
+        val i = items.map(_.to())
 
         entity.copy(identity = Some(id), items = i)
     }
   }
 
-  private def store(slipId: SlipId, ss: Seq[SlipItem]) = {
-    val targets = ss.map(PolishedSlipItem.from(slipId, _))
+  private def storeSlip(entity: PolishedSalesSlip) = {
+    import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
+
+    if (entity.identity.isDefined) {
+      slips.update(entity).map(_ => entity.identity.get)
+    } else {
+      (slips returning slips.map { _.identity }).+=(entity)
+    }
+  }
+
+  private def storeItems(slipId: SlipId, ss: Seq[SlipItem]) = {
+    def storeItems(entity: PolishedSlipItem) = {
+      if (entity.identity.isDefined) {
+        slipItems.update(entity).map(_ => entity)
+      } else {
+        (slipItems returning slipItems).+=(entity)
+      }
+    }
 
     DBIO.sequence {
-      targets.map { t =>
-        (slipItems returning slipItems).insertOrUpdate(t)
+      ss.map { s =>
+        storeItems(PolishedSlipItem.from(slipId, s))
       }
     }
   }
