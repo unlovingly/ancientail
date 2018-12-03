@@ -7,15 +7,19 @@ import cats.data.EitherT
 import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.publisher._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
+import com.example.manything.outsiders.slick.NotFoundException
 
 class PublisherRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
   extends PublisherRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
+    import cats.implicits.catsStdInstancesForFuture
+
     val q = publishers.take(20)
     val a = q.result.asTry.map { _.toEither }
 
     EitherT(db.run(a))
+      .ensure(NotFoundException())(_.nonEmpty)
   }
 
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {

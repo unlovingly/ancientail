@@ -12,6 +12,7 @@ import play.api.mvc._
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.shop._
 import com.example.manything.ancientail.usecases.shop.ShopUseCases
+import com.example.manything.outsiders.slick.NotFoundException
 
 @Singleton
 class ShopController(cc: ControllerComponents,
@@ -48,8 +49,12 @@ class ShopController(cc: ControllerComponents,
       shopUseCases.retrieveWithStocksBy(q)
 
     val result = shops
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
+      .fold({
+        case NotFoundException(e) =>
+          NotFound(e.asJson.spaces2)
+        case e =>
+          BadRequest(e.toString.asJson.spaces2)
+      }, right => Ok(right.asJson.spaces2))
 
     result
   }

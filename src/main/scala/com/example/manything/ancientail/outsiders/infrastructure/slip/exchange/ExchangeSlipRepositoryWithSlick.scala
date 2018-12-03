@@ -11,6 +11,7 @@ import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipReposit
 import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
 import com.example.manything.ancientail.outsiders.infrastructure.slip.PolishedSlipItem
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
+import com.example.manything.outsiders.slick.NotFoundException
 
 class ExchangeSlipRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
@@ -24,9 +25,11 @@ class ExchangeSlipRepositoryWithSlick(val db: Database)(
     val q = slips.take(20)
     val a = q.result.asTry.map { _.toEither }
 
-    EitherT(db.run(a)).map {
-      _.map(_.to())
-    }
+    EitherT(db.run(a))
+      .ensure(NotFoundException())(_.nonEmpty)
+      .map {
+        _.map(_.to())
+      }
   }
 
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
@@ -40,12 +43,14 @@ class ExchangeSlipRepositoryWithSlick(val db: Database)(
     } yield (s, i)
     val a = q.result.asTry.map { _.toEither }
 
-    val result = EitherT(db.run(a)).map {
-      _.groupBy(_._1).map {
-        case (slip, items) =>
-          slip.to(items.map(_._2.to()))
-      }.head
-    }
+    val result = EitherT(db.run(a))
+      .ensure(NotFoundException())(_.nonEmpty)
+      .map {
+        _.groupBy(_._1).map {
+          case (slip, items) =>
+            slip.to(items.map(_._2.to()))
+        }.head
+      }
 
     result
   }

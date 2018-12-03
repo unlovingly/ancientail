@@ -8,6 +8,7 @@ import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.shop._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
+import com.example.manything.outsiders.slick.NotFoundException
 
 class ShopRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
@@ -18,7 +19,9 @@ class ShopRepositoryWithSlick(val db: Database)(
     val q = shops.take(20)
     val a = q.result.asTry.map { _.toEither }
 
-    EitherT(db.run(a)).map { _.map { _.to() } }
+    EitherT(db.run(a))
+      .ensure(NotFoundException())(_.nonEmpty)
+      .map { _.map { _.to() } }
   }
 
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
@@ -74,14 +77,16 @@ class ShopRepositoryWithSlick(val db: Database)(
     val q = shops joinLeft s on (_.identity === _.shopId)
     val a = q.result.asTry.map { _.toEither }
 
-    EitherT(db.run(a)).map {
-      _.groupBy(_._1).map {
-        case (shop, stock) =>
-          val ss = stock.flatMap(_._2)
+    EitherT(db.run(a))
+      .ensure(NotFoundException())(_.nonEmpty)
+      .map {
+        _.groupBy(_._1).map {
+          case (shop, stock) =>
+            val ss = stock.flatMap(_._2)
 
-          shop.to(ss)
-      }.head
-    }
+            shop.to(ss)
+        }.head
+      }
   }
 
   override def retrieveWithStocksBy(
@@ -93,14 +98,16 @@ class ShopRepositoryWithSlick(val db: Database)(
     val q = shops joinLeft s on (_.identity === _.shopId) filter (_._1.identity === shopId.bind)
     val a = q.result.asTry.map { _.toEither }
 
-    EitherT(db.run(a)).map {
-      _.groupBy(_._1).map {
-        case (shop, stock) =>
-          val ss = stock.flatMap(_._2)
+    EitherT(db.run(a))
+      .ensure(NotFoundException())(_.nonEmpty)
+      .map {
+        _.groupBy(_._1).map {
+          case (shop, stock) =>
+            val ss = stock.flatMap(_._2)
 
-          shop.to(ss)
-      }.head
-    }
+            shop.to(ss)
+        }.head
+      }
   }
 
   override def retrieveWithStocksBy(
@@ -117,12 +124,14 @@ class ShopRepositoryWithSlick(val db: Database)(
 
     val a = query.result.asTry.map { _.toEither }
 
-    EitherT(db.run(a)).map {
-      _.groupBy(_._1).map {
-        case (shop, stock) =>
-          shop.to(stock.map(_._2))
-      }.toSeq
-    }
+    EitherT(db.run(a))
+      .ensure(NotFoundException())(_.nonEmpty)
+      .map {
+        _.groupBy(_._1).map {
+          case (shop, stock) =>
+            shop.to(stock.map(_._2))
+        }.toSeq
+      }
   }
 
   override def retrieveWithStocksBy(
@@ -136,14 +145,16 @@ class ShopRepositoryWithSlick(val db: Database)(
     val q = h joinLeft t on (_.identity === _.shopId)
     val a = q.result.asTry.map { _.toEither }
 
-    EitherT(db.run(a)).map {
-      _.groupBy(_._1).map {
-        case (shop, stock) =>
-          val ss = stock.flatMap(_._2)
+    EitherT(db.run(a))
+      .ensure(NotFoundException())(_.nonEmpty)
+      .map {
+        _.groupBy(_._1).map {
+          case (shop, stock) =>
+            val ss = stock.flatMap(_._2)
 
-          shop.to(ss)
-      }.head
-    }
+            shop.to(ss)
+        }.head
+      }
   }
 
   /**
