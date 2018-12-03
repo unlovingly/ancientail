@@ -20,7 +20,7 @@ class SalesSlipUseCases(val shops: ShopRepository[EitherTFuture],
     import cats.implicits.catsStdInstancesForFuture
 
     val productIds = slip.items.map(_.productId)
-    val shop = shops.retrieveWithStocks(slip.senderId, productIds)
+    val shop = shops.retrieveWithStocksBy(slip.senderId, productIds)
 
     // 逐次処理しなければいけない？
     val result = slips.store(slip)

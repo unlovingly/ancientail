@@ -20,7 +20,7 @@ class PurchaseSlipUseCases(val shops: ShopRepository[EitherTFuture],
     import cats.implicits.catsStdInstancesForFuture
 
     val productIds = slip.items.map(_.productId)
-    val shop = shops.retrieveWithStocks(slip.receiverId, productIds)
+    val shop = shops.retrieveWithStocksBy(slip.receiverId, productIds)
     // 1. 伝票を保存して
     val result = slips.store(slip)
 

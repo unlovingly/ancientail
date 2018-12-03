@@ -7,11 +7,11 @@ trait ShopRepository[A[_]] extends Repository[Shop] {
   override type EntityType = Shop
   override type Identifier = ShopId
 
-  def retrieveWithStocks(shopId: Identifier,
-                         productId: Seq[ProductId]): A[EntityType]
-
-  def retrieveWithStocks(q: String): A[Seq[EntityType]]
-  def retrieveWithStocks(shopId: ShopId, code: PluCode): A[EntityType]
+  def retrieveWithStocksBy(q: String): A[Seq[EntityType]]
+  def retrieveWithStocksBy(shopId: Identifier): A[EntityType]
+  def retrieveWithStocksBy(shopId: Identifier, code: PluCode): A[EntityType]
+  def retrieveWithStocksBy(shopId: Identifier,
+                           productId: Seq[ProductId]): A[EntityType]
 
   /**
    * 棚卸し処理、理論在庫状態を保存する

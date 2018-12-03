@@ -48,11 +48,11 @@ class PurchaseSlipController(cc: ControllerComponents,
 
       import io.circe.syntax.EncoderOps
 
-      val slips: EitherTFuture[PurchaseSlip] =
+      val slips =
         slipUseCases.retrieve(shopId, id)
 
-      val result: Future[Result] = slips
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
+      val result = slips
+        .fold(left => NotFound(left.getMessage.asJson.noSpaces),
               right => Ok(right.asJson.spaces2))
 
       result

@@ -20,8 +20,8 @@ class ExchangeSlipUseCases(val shops: ShopRepository[EitherTFuture],
     import cats.implicits.catsStdInstancesForFuture
 
     val productIds = slip.items.map(_.productId)
-    val receiver = shops.retrieveWithStocks(slip.receiverId, productIds)
-    val sender = shops.retrieveWithStocks(slip.senderId, productIds)
+    val receiver = shops.retrieveWithStocksBy(slip.receiverId, productIds)
+    val sender = shops.retrieveWithStocksBy(slip.senderId, productIds)
     // 1. 伝票を保存して
     val result = slips.store(slip)
 

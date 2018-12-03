@@ -37,7 +37,7 @@ object PolishedSalesSlip {
   def from(entity: SalesSlip): PolishedSalesSlip = {
     PolishedSalesSlip(
       identity = entity.identity,
-      number = entity.number,
+      number = entity.senderId.toString + entity.publishedAt.toString,
       senderId = entity.senderId,
       receiverId = entity.receiverId,
       publishedAt = entity.publishedAt.toOffsetDateTime,

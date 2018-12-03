@@ -14,7 +14,8 @@ import com.example.manything.ancientail.domain.shop._
 import com.example.manything.ancientail.usecases.shop.ShopUseCases
 
 @Singleton
-class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
+class ShopController(cc: ControllerComponents,
+                     protected val shopUseCases: ShopUseCases)(
   implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
@@ -23,49 +24,50 @@ class ShopController(cc: ControllerComponents, shopUseCases: ShopUseCases)(
 
   val shopId: ShopId = ShopId(new UUID(0, 0))
 
-  def index() = Action.async { implicit request =>
-    import cats.implicits.catsStdInstancesForFuture
-
-    import io.circe.syntax.EncoderOps
-
-    val shops: EitherTFuture[Seq[Shop]] =
-      shopUseCases.list()
-
-    val result = shops
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
-
-    result
-  }
-
-  def stocks(q: String) = Action.async { implicit request =>
-    import cats.implicits.catsStdInstancesForFuture
-
-    import io.circe.syntax.EncoderOps
-
-    val shops: EitherTFuture[Seq[Shop]] =
-      shopUseCases.retrieveWithStocks(q)
-
-    val result = shops
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
-
-    result
-  }
-
-  def show(code: PluCode) = Action.async { implicit request =>
+  def retrieveWithStocks() = Action.async { implicit request =>
     import cats.implicits.catsStdInstancesForFuture
 
     import io.circe.syntax.EncoderOps
 
     val shops: EitherTFuture[Shop] =
-      shopUseCases.retrieve(shopId, code)
+      shopUseCases.retrieveWithStocksBy(shopId)
 
     val result = shops
       .fold(left => BadRequest(left.toString.asJson.spaces2),
             right => Ok(right.asJson.spaces2))
 
     result
+  }
+
+  def retrieveWithStocksByQuery(q: String) = Action.async { implicit request =>
+    import cats.implicits.catsStdInstancesForFuture
+
+    import io.circe.syntax.EncoderOps
+
+    val shops: EitherTFuture[Seq[Shop]] =
+      shopUseCases.retrieveWithStocksBy(q)
+
+    val result = shops
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.asJson.spaces2))
+
+    result
+  }
+
+  def retrieveWithStocksByCode(code: PluCode) = Action.async {
+    implicit request =>
+      import cats.implicits.catsStdInstancesForFuture
+
+      import io.circe.syntax.EncoderOps
+
+      val shops: EitherTFuture[Shop] =
+        shopUseCases.retrieveWithStocksBy(shopId, code)
+
+      val result = shops
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
+              right => Ok(right.asJson.spaces2))
+
+      result
   }
 
   def performCreation() =

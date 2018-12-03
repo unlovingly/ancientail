@@ -4,9 +4,7 @@ import scala.concurrent.ExecutionContext
 
 import cats.data.EitherT
 
-import slick.dbio.Effect
 import slick.lifted
-import slick.sql.FixedSqlAction
 
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository

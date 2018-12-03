@@ -65,13 +65,13 @@ class ShopRepositoryWithSlick(val db: Database)(
     }
   }
 
-  override def retrieveWithStocks(
-    shopId: Identifier,
-    productIds: Seq[ProductId]): EitherTFuture[EntityType] = {
+  override def retrieveWithStocksBy(
+    shopId: Identifier): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
     // TODO productId
-    val q = shops joinLeft stocks on (_.identity === _.shopId) filter (_._1.identity === shopId.bind)
+    val s = stocks filter (_.amount > 0)
+    val q = shops joinLeft s on (_.identity === _.shopId)
     val a = q.result.asTry.map { _.toEither }
 
     EitherT(db.run(a)).map {
@@ -84,11 +84,12 @@ class ShopRepositoryWithSlick(val db: Database)(
     }
   }
 
-  override def retrieveWithStocks(shopId: Identifier,
-                                  code: PluCode): EitherTFuture[EntityType] = {
+  override def retrieveWithStocksBy(
+    shopId: Identifier,
+    code: PluCode): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
-    val s = stocks filter (_.pluCode === code.bind)
+    val s = stocks filter (_.pluCode === code.bind) filter (_.amount > 0)
     val q = shops joinLeft s on (_.identity === _.shopId) filter (_._1.identity === shopId.bind)
     val a = q.result.asTry.map { _.toEither }
 
@@ -102,14 +103,15 @@ class ShopRepositoryWithSlick(val db: Database)(
     }
   }
 
-  override def retrieveWithStocks(q: String): EitherTFuture[Seq[EntityType]] = {
+  override def retrieveWithStocksBy(
+    q: String): EitherTFuture[Seq[EntityType]] = {
     import cats.implicits.catsStdInstancesForFuture
 
     import com.example.manything.ambientendre.outsiders.infrastructure.product._
 
     val query = for {
-      p <- products if p.name like s"%$q%".bind
-      t <- stocks if p.identity === t.productId
+      p <- products if p.name.toLowerCase like s"%$q%".toLowerCase.bind
+      t <- stocks if p.identity === t.productId && t.amount > 0
       h <- shops if t.shopId === h.identity
     } yield (h, t)
 
@@ -120,6 +122,27 @@ class ShopRepositoryWithSlick(val db: Database)(
         case (shop, stock) =>
           shop.to(stock.map(_._2))
       }.toSeq
+    }
+  }
+
+  override def retrieveWithStocksBy(
+    shopId: Identifier,
+    productIds: Seq[ProductId]): EitherTFuture[EntityType] = {
+    import cats.implicits.catsStdInstancesForFuture
+
+    // TODO productId
+    val t = stocks filter (_.amount > 0)
+    val h = shops filter (_.identity === shopId.bind)
+    val q = h joinLeft t on (_.identity === _.shopId)
+    val a = q.result.asTry.map { _.toEither }
+
+    EitherT(db.run(a)).map {
+      _.groupBy(_._1).map {
+        case (shop, stock) =>
+          val ss = stock.flatMap(_._2)
+
+          shop.to(ss)
+      }.head
     }
   }
 

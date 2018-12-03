@@ -6,5 +6,4 @@ import com.example.manything.ancientail.domain.shop._
 class ShopUseCases(val shops: ShopRepository[EitherTFuture])
   extends CreateShop
   with ListingShops
-  with ListingStocks
   with ShowStocks
