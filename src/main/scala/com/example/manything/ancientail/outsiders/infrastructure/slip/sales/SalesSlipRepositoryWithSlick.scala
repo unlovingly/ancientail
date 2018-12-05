@@ -70,12 +70,14 @@ class SalesSlipRepositoryWithSlick(val db: Database)(
 
     val a = query.asTry.map { _.toEither }
 
-    EitherT(db.run(a)).map {
-      case (id, items) =>
-        val i = items.map(_.to())
+    EitherT(db.run(a))
+    // .ensure(NotFoundException)(_._2.nonEmpty)
+      .map {
+        case (id, items) =>
+          val i = items.map(_.to())
 
-        entity.copy(identity = Some(id), items = i)
-    }
+          entity.copy(identity = Some(id), items = i)
+      }
   }
 
   private def storeSlip(entity: PolishedSalesSlip) = {
@@ -89,6 +91,7 @@ class SalesSlipRepositoryWithSlick(val db: Database)(
   }
 
   private def storeItems(slipId: SlipId, ss: Seq[SlipItem]) = {
+    // TODO: ensure(amount > 0)
     def storeItems(entity: PolishedSlipItem) = {
       if (entity.identity.isDefined) {
         slipItems.update(entity).map(_ => entity)

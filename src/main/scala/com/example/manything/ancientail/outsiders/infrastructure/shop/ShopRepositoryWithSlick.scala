@@ -30,9 +30,11 @@ class ShopRepositoryWithSlick(val db: Database)(
     val q = for {
       p <- shops if p.identity === id.bind
     } yield p
-    val a = q.result.head.asTry.map { _.toEither }
+    val a = q.result.headOption.asTry.map { _.toEither }
 
-    EitherT(db.run(a)).map { _.to() }
+    EitherT(db.run(a))
+      .ensure(NotFoundException())(_.isDefined)
+      .map { _.get.to() }
   }
 
   override def store(entity: EntityType): EitherTFuture[EntityType] = {

@@ -7,24 +7,32 @@ import cats.data.EitherT
 import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.product._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
+import com.example.manything.outsiders.slick.NotFoundException
 
 class ProductRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
   extends ProductRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
+    import cats.implicits.catsStdInstancesForFuture
+
     val q = products.take(20)
     val a = q.result.asTry.map { _.toEither }
 
     EitherT(db.run(a))
+      .ensure(NotFoundException())(_.nonEmpty)
   }
 
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
+    import cats.implicits.catsStdInstancesForFuture
+
     val q = for {
       p <- products if p.identity === id
     } yield p
-    val a = q.result.head.asTry.map { _.toEither }
+    val a = q.result.headOption.asTry.map { _.toEither }
 
     EitherT(db.run(a))
+      .ensure(NotFoundException())(_.isDefined)
+      .map { _.get }
   }
 
   override def store(entity: EntityType): EitherTFuture[EntityType] = {

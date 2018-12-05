@@ -9,7 +9,10 @@ import play.api.libs.circe.Circe
 import play.api.mvc._
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.publisher.Publisher
+import com.example.manything.ambientendre.domain.publisher.{
+  Publisher,
+  PublisherId
+}
 import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 
 @Singleton
