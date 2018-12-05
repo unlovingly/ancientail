@@ -12,10 +12,12 @@ import com.example.manything.ancientail.outsiders.play.components.{
   ShopComponents,
   SlipComponents
 }
+import com.example.manything.blessedict.outsiders.play.components.CustomerComponents
 
 class ApplicationComponents(context: Context)
   extends BuiltInComponentsFromContext(context)
   with OutsiderComponents
+  with CustomerComponents
   with ProductComponents
   with PublisherComponents
   with ShopComponents
@@ -24,6 +26,7 @@ class ApplicationComponents(context: Context)
   with controllers.AssetsComponents {
   override lazy val router: Routes =
     new Routes(httpErrorHandler,
+               customerRoutes,
                productRoutes,
                publisherRoutes,
                shopRoutes,
