@@ -13,7 +13,7 @@ trait SlipItemDecoder {
 
   import io.circe.Decoder
 
-  import com.example.manything.ambientendre.outsiders.infrastructure.product.circe.ProductCodec.productIdDecoder
+  import com.example.manything.ambientendre.outsiders.circe.product.ProductCodec.productIdDecoder
 
   implicit lazy val slipItemIdDecoder: Decoder[SlipItemId] =
     Decoder.decodeString.emap { str =>

@@ -1,4 +1,4 @@
-package com.example.manything.ambientendre.outsiders.infrastructure.product.circe
+package com.example.manything.ambientendre.outsiders.circe.product
 
 import java.util.UUID
 
@@ -9,7 +9,7 @@ trait ProductDecoder {
 
   import io.circe.Decoder
 
-  import com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe.PublisherCodec.publisherIdDecoder
+  import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec.publisherIdDecoder
 
   implicit lazy val productIdDecoder: Decoder[ProductId] =
     Decoder.decodeString.emap { str =>

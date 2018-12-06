@@ -9,7 +9,7 @@ trait SlipItemEncoder {
   import io.circe.Encoder
   import io.circe.generic.semiauto.deriveEncoder
 
-  import com.example.manything.ambientendre.outsiders.infrastructure.product.circe.ProductCodec.productIdEncoder
+  import com.example.manything.ambientendre.outsiders.circe.product.ProductCodec.productIdEncoder
 
   implicit lazy val slipItemIdEncoder: Encoder[SlipItemId] =
     Encoder.encodeString.contramap[SlipItemId](_.value.toString)

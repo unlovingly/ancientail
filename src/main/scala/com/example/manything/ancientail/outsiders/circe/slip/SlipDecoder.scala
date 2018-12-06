@@ -13,7 +13,7 @@ trait SlipDecoder {
   import io.circe.Decoder
   import io.circe.generic.auto._
 
-  import com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe.PublisherCodec.publisherIdDecoder
+  import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec.publisherIdDecoder
   import com.example.manything.ancientail.outsiders.circe.shop.ShopCodec.shopIdDecoder
   import com.example.manything.ancientail.outsiders.circe.slip.SlipItemCodec.slipItemDecoder
   import com.example.manything.blessedict.outsiders.circe.CustomerEncoder

@@ -1,11 +1,11 @@
-package com.example.manything.ambientendre.outsiders.infrastructure.product.circe
+package com.example.manything.ambientendre.outsiders.circe.product
 
 import com.example.manything.ambientendre.domain.product.{Product, ProductId}
 
 trait ProductEncoder {
   import io.circe._
 
-  import com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe.PublisherCodec.publisherIdEncoder
+  import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec.publisherIdEncoder
 
   implicit lazy val productEncoder: Encoder[Product] =
     Encoder.forProduct3("id", "name", "publisherId")(p =>

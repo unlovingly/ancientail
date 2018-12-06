@@ -1,4 +1,4 @@
-package com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe
+package com.example.manything.ambientendre.outsiders.circe.publisher
 
 import java.util.UUID
 
