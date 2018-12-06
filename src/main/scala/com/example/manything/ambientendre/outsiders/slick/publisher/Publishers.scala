@@ -1,6 +1,6 @@
 package com.example.manything.ambientendre.outsiders.slick.publisher
 
-import com.example.manything.ambientendre.domain.publisher.{
+import com.example.manything.ambientendre.domain.models.publisher.{
   Publisher,
   PublisherId
 }

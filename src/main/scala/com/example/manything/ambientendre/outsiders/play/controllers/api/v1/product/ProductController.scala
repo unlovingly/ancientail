@@ -8,9 +8,9 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import com.example.manything.ambientendre.domain.product.Product
-import com.example.manything.ambientendre.usecases.product.ProductUseCases
-import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
+import com.example.manything.ambientendre.domain.models.product.Product
+import com.example.manything.ambientendre.domain.usecases.product.ProductUseCases
+import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 
 @Singleton
 class ProductController(cc: ControllerComponents,

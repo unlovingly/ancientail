@@ -1,4 +1,4 @@
-package com.example.manything.ambientendre.domain.publisher
+package com.example.manything.ambientendre.domain.models.publisher
 
 import java.util.UUID
 

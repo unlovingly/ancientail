@@ -4,7 +4,7 @@ import java.util.UUID
 
 import slick.lifted
 
-import com.example.manything.ambientendre.domain.product.ProductId
+import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 package object product {

@@ -4,7 +4,7 @@ import java.time.OffsetDateTime
 
 import slick.lifted.Tag
 
-import com.example.manything.ambientendre.domain.publisher.PublisherId
+import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.models.slip.SlipId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._

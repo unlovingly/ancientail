@@ -1,7 +1,10 @@
 package com.example.manything.ambientendre.outsiders.slick.product
 
-import com.example.manything.ambientendre.domain.product.{Product, ProductId}
-import com.example.manything.ambientendre.domain.publisher.PublisherId
+import com.example.manything.ambientendre.domain.models.product.{
+  Product,
+  ProductId
+}
+import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class Products(tag: Tag) extends Table[Product](tag, "products") {

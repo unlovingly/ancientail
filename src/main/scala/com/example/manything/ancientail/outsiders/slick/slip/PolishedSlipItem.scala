@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.outsiders.slick.slip
 
-import com.example.manything.ambientendre.domain.product.ProductId
+import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.models.slip._
 
 case class PolishedSlipItem(

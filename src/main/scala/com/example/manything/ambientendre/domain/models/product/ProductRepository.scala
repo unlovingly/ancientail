@@ -1,4 +1,4 @@
-package com.example.manything.ambientendre.domain.product
+package com.example.manything.ambientendre.domain.models.product
 
 import com.example.manything.roundelayout.domain.Repository
 

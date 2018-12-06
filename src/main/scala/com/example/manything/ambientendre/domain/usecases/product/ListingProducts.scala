@@ -1,7 +1,7 @@
-package com.example.manything.ambientendre.usecases.product
+package com.example.manything.ambientendre.domain.usecases.product
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.product.Product
+import com.example.manything.ambientendre.domain.models.product.Product
 
 trait ListingProducts {
   this: ProductUseCases =>

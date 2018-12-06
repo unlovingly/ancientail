@@ -1,8 +1,8 @@
-package com.example.manything.ambientendre.domain.product
+package com.example.manything.ambientendre.domain.models.product
 
 import java.util.UUID
 
-import com.example.manything.ambientendre.domain.publisher.PublisherId
+import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class Product(

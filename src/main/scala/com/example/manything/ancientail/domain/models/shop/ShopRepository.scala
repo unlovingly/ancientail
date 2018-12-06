@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.domain.models.shop
 
-import com.example.manything.ambientendre.domain.product.ProductId
+import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.roundelayout.domain.Repository
 
 trait ShopRepository[A[_]] extends Repository[Shop] {

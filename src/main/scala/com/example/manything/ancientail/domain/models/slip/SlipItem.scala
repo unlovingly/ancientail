@@ -2,7 +2,7 @@ package com.example.manything.ancientail.domain.models.slip
 
 import java.util.UUID
 
-import com.example.manything.ambientendre.domain.product.ProductId
+import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class SlipItem(

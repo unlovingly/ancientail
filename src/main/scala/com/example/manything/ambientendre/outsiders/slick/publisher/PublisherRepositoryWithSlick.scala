@@ -5,7 +5,7 @@ import scala.concurrent.ExecutionContext
 import cats.data.EitherT
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.publisher._
+import com.example.manything.ambientendre.domain.models.publisher._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 import com.example.manything.outsiders.slick.NotFoundException
 

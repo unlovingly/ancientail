@@ -2,7 +2,7 @@ package com.example.manything.ancientail.domain.models.slip.purchase
 
 import java.time.{ZoneId, ZonedDateTime}
 
-import com.example.manything.ambientendre.domain.publisher.PublisherId
+import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.models.slip._
 

@@ -4,7 +4,7 @@ import java.util.UUID
 
 import org.scalatest.{DiagrammedAssertions, FlatSpec}
 
-import com.example.manything.ambientendre.domain.product.ProductId
+import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.slip.Price
 
 class StockSpec extends FlatSpec with DiagrammedAssertions {

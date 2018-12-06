@@ -1,6 +1,9 @@
 package com.example.manything.ambientendre.outsiders.circe.product
 
-import com.example.manything.ambientendre.domain.product.{Product, ProductId}
+import com.example.manything.ambientendre.domain.models.product.{
+  Product,
+  ProductId
+}
 
 trait ProductEncoder {
   import io.circe._

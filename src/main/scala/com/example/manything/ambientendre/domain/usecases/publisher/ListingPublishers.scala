@@ -1,7 +1,7 @@
-package com.example.manything.ambientendre.usecases.publisher
+package com.example.manything.ambientendre.domain.usecases.publisher
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.publisher._
+import com.example.manything.ambientendre.domain.models.publisher._
 
 trait ListingPublishers {
   this: PublisherUseCases =>
