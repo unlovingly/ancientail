@@ -2,17 +2,16 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.circe
 
 import java.util.UUID
 
-import com.example.manything.ancientail.domain.slip.SlipId
-import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
-import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
-import com.example.manything.ancientail.domain.slip.sales.SalesSlip
+import com.example.manything.ancientail.domain.models.slip.SlipId
+import com.example.manything.ancientail.domain.models.slip.exchange.ExchangeSlip
+import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
+import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
 
 trait SlipDecoder {
-  import cats.syntax.either.catsSyntaxEither
-  import cats.syntax.either.catsSyntaxEitherObject
+  import cats.syntax.either.{catsSyntaxEither, catsSyntaxEitherObject}
 
-  import io.circe.generic.auto._
   import io.circe.Decoder
+  import io.circe.generic.auto._
 
   import com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe.PublisherCodec.publisherIdDecoder
   import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.ShopCodec.shopIdDecoder

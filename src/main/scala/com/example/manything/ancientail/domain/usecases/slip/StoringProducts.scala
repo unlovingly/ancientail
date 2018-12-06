@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.domain.usecases.slip
 
-import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
+import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
 
 /**
  * 入庫ユースケース

@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.domain.slip
+package com.example.manything.ancientail.domain.models.slip
 
 import java.time.ZonedDateTime
 import java.util.UUID

@@ -4,9 +4,9 @@ import play.api.BuiltInComponentsFromContext
 
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.models.shop.ShopRepository
-import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
-import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
-import com.example.manything.ancientail.domain.slip.sales.SalesSlipRepository
+import com.example.manything.ancientail.domain.models.slip.exchange.ExchangeSlipRepository
+import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlipRepository
+import com.example.manything.ancientail.domain.models.slip.sales.SalesSlipRepository
 import com.example.manything.ancientail.domain.usecases.slip._
 import com.example.manything.ancientail.outsiders.infrastructure.shop.ShopRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.infrastructure.slip.exchange.ExchangeSlipRepositoryWithSlick

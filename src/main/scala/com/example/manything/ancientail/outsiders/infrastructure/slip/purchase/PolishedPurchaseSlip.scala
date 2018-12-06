@@ -4,8 +4,8 @@ import java.time.OffsetDateTime
 
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.models.shop.ShopId
-import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
-import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
+import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
+import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItem}
 
 /**
  * 購入伝票

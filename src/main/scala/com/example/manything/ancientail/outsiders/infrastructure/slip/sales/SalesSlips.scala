@@ -5,7 +5,7 @@ import java.time.OffsetDateTime
 import slick.lifted.Tag
 
 import com.example.manything.ancientail.domain.models.shop.ShopId
-import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.ancientail.domain.models.slip.SlipId
 import com.example.manything.blessedict.domain.models.customer.CustomerId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 

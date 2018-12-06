@@ -2,9 +2,9 @@ package com.example.manything.ancientail.domain.models.shop
 
 import java.util.UUID
 
-import com.example.manything.ancientail.domain.slip._
-import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
-import com.example.manything.ancientail.domain.slip.sales.SalesSlip
+import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
+import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
+import com.example.manything.ancientail.domain.models.slip.{Slip, SlipItem}
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 case class Shop(
@@ -20,9 +20,9 @@ case class Shop(
   def inbound(slip: Slip): Shop = {
     import cats.syntax.monoid.catsSyntaxSemigroup
 
-    val newStocks: Seq[Stock] = convertFrom(slip.items)
+    val newStocks = convertFrom(slip.items)
 
-    val result: Seq[Stock] = (newStocks ++ stocks)
+    val result = (newStocks ++ stocks)
       .groupBy(_.pluCode)
       .mapValues(_.reduce((x, y) => x |+| y))
       .values
@@ -35,9 +35,9 @@ case class Shop(
    * 出庫処理
    */
   def outbound(slip: Slip): Shop = {
-    val newStocks: Seq[Stock] = convertFrom(slip.items)
+    val newStocks = convertFrom(slip.items)
 
-    val result: Seq[Stock] = (stocks ++ newStocks)
+    val result = (stocks ++ newStocks)
       .groupBy(_.pluCode)
       .mapValues(_.reduce((x, y) => x - y))
       .values

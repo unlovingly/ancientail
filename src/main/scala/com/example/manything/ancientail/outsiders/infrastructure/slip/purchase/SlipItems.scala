@@ -3,7 +3,7 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
 import slick.lifted.Tag
 
 import com.example.manything.ambientendre.domain.product.ProductId
-import com.example.manything.ancientail.domain.slip.{SlipId, SlipItemId}
+import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItemId}
 import com.example.manything.ancientail.outsiders.infrastructure.slip.PolishedSlipItem
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 

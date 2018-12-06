@@ -1,6 +1,9 @@
 package com.example.manything.ancientail.outsiders.infrastructure.slip.circe
 
-import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.models.slip.{
+  SlipItem,
+  SlipItemId
+}
 
 trait SlipItemEncoder {
   import io.circe.Encoder

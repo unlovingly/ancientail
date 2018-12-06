@@ -1,9 +1,9 @@
-package com.example.manything.ancientail.domain.slip.exchange
+package com.example.manything.ancientail.domain.models.slip.exchange
 
 import java.time.{ZoneId, ZonedDateTime}
 
 import com.example.manything.ancientail.domain.models.shop.ShopId
-import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.models.slip._
 
 /**
  * 移動伝票 (入庫伝票、出庫伝票)

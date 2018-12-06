@@ -3,8 +3,8 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.sales
 import java.time.OffsetDateTime
 
 import com.example.manything.ancientail.domain.models.shop.ShopId
-import com.example.manything.ancientail.domain.slip.sales.SalesSlip
-import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
+import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
+import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItem}
 import com.example.manything.blessedict.domain.models.customer.CustomerId
 
 /**

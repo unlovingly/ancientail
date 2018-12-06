@@ -1,10 +1,10 @@
-package com.example.manything.ancientail.domain.slip.purchase
+package com.example.manything.ancientail.domain.models.slip.purchase
 
 import java.time.{ZoneId, ZonedDateTime}
 
 import com.example.manything.ambientendre.domain.publisher.PublisherId
 import com.example.manything.ancientail.domain.models.shop.ShopId
-import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.models.slip._
 
 /**
  * 納品伝票

@@ -4,7 +4,7 @@ import java.util.UUID
 
 import play.api.mvc.PathBindable
 
-import com.example.manything.ancientail.domain.slip.SlipId
+import com.example.manything.ancientail.domain.models.slip.SlipId
 
 package object slip {
   implicit def pathBinder(

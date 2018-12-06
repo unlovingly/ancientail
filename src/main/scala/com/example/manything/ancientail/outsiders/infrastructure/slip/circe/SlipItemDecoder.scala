@@ -2,7 +2,10 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.circe
 
 import java.util.UUID
 
-import com.example.manything.ancientail.domain.slip.{SlipItem, SlipItemId}
+import com.example.manything.ancientail.domain.models.slip.{
+  SlipItem,
+  SlipItemId
+}
 
 trait SlipItemDecoder {
   import cats.syntax.either.catsSyntaxEither

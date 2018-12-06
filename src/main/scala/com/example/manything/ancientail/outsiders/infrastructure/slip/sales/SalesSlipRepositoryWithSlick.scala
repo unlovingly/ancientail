@@ -7,8 +7,8 @@ import cats.data.EitherT
 import slick.lifted
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.slip.sales.SalesSlipRepository
-import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
+import com.example.manything.ancientail.domain.models.slip.sales.SalesSlipRepository
+import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItem}
 import com.example.manything.ancientail.outsiders.infrastructure.slip.PolishedSlipItem
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 import com.example.manything.outsiders.slick.NotFoundException

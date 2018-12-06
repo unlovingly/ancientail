@@ -4,7 +4,7 @@ import scala.concurrent.ExecutionContext
 
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.models.shop.ShopRepository
-import com.example.manything.ancientail.domain.slip.sales.{
+import com.example.manything.ancientail.domain.models.slip.sales.{
   SalesSlip,
   SalesSlipRepository
 }

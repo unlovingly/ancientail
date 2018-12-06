@@ -10,8 +10,8 @@ import play.api.libs.circe.Circe
 import play.api.mvc._
 
 import com.example.manything.ancientail.domain.models.shop.ShopId
-import com.example.manything.ancientail.domain.slip.SlipId
-import com.example.manything.ancientail.domain.slip.sales.SalesSlip
+import com.example.manything.ancientail.domain.models.slip.SlipId
+import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
 import com.example.manything.ancientail.domain.usecases.slip.SalesSlipUseCases
 
 @Singleton

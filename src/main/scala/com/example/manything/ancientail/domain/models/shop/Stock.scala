@@ -3,7 +3,7 @@ package com.example.manything.ancientail.domain.models.shop
 import cats.{Eq, Semigroup}
 
 import com.example.manything.ambientendre.domain.product.ProductId
-import com.example.manything.ancientail.domain.slip.{Amount, Price}
+import com.example.manything.ancientail.domain.models.slip.{Amount, Price}
 
 /**
  * 店舗在庫
