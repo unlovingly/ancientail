@@ -21,7 +21,7 @@ class SalesSlipController(
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
-  import com.example.manything.ancientail.outsiders.infrastructure.slip.circe.SlipCodec._
+  import com.example.manything.ancientail.outsiders.circe.slip.SlipCodec._
 
   // TODO
   val shopId: ShopId = ShopId(new UUID(0, 0))

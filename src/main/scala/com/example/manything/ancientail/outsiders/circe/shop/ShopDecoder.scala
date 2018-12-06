@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.shop.circe
+package com.example.manything.ancientail.outsiders.circe.shop
 
 import java.util.UUID
 
@@ -10,7 +10,7 @@ trait ShopDecoder {
 
   import io.circe.Decoder
 
-  import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.StockCodec.stockDecoder
+  import com.example.manything.ancientail.outsiders.circe.shop.StockCodec.stockDecoder
 
   implicit lazy val shopIdDecoder: Decoder[ShopId] =
     Decoder.decodeString.emap { str =>

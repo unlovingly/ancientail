@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.shop.circe
+package com.example.manything.ancientail.outsiders.circe.shop
 
 import com.example.manything.ancientail.domain.models.shop.PluCode
 

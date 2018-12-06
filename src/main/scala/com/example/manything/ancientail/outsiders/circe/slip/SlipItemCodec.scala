@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip.circe
+package com.example.manything.ancientail.outsiders.circe.slip
 
 trait SlipItemCodec extends SlipItemDecoder with SlipItemEncoder
 

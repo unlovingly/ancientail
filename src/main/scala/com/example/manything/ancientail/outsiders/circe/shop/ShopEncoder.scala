@@ -1,11 +1,11 @@
-package com.example.manything.ancientail.outsiders.infrastructure.shop.circe
+package com.example.manything.ancientail.outsiders.circe.shop
 
 import com.example.manything.ancientail.domain.models.shop.{Shop, ShopId}
 
 trait ShopEncoder {
   import io.circe.Encoder
 
-  import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.StockCodec.stockEncoder
+  import com.example.manything.ancientail.outsiders.circe.shop.StockCodec.stockEncoder
 
   implicit lazy val shopIdEncoder: Encoder[ShopId] =
     Encoder.encodeString.contramap[ShopId](_.value.toString)

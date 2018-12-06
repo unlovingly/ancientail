@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip.circe
+package com.example.manything.ancientail.outsiders.circe.slip
 
 import com.example.manything.ancientail.domain.models.slip.SlipId
 import com.example.manything.ancientail.domain.models.slip.exchange.ExchangeSlip
@@ -12,8 +12,8 @@ trait SlipEncoder {
   import io.circe.generic.semiauto.deriveEncoder
 
   import com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe.PublisherCodec.publisherIdEncoder
-  import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.ShopCodec.shopIdEncoder
-  import com.example.manything.ancientail.outsiders.infrastructure.slip.circe.SlipItemCodec.slipItemEncoder
+  import com.example.manything.ancientail.outsiders.circe.shop.ShopCodec.shopIdEncoder
+  import com.example.manything.ancientail.outsiders.circe.slip.SlipItemCodec.slipItemEncoder
 
   implicit lazy val slipIdEncoder: Encoder[SlipId] =
     Encoder.encodeString.contramap[SlipId](_.value.toString)
