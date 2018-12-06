@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip
+package com.example.manything.ancientail.outsiders.slick.slip
 
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.models.slip._

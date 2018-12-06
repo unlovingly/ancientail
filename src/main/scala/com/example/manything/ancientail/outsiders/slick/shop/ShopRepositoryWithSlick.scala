@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.shop
+package com.example.manything.ancientail.outsiders.slick.shop
 
 import scala.concurrent.ExecutionContext
 

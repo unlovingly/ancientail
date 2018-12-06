@@ -1,16 +1,16 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip.sales
+package com.example.manything.ancientail.outsiders.slick.slip.purchase
 
 import slick.lifted.Tag
 
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItemId}
-import com.example.manything.ancientail.outsiders.infrastructure.slip.PolishedSlipItem
+import com.example.manything.ancientail.outsiders.slick.slip.PolishedSlipItem
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class SlipItems(tag: Tag)
-  extends Table[PolishedSlipItem](tag, "sales_slip_items") {
+  extends Table[PolishedSlipItem](tag, "purchase_slip_items") {
   import com.example.manything.ambientendre.outsiders.infrastructure.product.productIdColumnType
-  import com.example.manything.ancientail.outsiders.infrastructure.slip.{
+  import com.example.manything.ancientail.outsiders.slick.slip.{
     slipIdColumnType,
     slipItemIdColumnType
   }

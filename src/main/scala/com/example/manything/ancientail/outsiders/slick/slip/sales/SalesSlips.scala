@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip.sales
+package com.example.manything.ancientail.outsiders.slick.slip.sales
 
 import java.time.OffsetDateTime
 
@@ -11,8 +11,8 @@ import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class SalesSlips(tag: Tag)
   extends Table[PolishedSalesSlip](tag, "sales_slips") {
-  import com.example.manything.ancientail.outsiders.infrastructure.shop.shopIdColumnType
-  import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
+  import com.example.manything.ancientail.outsiders.slick.shop.shopIdColumnType
+  import com.example.manything.ancientail.outsiders.slick.slip.slipIdColumnType
   import com.example.manything.blessedict.outsiders.slick.customerIdColumnType
 
   def identity = column[SlipId]("slip_id", O.PrimaryKey, O.AutoInc)

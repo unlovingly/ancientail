@@ -4,9 +4,9 @@ import play.api.BuiltInComponentsFromContext
 
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.models.shop.ShopRepository
-import com.example.manything.ancientail.outsiders.infrastructure.shop.ShopRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController
 import com.example.manything.ancientail.domain.usecases.shop.ShopUseCases
+import com.example.manything.ancientail.outsiders.slick.shop.ShopRepositoryWithSlick
 import com.example.manything.outsiders.play.components.OutsiderComponents
 
 trait ShopComponents {

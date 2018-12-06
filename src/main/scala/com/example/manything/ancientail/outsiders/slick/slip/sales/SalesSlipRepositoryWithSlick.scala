@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip.purchase
+package com.example.manything.ancientail.outsiders.slick.slip.sales
 
 import scala.concurrent.ExecutionContext
 
@@ -7,16 +7,16 @@ import cats.data.EitherT
 import slick.lifted
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlipRepository
+import com.example.manything.ancientail.domain.models.slip.sales.SalesSlipRepository
 import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItem}
-import com.example.manything.ancientail.outsiders.infrastructure.slip.PolishedSlipItem
+import com.example.manything.ancientail.outsiders.slick.slip.PolishedSlipItem
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 import com.example.manything.outsiders.slick.NotFoundException
 
-class PurchaseSlipRepositoryWithSlick(val db: Database)(
+class SalesSlipRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
-  extends PurchaseSlipRepository[EitherTFuture] {
-  val slips = lifted.TableQuery[PurchaseSlips]
+  extends SalesSlipRepository[EitherTFuture] {
+  val slips = lifted.TableQuery[SalesSlips]
   val slipItems = lifted.TableQuery[SlipItems]
 
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
@@ -35,7 +35,7 @@ class PurchaseSlipRepositoryWithSlick(val db: Database)(
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
-    import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
+    import com.example.manything.ancientail.outsiders.slick.slip.slipIdColumnType
 
     val q = for {
       s <- slips if s.identity === id.bind
@@ -64,13 +64,14 @@ class PurchaseSlipRepositoryWithSlick(val db: Database)(
     import cats.implicits.catsStdInstancesForFuture
 
     val query = for {
-      q1 <- storeSlip(PolishedPurchaseSlip.from(entity))
+      q1 <- storeSlip(PolishedSalesSlip.from(entity))
       q2 <- storeItems(q1, entity.items)
     } yield (q1, q2)
 
     val a = query.asTry.map { _.toEither }
 
     EitherT(db.run(a))
+    // .ensure(NotFoundException)(_._2.nonEmpty)
       .map {
         case (id, items) =>
           val i = items.map(_.to())
@@ -79,8 +80,8 @@ class PurchaseSlipRepositoryWithSlick(val db: Database)(
       }
   }
 
-  private def storeSlip(entity: PolishedPurchaseSlip) = {
-    import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
+  private def storeSlip(entity: PolishedSalesSlip) = {
+    import com.example.manything.ancientail.outsiders.slick.slip.slipIdColumnType
 
     if (entity.identity.isDefined) {
       slips.update(entity).map(_ => entity.identity.get)
@@ -90,6 +91,7 @@ class PurchaseSlipRepositoryWithSlick(val db: Database)(
   }
 
   private def storeItems(slipId: SlipId, ss: Seq[SlipItem]) = {
+    // TODO: ensure(amount > 0)
     def storeItems(entity: PolishedSlipItem) = {
       if (entity.identity.isDefined) {
         slipItems.update(entity).map(_ => entity)

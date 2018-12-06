@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip.exchange
+package com.example.manything.ancientail.outsiders.slick.slip.exchange
 
 import java.time.OffsetDateTime
 

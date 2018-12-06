@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.outsiders.infrastructure.slip.exchange
+package com.example.manything.ancientail.outsiders.slick.slip.exchange
 
 import scala.concurrent.ExecutionContext
 
@@ -9,7 +9,7 @@ import slick.lifted
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.models.slip.exchange.ExchangeSlipRepository
 import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItem}
-import com.example.manything.ancientail.outsiders.infrastructure.slip.PolishedSlipItem
+import com.example.manything.ancientail.outsiders.slick.slip.PolishedSlipItem
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 import com.example.manything.outsiders.slick.NotFoundException
 
@@ -35,7 +35,7 @@ class ExchangeSlipRepositoryWithSlick(val db: Database)(
   override def retrieve(id: Identifier): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
-    import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
+    import com.example.manything.ancientail.outsiders.slick.slip.slipIdColumnType
 
     val q = for {
       s <- slips if s.identity === id.bind
@@ -58,7 +58,7 @@ class ExchangeSlipRepositoryWithSlick(val db: Database)(
   override def store(entity: EntityType): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
-    import com.example.manything.ancientail.outsiders.infrastructure.slip.slipIdColumnType
+    import com.example.manything.ancientail.outsiders.slick.slip.slipIdColumnType
 
     val query = for {
       q1 <- (slips returning slips.map { _.identity }) += PolishedExchangeSlip
