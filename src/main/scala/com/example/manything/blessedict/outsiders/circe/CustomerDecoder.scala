@@ -2,7 +2,10 @@ package com.example.manything.blessedict.outsiders.circe
 
 import java.util.UUID
 
-import com.example.manything.blessedict.domain.customer.{Customer, CustomerId}
+import com.example.manything.blessedict.domain.models.customer.{
+  Customer,
+  CustomerId
+}
 
 trait CustomerDecoder {
   import cats.syntax.either._

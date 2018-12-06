@@ -3,7 +3,7 @@ package com.example.manything.blessedict.outsiders.play.components
 import play.api.BuiltInComponentsFromContext
 
 import com.example.manything.EitherTFuture
-import com.example.manything.blessedict.domain.customer.CustomerRepository
+import com.example.manything.blessedict.domain.models.customer.CustomerRepository
 import com.example.manything.blessedict.domain.usecases.customer.CustomerUseCases
 import com.example.manything.blessedict.outsiders.play.controllers.api.v1.customer.CustomerController
 import com.example.manything.blessedict.outsiders.slick.CustomerRepositoryWithSlick

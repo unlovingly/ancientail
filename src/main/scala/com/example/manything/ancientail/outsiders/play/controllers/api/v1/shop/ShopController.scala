@@ -9,9 +9,8 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.shop._
-import com.example.manything.ancientail.usecases.shop.ShopUseCases
+import com.example.manything.ancientail.domain.models.shop._
+import com.example.manything.ancientail.domain.usecases.shop.ShopUseCases
 import com.example.manything.outsiders.slick.NotFoundException
 
 @Singleton
@@ -21,7 +20,7 @@ class ShopController(cc: ControllerComponents,
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
-  import com.example.manything.ancientail.outsiders.infrastructure.shop.circe.ShopCodec._
+  import com.example.manything.ancientail.outsiders.circe.shop.ShopCodec._
 
   val shopId: ShopId = ShopId(new UUID(0, 0))
 

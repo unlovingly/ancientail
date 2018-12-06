@@ -8,9 +8,9 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import com.example.manything.ambientendre.domain.product.Product
-import com.example.manything.ambientendre.usecases.product.ProductUseCases
-import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
+import com.example.manything.ambientendre.domain.models.product.Product
+import com.example.manything.ambientendre.domain.usecases.product.ProductUseCases
+import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 
 @Singleton
 class ProductController(cc: ControllerComponents,
@@ -20,7 +20,7 @@ class ProductController(cc: ControllerComponents,
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
-  import com.example.manything.ambientendre.outsiders.infrastructure.product.circe.ProductCodec._
+  import com.example.manything.ambientendre.outsiders.circe.product.ProductCodec._
 
   def index() = Action.async { implicit request: Request[AnyContent] =>
     import cats.implicits.catsStdInstancesForFuture

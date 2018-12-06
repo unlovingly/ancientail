@@ -9,7 +9,7 @@ import play.api.libs.circe.Circe
 import play.api.mvc._
 
 import com.example.manything.EitherTFuture
-import com.example.manything.blessedict.domain.customer.Customer
+import com.example.manything.blessedict.domain.models.customer.Customer
 import com.example.manything.blessedict.domain.usecases.customer.CustomerUseCases
 
 @Singleton

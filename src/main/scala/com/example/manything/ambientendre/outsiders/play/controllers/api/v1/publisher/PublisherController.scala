@@ -8,8 +8,8 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import com.example.manything.ambientendre.domain.publisher.Publisher
-import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
+import com.example.manything.ambientendre.domain.models.publisher.Publisher
+import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 
 @Singleton
 class PublisherController(cc: ControllerComponents,
@@ -18,7 +18,7 @@ class PublisherController(cc: ControllerComponents,
   extends AbstractController(cc)
   with I18nSupport
   with Circe {
-  import com.example.manything.ambientendre.outsiders.infrastructure.publisher.circe.PublisherCodec._
+  import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec._
 
   def index() = Action.async { implicit request =>
     import cats.implicits.catsStdInstancesForFuture
