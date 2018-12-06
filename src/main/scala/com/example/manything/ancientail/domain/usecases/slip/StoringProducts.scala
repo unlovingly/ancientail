@@ -1,5 +1,4 @@
-package com.example.manything.ancientail.usecases.slip
-
+package com.example.manything.ancientail.domain.usecases.slip
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 
 /**

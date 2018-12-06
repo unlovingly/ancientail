@@ -13,7 +13,7 @@ import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.SlipId
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
-import com.example.manything.ancientail.usecases.slip.ExchangeSlipUseCases
+import com.example.manything.ancientail.domain.usecases.slip.ExchangeSlipUseCases
 
 @Singleton
 class ExchangeSlipController(cc: ControllerComponents,

@@ -7,6 +7,7 @@ import com.example.manything.ancientail.domain.shop.ShopRepository
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
 import com.example.manything.ancientail.domain.slip.sales.SalesSlipRepository
+import com.example.manything.ancientail.domain.usecases.slip._
 import com.example.manything.ancientail.outsiders.infrastructure.shop.ShopRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.infrastructure.slip.exchange.ExchangeSlipRepositoryWithSlick
 import com.example.manything.ancientail.outsiders.infrastructure.slip.purchase.PurchaseSlipRepositoryWithSlick
@@ -16,7 +17,6 @@ import com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.{
   PurchaseSlipController,
   SalesSlipController
 }
-import com.example.manything.ancientail.usecases.slip._
 import com.example.manything.outsiders.play.components.OutsiderComponents
 
 trait SlipComponents {

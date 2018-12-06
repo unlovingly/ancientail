@@ -11,7 +11,7 @@ import play.api.mvc._
 
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.shop._
-import com.example.manything.ancientail.usecases.shop.ShopUseCases
+import com.example.manything.ancientail.domain.usecases.shop.ShopUseCases
 import com.example.manything.outsiders.slick.NotFoundException
 
 @Singleton
