@@ -30,7 +30,7 @@ class ShopController(cc: ControllerComponents,
 
     import io.circe.syntax.EncoderOps
 
-    val shops: EitherTFuture[Shop] =
+    val shops =
       shopUseCases.retrieveWithStocksBy(shopId)
 
     val result = shops
@@ -45,7 +45,7 @@ class ShopController(cc: ControllerComponents,
 
     import io.circe.syntax.EncoderOps
 
-    val shops: EitherTFuture[Seq[Shop]] =
+    val shops =
       shopUseCases.retrieveWithStocksBy(q)
 
     val result = shops
@@ -65,7 +65,7 @@ class ShopController(cc: ControllerComponents,
 
       import io.circe.syntax.EncoderOps
 
-      val shops: EitherTFuture[Shop] =
+      val shops =
         shopUseCases.retrieveWithStocksBy(shopId, code)
 
       val result = shops
@@ -81,7 +81,7 @@ class ShopController(cc: ControllerComponents,
 
       import io.circe.syntax.EncoderOps
 
-      val shop: EitherTFuture[Shop] =
+      val shop =
         shopUseCases.create(request.body)
 
       val result = shop

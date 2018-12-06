@@ -26,10 +26,10 @@ class CustomerController(cc: ControllerComponents,
 
     import io.circe.syntax.EncoderOps
 
-    val customers: EitherTFuture[Seq[Customer]] =
+    val customers =
       publihserUseCases.retrieve()
 
-    val result: Future[Result] = customers
+    val result = customers
       .fold(left => BadRequest(left.toString.asJson.spaces2),
             right => Ok(right.asJson.spaces2))
 
@@ -42,10 +42,10 @@ class CustomerController(cc: ControllerComponents,
 
       import io.circe.syntax.EncoderOps
 
-      val customer: EitherTFuture[Customer] =
+      val customer =
         publihserUseCases.create(request.body)
 
-      val result: Future[Result] = customer
+      val result = customer
         .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 

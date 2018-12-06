@@ -32,7 +32,7 @@ class SalesSlipController(
 
     import io.circe.syntax.EncoderOps
 
-    val slips: EitherTFuture[Seq[SalesSlip]] =
+    val slips =
       slipUseCases.retrieve()
 
     val result = slips
@@ -48,10 +48,10 @@ class SalesSlipController(
 
       import io.circe.syntax.EncoderOps
 
-      val slips: EitherTFuture[SalesSlip] =
+      val slips =
         slipUseCases.retrieve(shopId, id)
 
-      val result: Future[Result] = slips
+      val result = slips
         .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
@@ -64,10 +64,10 @@ class SalesSlipController(
 
       import io.circe.syntax.EncoderOps
 
-      val slip: EitherTFuture[SalesSlip] =
+      val slip =
         slipUseCases.sell(request.body)
 
-      val result: Future[Result] = slip
+      val result = slip
         .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 

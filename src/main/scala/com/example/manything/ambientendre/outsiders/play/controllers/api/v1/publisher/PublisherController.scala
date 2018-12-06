@@ -2,17 +2,13 @@ package com.example.manything.ambientendre.outsiders.play.controllers.api.v1.pub
 
 import javax.inject.Singleton
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.publisher.{
-  Publisher,
-  PublisherId
-}
+import com.example.manything.ambientendre.domain.publisher.Publisher
 import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
 
 @Singleton
@@ -29,10 +25,10 @@ class PublisherController(cc: ControllerComponents,
 
     import io.circe.syntax.EncoderOps
 
-    val publishers: EitherTFuture[Seq[Publisher]] =
+    val publishers =
       publihserUseCases.list()
 
-    val result: Future[Result] = publishers
+    val result = publishers
       .fold(left => BadRequest(left.toString.asJson.spaces2),
             right => Ok(right.asJson.spaces2))
 
@@ -45,10 +41,10 @@ class PublisherController(cc: ControllerComponents,
 
       import io.circe.syntax.EncoderOps
 
-      val publisher: EitherTFuture[Publisher] =
+      val publisher =
         publihserUseCases.create(request.body)
 
-      val result: Future[Result] = publisher
+      val result = publisher
         .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 

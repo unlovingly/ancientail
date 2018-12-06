@@ -32,7 +32,7 @@ class PurchaseSlipController(cc: ControllerComponents,
 
     import io.circe.syntax.EncoderOps
 
-    val slips: EitherTFuture[Seq[PurchaseSlip]] =
+    val slips =
       slipUseCases.retrieve()
 
     val result = slips
@@ -64,10 +64,10 @@ class PurchaseSlipController(cc: ControllerComponents,
 
       import io.circe.syntax.EncoderOps
 
-      val slip: EitherTFuture[PurchaseSlip] =
+      val slip =
         slipUseCases.storing(request.body)
 
-      val result: Future[Result] = slip
+      val result = slip
         .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 

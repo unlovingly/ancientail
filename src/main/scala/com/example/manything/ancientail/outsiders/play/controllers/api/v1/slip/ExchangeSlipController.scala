@@ -32,7 +32,7 @@ class ExchangeSlipController(cc: ControllerComponents,
 
     import io.circe.syntax.EncoderOps
 
-    val slips: EitherTFuture[Seq[ExchangeSlip]] =
+    val slips =
       slipUseCases.retrieve()
 
     val result = slips
@@ -48,10 +48,10 @@ class ExchangeSlipController(cc: ControllerComponents,
 
       import io.circe.syntax.EncoderOps
 
-      val slips: EitherTFuture[ExchangeSlip] =
+      val slips =
         slipUseCases.retrieve(shopId, id)
 
-      val result: Future[Result] = slips
+      val result = slips
         .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
@@ -67,7 +67,7 @@ class ExchangeSlipController(cc: ControllerComponents,
       val slip =
         slipUseCases.exchange(request.body)
 
-      val result: Future[Result] = slip
+      val result = slip
         .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
