@@ -1,4 +1,4 @@
-package com.example.manything.ambientendre.outsiders.infrastructure
+package com.example.manything.ambientendre.outsiders.slick
 
 import java.util.UUID
 

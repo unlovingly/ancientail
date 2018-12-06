@@ -9,7 +9,7 @@ import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class SlipItems(tag: Tag)
   extends Table[PolishedSlipItem](tag, "sales_slip_items") {
-  import com.example.manything.ambientendre.outsiders.infrastructure.product.productIdColumnType
+  import com.example.manything.ambientendre.outsiders.slick.product.productIdColumnType
   import com.example.manything.ancientail.outsiders.slick.slip.{
     slipIdColumnType,
     slipItemIdColumnType

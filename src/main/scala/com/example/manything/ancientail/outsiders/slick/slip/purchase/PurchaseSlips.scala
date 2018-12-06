@@ -11,7 +11,7 @@ import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class PurchaseSlips(tag: Tag)
   extends Table[PolishedPurchaseSlip](tag, "purchase_slips") {
-  import com.example.manything.ambientendre.outsiders.infrastructure.publisher.publisherIdColumnType
+  import com.example.manything.ambientendre.outsiders.slick.publisher.publisherIdColumnType
   import com.example.manything.ancientail.outsiders.slick.shop.shopIdColumnType
   import com.example.manything.ancientail.outsiders.slick.slip.slipIdColumnType
 

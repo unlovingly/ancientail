@@ -116,7 +116,7 @@ class ShopRepositoryWithSlick(val db: Database)(
     q: String): EitherTFuture[Seq[EntityType]] = {
     import cats.implicits.catsStdInstancesForFuture
 
-    import com.example.manything.ambientendre.outsiders.infrastructure.product._
+    import com.example.manything.ambientendre.outsiders.slick.product._
 
     val query = for {
       p <- products if p.name.toLowerCase like s"%$q%".toLowerCase.bind

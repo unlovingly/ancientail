@@ -1,4 +1,4 @@
-package com.example.manything.ambientendre.outsiders.infrastructure.publisher
+package com.example.manything.ambientendre.outsiders.slick.publisher
 
 import com.example.manything.ambientendre.domain.publisher.{
   Publisher,
