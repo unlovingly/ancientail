@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.outsiders.infrastructure.shop
 
-import com.example.manything.ancientail.domain.shop._
+import com.example.manything.ancientail.domain.models.shop._
 
 // https://stackoverflow.com/a/42218139/1764794
 case class PolishedShop(identity: Option[ShopId] = None, name: String) {

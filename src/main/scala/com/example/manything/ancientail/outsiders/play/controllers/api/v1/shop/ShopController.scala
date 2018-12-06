@@ -9,8 +9,7 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.shop._
+import com.example.manything.ancientail.domain.models.shop._
 import com.example.manything.ancientail.domain.usecases.shop.ShopUseCases
 import com.example.manything.outsiders.slick.NotFoundException
 

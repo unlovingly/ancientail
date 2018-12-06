@@ -4,7 +4,7 @@ import java.util.UUID
 
 import play.api.mvc.PathBindable
 
-import com.example.manything.ancientail.domain.shop.{PluCode, ShopId}
+import com.example.manything.ancientail.domain.models.shop.{PluCode, ShopId}
 
 package object shop {
   implicit def pluCodeBinder(

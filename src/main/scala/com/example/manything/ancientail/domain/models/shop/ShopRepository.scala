@@ -1,4 +1,4 @@
-package com.example.manything.ancientail.domain.shop
+package com.example.manything.ancientail.domain.models.shop
 
 import com.example.manything.ambientendre.domain.product.ProductId
 import com.example.manything.roundelayout.domain.Repository

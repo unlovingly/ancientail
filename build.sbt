@@ -25,8 +25,8 @@ lazy val root = (project in file("."))
     routesImport ++= Seq(
       "com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.pathBinder",
       "com.example.manything.ancientail.domain.slip.SlipId",
-      "com.example.manything.ancientail.domain.shop.PluCode",
-      "com.example.manything.ancientail.domain.shop.ShopId",
+      "com.example.manything.ancientail.domain.models.shop.PluCode",
+      "com.example.manything.ancientail.domain.models.shop.ShopId",
       "com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.pluCodeBinder",
       "com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.shopIdBinder",
     ),

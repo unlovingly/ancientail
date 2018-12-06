@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.outsiders.infrastructure.shop.circe
 
-import com.example.manything.ancientail.domain.shop.PluCode
+import com.example.manything.ancientail.domain.models.shop.PluCode
 
 trait PluCodeDecoder {
   import cats.syntax.either.catsSyntaxEither

@@ -2,7 +2,7 @@ package com.example.manything.ancientail.outsiders.infrastructure.slip.exchange
 
 import java.time.OffsetDateTime
 
-import com.example.manything.ancientail.domain.shop.ShopId
+import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlip
 

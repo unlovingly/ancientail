@@ -1,7 +1,7 @@
 package com.example.manything.ancientail.domain.usecases.shop
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.shop._
+import com.example.manything.ancientail.domain.models.shop._
 
 trait ShowStocks { this: ShopUseCases =>
   def retrieveWithStocksBy(q: String): EitherTFuture[Seq[Shop]] =

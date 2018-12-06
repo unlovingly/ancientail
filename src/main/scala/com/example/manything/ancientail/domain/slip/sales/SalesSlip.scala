@@ -2,7 +2,7 @@ package com.example.manything.ancientail.domain.slip.sales
 
 import java.time.{ZoneId, ZonedDateTime}
 
-import com.example.manything.ancientail.domain.shop.ShopId
+import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.slip._
 import com.example.manything.blessedict.domain.models.customer.CustomerId
 

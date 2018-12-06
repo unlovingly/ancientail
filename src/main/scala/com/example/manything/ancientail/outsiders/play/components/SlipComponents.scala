@@ -3,7 +3,7 @@ package com.example.manything.ancientail.outsiders.play.components
 import play.api.BuiltInComponentsFromContext
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.shop.ShopRepository
+import com.example.manything.ancientail.domain.models.shop.ShopRepository
 import com.example.manything.ancientail.domain.slip.exchange.ExchangeSlipRepository
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlipRepository
 import com.example.manything.ancientail.domain.slip.sales.SalesSlipRepository

@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.outsiders.infrastructure.shop.circe
 
-import com.example.manything.ancientail.domain.shop.Stock
+import com.example.manything.ancientail.domain.models.shop.Stock
 
 trait StockDecoder {
   import io.circe.Decoder

@@ -3,7 +3,7 @@ package com.example.manything.ancientail.domain.usecases.slip
 import scala.concurrent.ExecutionContext
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.shop.ShopRepository
+import com.example.manything.ancientail.domain.models.shop.ShopRepository
 import com.example.manything.ancientail.domain.slip.exchange.{
   ExchangeSlip,
   ExchangeSlipRepository

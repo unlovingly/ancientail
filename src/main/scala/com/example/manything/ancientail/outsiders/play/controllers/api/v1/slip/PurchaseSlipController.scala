@@ -3,14 +3,13 @@ package com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip
 import java.util.UUID
 import javax.inject.Singleton
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
-import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.shop.ShopId
+import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.slip.SlipId
 import com.example.manything.ancientail.domain.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.domain.usecases.slip.PurchaseSlipUseCases
