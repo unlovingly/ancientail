@@ -1,4 +1,4 @@
-package com.example.manything.blessedict.domain.customer
+package com.example.manything.blessedict.domain.models.customer
 
 import com.example.manything.roundelayout.domain.Repository
 

@@ -6,7 +6,7 @@ import slick.lifted.Tag
 
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.SlipId
-import com.example.manything.blessedict.domain.customer.CustomerId
+import com.example.manything.blessedict.domain.models.customer.CustomerId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class SalesSlips(tag: Tag)

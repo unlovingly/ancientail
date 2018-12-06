@@ -4,7 +4,7 @@ import java.util.UUID
 
 import _root_.slick.lifted.TableQuery
 
-import com.example.manything.blessedict.domain.customer.CustomerId
+import com.example.manything.blessedict.domain.models.customer.CustomerId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 package object slick {

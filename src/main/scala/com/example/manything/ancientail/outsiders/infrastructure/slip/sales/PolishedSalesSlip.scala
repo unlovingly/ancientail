@@ -5,7 +5,7 @@ import java.time.OffsetDateTime
 import com.example.manything.ancientail.domain.shop.ShopId
 import com.example.manything.ancientail.domain.slip.sales.SalesSlip
 import com.example.manything.ancientail.domain.slip.{SlipId, SlipItem}
-import com.example.manything.blessedict.domain.customer.CustomerId
+import com.example.manything.blessedict.domain.models.customer.CustomerId
 
 /**
  * 売上伝票
