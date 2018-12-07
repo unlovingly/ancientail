@@ -2,4 +2,4 @@ POST  /                               com.example.manything.ancientail.outsiders
 
 GET   /retrieveWithStocks             com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.retrieveWithStocks
 GET   /retrieveWithStocksByCode/:code com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.retrieveWithStocksByCode(code: PluCode)
-GET   /retrieveWithStocksByQuery/:q   com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.retrieveWithStocksByQuery(q: String)
+GET   /retrieveWithStocksByQuery      com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.retrieveWithStocksByQuery(q: String)
