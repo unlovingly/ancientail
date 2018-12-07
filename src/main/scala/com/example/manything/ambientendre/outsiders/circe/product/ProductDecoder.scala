@@ -22,5 +22,5 @@ trait ProductDecoder {
     }
 
   implicit lazy val productDecoder: Decoder[Product] =
-    Decoder.forProduct3("id", "name", "publisherId")(Product.apply)
+    Decoder.forProduct3("identity", "name", "publisherId")(Product.apply)
 }
