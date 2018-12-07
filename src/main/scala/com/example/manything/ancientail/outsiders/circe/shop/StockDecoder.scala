@@ -10,6 +10,6 @@ trait StockDecoder {
   import com.example.manything.ancientail.outsiders.circe.shop.ShopCodec.shopIdDecoder
 
   implicit lazy val stockDecoder: Decoder[Stock] =
-    Decoder.forProduct5("pluCode", "shopId", "productId", "name", "price")(
+    Decoder.forProduct5("pluCode", "shopId", "productId", "amount", "price")(
       Stock.apply)
 }

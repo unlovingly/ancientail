@@ -16,7 +16,7 @@ trait SlipDecoder {
   import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec.publisherIdDecoder
   import com.example.manything.ancientail.outsiders.circe.shop.ShopCodec.shopIdDecoder
   import com.example.manything.ancientail.outsiders.circe.slip.SlipItemCodec.slipItemDecoder
-  import com.example.manything.blessedict.outsiders.circe.CustomerEncoder
+  import com.example.manything.blessedict.outsiders.circe.CustomerCodec.customerIdDecoder
 
   implicit lazy val slipIdDecoder: Decoder[SlipId] =
     Decoder.decodeString.emap { str =>

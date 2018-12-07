@@ -9,9 +9,9 @@ trait CustomerEncoder {
   import io.circe.Encoder
   import io.circe.generic.auto._
 
-  implicit lazy val shopIdEncoder: Encoder[CustomerId] =
+  implicit lazy val customerIdEncoder: Encoder[CustomerId] =
     Encoder.encodeString.contramap[CustomerId](_.value.toString)
 
-  implicit lazy val shopEncoder: Encoder[Customer] =
-    Encoder.forProduct2("id", "name")(s => (s.identity, s.name))
+  implicit lazy val customerEncoder: Encoder[Customer] =
+    Encoder.forProduct2("identity", "name")(s => (s.identity, s.name))
 }

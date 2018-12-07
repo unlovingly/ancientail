@@ -11,7 +11,7 @@ trait ProductEncoder {
   import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec.publisherIdEncoder
 
   implicit lazy val productEncoder: Encoder[Product] =
-    Encoder.forProduct3("id", "name", "publisherId")(p =>
+    Encoder.forProduct3("identity", "name", "publisherId")(p =>
       (p.identity, p.name, p.publisherId))
 
   implicit lazy val productIdEncoder: Encoder[ProductId] =
