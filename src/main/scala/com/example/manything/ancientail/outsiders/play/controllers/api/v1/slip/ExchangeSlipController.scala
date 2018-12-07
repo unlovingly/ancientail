@@ -36,7 +36,7 @@ class ExchangeSlipController(cc: ControllerComponents,
       slipUseCases.retrieve()
 
     val result = slips
-      .fold(left => BadRequest(left.getMessage.asJson.spaces2),
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
             right => Ok(right.asJson.spaces2))
 
     result
@@ -52,7 +52,7 @@ class ExchangeSlipController(cc: ControllerComponents,
         slipUseCases.retrieve(shopId, id)
 
       val result = slips
-        .fold(left => BadRequest(left.getMessage.asJson.spaces2),
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result
@@ -68,7 +68,7 @@ class ExchangeSlipController(cc: ControllerComponents,
         slipUseCases.exchange(request.body)
 
       val result = slip
-        .fold(left => BadRequest(left.getMessage.asJson.spaces2),
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result

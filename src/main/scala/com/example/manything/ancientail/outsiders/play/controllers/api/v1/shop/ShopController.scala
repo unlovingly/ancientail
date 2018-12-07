@@ -33,7 +33,7 @@ class ShopController(cc: ControllerComponents,
       shopUseCases.retrieveWithStocksBy(shopId)
 
     val result = shops
-      .fold(left => BadRequest(left.getMessage.asJson.spaces2),
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
             right => Ok(right.asJson.spaces2))
 
     result
@@ -49,10 +49,10 @@ class ShopController(cc: ControllerComponents,
 
     val result = shops
       .fold({
-        case e: NoSuchElementException =>
-          NotFound(e.getMessage.asJson.spaces2)
+        case _: NoSuchElementException =>
+          NotFound("")
         case e =>
-          BadRequest(e.getMessage.asJson.spaces2)
+          BadRequest(e.toString.asJson.spaces2)
       }, right => Ok(right.asJson.spaces2))
 
     result
@@ -68,7 +68,7 @@ class ShopController(cc: ControllerComponents,
         shopUseCases.retrieveWithStocksBy(shopId, code)
 
       val result = shops
-        .fold(left => BadRequest(left.getMessage.asJson.spaces2),
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result
@@ -84,7 +84,7 @@ class ShopController(cc: ControllerComponents,
         shopUseCases.create(request.body)
 
       val result = shop
-        .fold(left => BadRequest(left.getMessage.asJson.spaces2),
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result

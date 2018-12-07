@@ -30,7 +30,7 @@ class CustomerController(cc: ControllerComponents,
       customerUseCases.retrieve()
 
     val result = customers
-      .fold(left => BadRequest(left.getMessage.asJson.spaces2),
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
             right => Ok(right.asJson.spaces2))
 
     result
@@ -46,7 +46,7 @@ class CustomerController(cc: ControllerComponents,
         customerUseCases.create(request.body)
 
       val result = customer
-        .fold(left => BadRequest(left.getMessage.asJson.spaces2),
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result
