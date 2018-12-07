@@ -2,22 +2,23 @@ package com.example.manything.ancientail.domain.usecases.slip
 
 import scala.concurrent.ExecutionContext
 
-import com.example.manything.EitherTFuture
+import cats.Functor
+
 import com.example.manything.ancientail.domain.models.shop.ShopRepository
 import com.example.manything.ancientail.domain.models.slip.sales.{
   SalesSlip,
   SalesSlipRepository
 }
 
-class SalesSlipUseCases(val shops: ShopRepository[EitherTFuture],
-                        val slips: SalesSlipRepository[EitherTFuture])(
+class SalesSlipUseCases[A[_]](val shops: ShopRepository[A],
+                              val slips: SalesSlipRepository[A])(
   implicit val executionContext: ExecutionContext)
-  extends SlipUseCases[EitherTFuture]
-  with SellProducts[EitherTFuture] {
+  extends SlipUseCases[A]
+  with SellProducts[A] {
   override type EntityType = SalesSlip
 
-  override def sell(slip: SalesSlip): EitherTFuture[SalesSlip] = {
-    import cats.implicits.catsStdInstancesForFuture
+  override def sell(slip: SalesSlip)(implicit F: Functor[A]): A[SalesSlip] = {
+    import cats.syntax.functor.toFunctorOps
 
     val productIds = slip.items.map(_.productId)
     val shop = shops.retrieveWithStocksBy(slip.senderId, productIds)

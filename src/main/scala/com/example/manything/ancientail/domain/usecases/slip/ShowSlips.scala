@@ -6,7 +6,11 @@ import com.example.manything.ancientail.domain.models.slip.SlipId
 /**
  * 詳細をみるときのユースケース
  */
-trait RetrieveOneSlip[A[_]] { this: SlipUseCases[A] =>
+trait ShowSlips[A[_]] { this: SlipUseCases[A] =>
+  def retrieve(): A[Seq[EntityType]] = {
+    slips.retrieve()
+  }
+
   def retrieve(shopId: ShopId, slipId: SlipId): A[EntityType] = {
     slips.retrieve(slipId)
   }

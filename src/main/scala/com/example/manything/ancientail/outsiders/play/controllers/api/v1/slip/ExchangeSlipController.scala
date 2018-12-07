@@ -9,6 +9,7 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
+import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.models.slip.SlipId
 import com.example.manything.ancientail.domain.models.slip.exchange.ExchangeSlip
@@ -16,7 +17,7 @@ import com.example.manything.ancientail.domain.usecases.slip.ExchangeSlipUseCase
 
 @Singleton
 class ExchangeSlipController(cc: ControllerComponents,
-                             slipUseCases: ExchangeSlipUseCases)(
+                             slipUseCases: ExchangeSlipUseCases[EitherTFuture])(
   implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport

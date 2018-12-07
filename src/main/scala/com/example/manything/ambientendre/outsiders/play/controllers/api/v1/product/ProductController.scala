@@ -8,14 +8,15 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
+import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.models.product.Product
 import com.example.manything.ambientendre.domain.usecases.product.ProductUseCases
 import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 
 @Singleton
 class ProductController(cc: ControllerComponents,
-                        productUseCases: ProductUseCases,
-                        publisherUseCases: PublisherUseCases)(
+                        productUseCases: ProductUseCases[EitherTFuture],
+                        publisherUseCases: PublisherUseCases[EitherTFuture])(
   implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
@@ -28,7 +29,7 @@ class ProductController(cc: ControllerComponents,
     import io.circe.syntax.EncoderOps
 
     val products =
-      productUseCases.list()
+      productUseCases.retrieve()
 
     val result = products
       .fold(left => BadRequest(left.toString.asJson.spaces2),

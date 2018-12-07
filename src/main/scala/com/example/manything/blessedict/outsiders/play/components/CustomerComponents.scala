@@ -22,7 +22,7 @@ trait CustomerComponents {
   lazy val customerController =
     new CustomerController(
       cc = controllerComponents,
-      publihserUseCases = customerUseCases)(executionContext)
+      customerUseCases = customerUseCases)(executionContext)
   lazy val customerRoutes =
     new customers.Routes(httpErrorHandler, customerController)
 }

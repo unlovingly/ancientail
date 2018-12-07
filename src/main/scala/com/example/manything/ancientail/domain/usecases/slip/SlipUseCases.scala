@@ -5,7 +5,7 @@ import com.example.manything.ancientail.domain.models.slip.{
   SlipRepository
 }
 
-trait SlipUseCases[A[_]] extends RetrieveSlips[A] with RetrieveOneSlip[A] {
+trait SlipUseCases[A[_]] extends ShowSlips[A] {
   type EntityType <: Slip
 
   val slips: SlipRepository[EntityType, A]

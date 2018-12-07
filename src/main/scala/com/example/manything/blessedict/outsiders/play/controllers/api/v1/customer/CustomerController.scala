@@ -2,7 +2,7 @@ package com.example.manything.blessedict.outsiders.play.controllers.api.v1.custo
 
 import javax.inject.Singleton
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
 import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
@@ -14,7 +14,7 @@ import com.example.manything.blessedict.domain.usecases.customer.CustomerUseCase
 
 @Singleton
 class CustomerController(cc: ControllerComponents,
-                         publihserUseCases: CustomerUseCases)(
+                         customerUseCases: CustomerUseCases[EitherTFuture])(
   implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
@@ -27,7 +27,7 @@ class CustomerController(cc: ControllerComponents,
     import io.circe.syntax.EncoderOps
 
     val customers =
-      publihserUseCases.retrieve()
+      customerUseCases.retrieve()
 
     val result = customers
       .fold(left => BadRequest(left.toString.asJson.spaces2),
@@ -43,7 +43,7 @@ class CustomerController(cc: ControllerComponents,
       import io.circe.syntax.EncoderOps
 
       val customer =
-        publihserUseCases.create(request.body)
+        customerUseCases.create(request.body)
 
       val result = customer
         .fold(left => BadRequest(left.toString.asJson.spaces2),

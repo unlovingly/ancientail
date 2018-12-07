@@ -8,12 +8,13 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
+import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.models.publisher.Publisher
 import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 
 @Singleton
 class PublisherController(cc: ControllerComponents,
-                          publihserUseCases: PublisherUseCases)(
+                          publihserUseCases: PublisherUseCases[EitherTFuture])(
   implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
@@ -26,7 +27,7 @@ class PublisherController(cc: ControllerComponents,
     import io.circe.syntax.EncoderOps
 
     val publishers =
-      publihserUseCases.list()
+      publihserUseCases.retrieve()
 
     val result = publishers
       .fold(left => BadRequest(left.toString.asJson.spaces2),

@@ -9,15 +9,16 @@ import play.api.i18n.I18nSupport
 import play.api.libs.circe.Circe
 import play.api.mvc._
 
+import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.models.slip.SlipId
 import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
 import com.example.manything.ancientail.domain.usecases.slip.SalesSlipUseCases
 
 @Singleton
-class SalesSlipController(
-  cc: ControllerComponents,
-  slipUseCases: SalesSlipUseCases)(implicit executionContext: ExecutionContext)
+class SalesSlipController(cc: ControllerComponents,
+                          slipUseCases: SalesSlipUseCases[EitherTFuture])(
+  implicit executionContext: ExecutionContext)
   extends AbstractController(cc)
   with I18nSupport
   with Circe {

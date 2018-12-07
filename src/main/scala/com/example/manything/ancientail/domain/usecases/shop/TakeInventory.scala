@@ -1,8 +1,6 @@
 package com.example.manything.ancientail.domain.usecases.shop
 
-import com.example.manything.EitherTFuture
-
-trait TakeInventory { this: ShopUseCases =>
-  def inventory(): EitherTFuture[Unit] =
+trait TakeInventory[A[_]] { this: ShopUseCases[A] =>
+  def inventory(): A[Unit] =
     shops.inventory("aa")
 }
