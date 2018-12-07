@@ -7,7 +7,7 @@ resolvers += Resolver.jcenterRepo
 lazy val root = (project in file("."))
   .settings(
     name := """ancientail""",
-    version := "0.5.0-SNAPSHOT",
+    version := "0.6.0-SNAPSHOT",
     libraryDependencies ++= Seq(
       filters,
       "org.typelevel"          %% "cats-core"          % "1.4.0",
@@ -23,12 +23,12 @@ lazy val root = (project in file("."))
       "com.example.manything"  %% "roundelayout"       % "0.4.1-SNAPSHOT"
     ),
     routesImport ++= Seq(
-      "com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.pathBinder",
-      "com.example.manything.ancientail.domain.models.slip.SlipId",
       "com.example.manything.ancientail.domain.models.shop.PluCode",
       "com.example.manything.ancientail.domain.models.shop.ShopId",
+      "com.example.manything.ancientail.domain.models.slip.SlipId",
       "com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.pluCodeBinder",
       "com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.shopIdBinder",
+      "com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.pathBinder",
     ),
     scalacOptions ++= Seq(
       "-deprecation",
@@ -64,8 +64,3 @@ lazy val hostname = sys.env.getOrElse("POSTGRES_HOSTNAME", "localhost")
 lazy val database = sys.env.getOrElse("POSTGRES_DATABASE", "username")
 lazy val port = sys.env.getOrElse("POSTGRES_PORT", "32768")
 
-// Adds additional packages into Twirl
-//TwirlKeys.templateImports += "com.example.manything.ancientail.controllers._"
-
-// Adds additional packages into conf/routes
-// play.sbt.routes.RoutesKeys.routesImport += "com.example.manything.ancientail.binders._"
