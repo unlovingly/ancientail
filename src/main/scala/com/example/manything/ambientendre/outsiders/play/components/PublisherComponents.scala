@@ -3,10 +3,10 @@ package com.example.manything.ambientendre.outsiders.play.components
 import play.api.BuiltInComponentsFromContext
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.publisher.PublisherRepository
-import com.example.manything.ambientendre.outsiders.infrastructure.publisher.PublisherRepositoryWithSlick
+import com.example.manything.ambientendre.domain.models.publisher.PublisherRepository
 import com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.PublisherController
-import com.example.manything.ambientendre.usecases.publisher.PublisherUseCases
+import com.example.manything.ambientendre.outsiders.slick.publisher.PublisherRepositoryWithSlick
+import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 import com.example.manything.outsiders.play.components.OutsiderComponents
 
 /**
@@ -14,9 +14,10 @@ import com.example.manything.outsiders.play.components.OutsiderComponents
  */
 trait PublisherComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
-  implicit private lazy val repository: PublisherRepository[EitherTFuture] =
-    new PublisherRepositoryWithSlick()
-  private lazy val publisherUseCases = new PublisherUseCases()
+  private lazy val repository: PublisherRepository[EitherTFuture] =
+    new PublisherRepositoryWithSlick(db = db)
+  private lazy val publisherUseCases = new PublisherUseCases(
+    publishers = repository)
 
   lazy val publisherController =
     new PublisherController(

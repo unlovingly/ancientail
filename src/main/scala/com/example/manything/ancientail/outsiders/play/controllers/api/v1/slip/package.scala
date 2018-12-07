@@ -4,12 +4,9 @@ import java.util.UUID
 
 import play.api.mvc.PathBindable
 
-import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.models.slip.SlipId
 
 package object slip {
-
-  // a la carte にすればマシになるのでは？
-
   implicit def pathBinder(
     implicit uuidBinder: PathBindable[UUID]): PathBindable[SlipId] =
     new PathBindable[SlipId] {
