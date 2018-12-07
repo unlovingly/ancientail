@@ -12,5 +12,5 @@ trait PublisherEncoder {
     Encoder.encodeString.contramap[PublisherId](_.value.toString)
 
   implicit lazy val publisherEncoder: Encoder[Publisher] =
-    Encoder.forProduct2("id", "name")(p => (p.identity, p.name))
+    Encoder.forProduct2("identity", "name")(p => (p.identity, p.name))
 }
