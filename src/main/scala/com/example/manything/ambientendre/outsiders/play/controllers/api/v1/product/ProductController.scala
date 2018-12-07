@@ -32,7 +32,7 @@ class ProductController(cc: ControllerComponents,
       productUseCases.retrieve()
 
     val result = products
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
+      .fold(left => BadRequest(left.getMessage.asJson.spaces2),
             right => Ok(right.asJson.spaces2))
 
     result
@@ -48,7 +48,7 @@ class ProductController(cc: ControllerComponents,
         productUseCases.create(request.body)
 
       val result = publisher
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
+        .fold(left => BadRequest(left.getMessage.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result

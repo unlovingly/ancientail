@@ -8,7 +8,6 @@ import com.example.manything.EitherTFuture
 import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.models.shop._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
-import com.example.manything.outsiders.slick.NotFoundException
 
 class ShopRepositoryWithSlick(val db: Database)(
   implicit val executionContext: ExecutionContext)
@@ -20,7 +19,7 @@ class ShopRepositoryWithSlick(val db: Database)(
     val a = q.result.asTry.map { _.toEither }
 
     EitherT(db.run(a))
-      .ensure(NotFoundException())(_.nonEmpty)
+      .ensure(new NoSuchElementException())(_.nonEmpty)
       .map { _.map { _.to() } }
   }
 
@@ -33,7 +32,7 @@ class ShopRepositoryWithSlick(val db: Database)(
     val a = q.result.headOption.asTry.map { _.toEither }
 
     EitherT(db.run(a))
-      .ensure(NotFoundException())(_.isDefined)
+      .ensure(new NoSuchElementException())(_.isDefined)
       .map { _.get.to() }
   }
 
@@ -80,7 +79,7 @@ class ShopRepositoryWithSlick(val db: Database)(
     val a = q.result.asTry.map { _.toEither }
 
     EitherT(db.run(a))
-      .ensure(NotFoundException())(_.nonEmpty)
+      .ensure(new NoSuchElementException())(_.nonEmpty)
       .map {
         _.groupBy(_._1).map {
           case (shop, stock) =>
@@ -101,7 +100,7 @@ class ShopRepositoryWithSlick(val db: Database)(
     val a = q.result.asTry.map { _.toEither }
 
     EitherT(db.run(a))
-      .ensure(NotFoundException())(_.nonEmpty)
+      .ensure(new NoSuchElementException())(_.nonEmpty)
       .map {
         _.groupBy(_._1).map {
           case (shop, stock) =>
@@ -127,7 +126,7 @@ class ShopRepositoryWithSlick(val db: Database)(
     val a = query.result.asTry.map { _.toEither }
 
     EitherT(db.run(a))
-      .ensure(NotFoundException())(_.nonEmpty)
+      .ensure(new NoSuchElementException())(_.nonEmpty)
       .map {
         _.groupBy(_._1).map {
           case (shop, stock) =>
@@ -148,7 +147,7 @@ class ShopRepositoryWithSlick(val db: Database)(
     val a = q.result.asTry.map { _.toEither }
 
     EitherT(db.run(a))
-      .ensure(NotFoundException())(_.nonEmpty)
+      .ensure(new NoSuchElementException())(_.nonEmpty)
       .map {
         _.groupBy(_._1).map {
           case (shop, stock) =>

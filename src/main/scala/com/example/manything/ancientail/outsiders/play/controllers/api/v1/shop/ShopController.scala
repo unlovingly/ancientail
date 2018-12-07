@@ -12,7 +12,6 @@ import play.api.mvc._
 import com.example.manything.EitherTFuture
 import com.example.manything.ancientail.domain.models.shop._
 import com.example.manything.ancientail.domain.usecases.shop.ShopUseCases
-import com.example.manything.outsiders.slick.NotFoundException
 
 @Singleton
 class ShopController(cc: ControllerComponents,
@@ -34,7 +33,7 @@ class ShopController(cc: ControllerComponents,
       shopUseCases.retrieveWithStocksBy(shopId)
 
     val result = shops
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
+      .fold(left => BadRequest(left.getMessage.asJson.spaces2),
             right => Ok(right.asJson.spaces2))
 
     result
@@ -50,10 +49,10 @@ class ShopController(cc: ControllerComponents,
 
     val result = shops
       .fold({
-        case NotFoundException(e) =>
-          NotFound(e.asJson.spaces2)
+        case e: NoSuchElementException =>
+          NotFound(e.getMessage.asJson.spaces2)
         case e =>
-          BadRequest(e.toString.asJson.spaces2)
+          BadRequest(e.getMessage.asJson.spaces2)
       }, right => Ok(right.asJson.spaces2))
 
     result
@@ -69,7 +68,7 @@ class ShopController(cc: ControllerComponents,
         shopUseCases.retrieveWithStocksBy(shopId, code)
 
       val result = shops
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
+        .fold(left => BadRequest(left.getMessage.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result
@@ -85,7 +84,7 @@ class ShopController(cc: ControllerComponents,
         shopUseCases.create(request.body)
 
       val result = shop
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
+        .fold(left => BadRequest(left.getMessage.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result

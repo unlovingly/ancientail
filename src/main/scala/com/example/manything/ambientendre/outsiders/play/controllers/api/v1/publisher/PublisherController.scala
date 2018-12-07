@@ -30,7 +30,7 @@ class PublisherController(cc: ControllerComponents,
       publihserUseCases.retrieve()
 
     val result = publishers
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
+      .fold(left => BadRequest(left.getMessage.asJson.spaces2),
             right => Ok(right.asJson.spaces2))
 
     result
@@ -46,7 +46,7 @@ class PublisherController(cc: ControllerComponents,
         publihserUseCases.create(request.body)
 
       val result = publisher
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
+        .fold(left => BadRequest(left.getMessage.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result
