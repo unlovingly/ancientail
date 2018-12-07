@@ -14,6 +14,7 @@ trait SlipEncoder {
   import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec.publisherIdEncoder
   import com.example.manything.ancientail.outsiders.circe.shop.ShopCodec.shopIdEncoder
   import com.example.manything.ancientail.outsiders.circe.slip.SlipItemCodec.slipItemEncoder
+  import com.example.manything.blessedict.outsiders.circe.CustomerCodec.customerIdEncoder
 
   implicit lazy val slipIdEncoder: Encoder[SlipId] =
     Encoder.encodeString.contramap[SlipId](_.value.toString)

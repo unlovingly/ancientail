@@ -23,5 +23,6 @@ trait SlipItemDecoder {
     }
 
   implicit lazy val slipItemDecoder: Decoder[SlipItem] =
-    Decoder.forProduct4("id", "productId", "amount", "price")(SlipItem.apply)
+    Decoder.forProduct4("identity", "productId", "amount", "price")(
+      SlipItem.apply)
 }
