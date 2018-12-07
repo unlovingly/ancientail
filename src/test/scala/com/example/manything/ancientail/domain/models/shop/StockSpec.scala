@@ -5,7 +5,7 @@ import java.util.UUID
 import org.scalatest.{DiagrammedAssertions, FlatSpec}
 
 import com.example.manything.ambientendre.domain.models.product.ProductId
-import com.example.manything.ancientail.domain.slip.Price
+import com.example.manything.ancientail.domain.models.slip.Price
 
 class StockSpec extends FlatSpec with DiagrammedAssertions {
   val shopId: ShopId = ShopId(value = new UUID(0, 0))

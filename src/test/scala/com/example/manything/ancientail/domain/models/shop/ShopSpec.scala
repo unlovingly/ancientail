@@ -7,7 +7,7 @@ import org.scalatest._
 
 import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ambientendre.domain.models.publisher.PublisherId
-import com.example.manything.ancientail.domain.slip._
+import com.example.manything.ancientail.domain.models.slip._
 import com.example.manything.ancientail.domain.models.slip.exchange.ExchangeSlip
 import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
 
