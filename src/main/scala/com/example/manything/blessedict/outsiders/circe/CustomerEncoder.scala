@@ -13,5 +13,5 @@ trait CustomerEncoder {
     Encoder.encodeString.contramap[CustomerId](_.value.toString)
 
   implicit lazy val customerEncoder: Encoder[Customer] =
-    Encoder.forProduct2("id", "name")(s => (s.identity, s.name))
+    Encoder.forProduct2("identity", "name")(s => (s.identity, s.name))
 }
