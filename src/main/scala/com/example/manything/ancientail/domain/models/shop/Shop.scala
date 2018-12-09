@@ -24,8 +24,8 @@ case class Shop(
 
     val result = (newStocks ++ stocks)
       .groupBy(_.pluCode)
-      .mapValues(_.reduce((x, y) => x |+| y))
       .values
+      .map(_.reduce((x, y) => x |+| y))
       .toSeq
 
     this.copy(stocks = result)
@@ -37,10 +37,16 @@ case class Shop(
   def outbound(slip: Slip): Shop = {
     val newStocks = convertFrom(slip.items)
 
+    // newStocks に含まれるキーは stocks にもあると保証しておかねばならない
+    val ka = newStocks.map(_.pluCode).toSet
+    val kb = stocks.map(_.pluCode).toSet
+
+    require(ka subsetOf kb)
+
     val result = (stocks ++ newStocks)
       .groupBy(_.pluCode)
-      .mapValues(_.reduce((x, y) => x - y))
       .values
+      .map(_.reduce((x, y) => x - y))
       .toSeq
 
     this.copy(stocks = result)

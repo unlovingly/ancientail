@@ -7,7 +7,7 @@ resolvers += Resolver.jcenterRepo
 lazy val root = (project in file("."))
   .settings(
     name := """ancientail""",
-    version := "0.6.0-SNAPSHOT",
+    version := "0.6.1-SNAPSHOT",
     libraryDependencies ++= Seq(
       filters,
       "org.typelevel"          %% "cats-core"          % "1.4.0",
