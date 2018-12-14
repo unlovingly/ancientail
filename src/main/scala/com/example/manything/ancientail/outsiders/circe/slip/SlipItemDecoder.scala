@@ -22,6 +22,7 @@ trait SlipItemDecoder {
         .leftMap(_ => "SlipItemId")
     }
 
+  // TODO productId のバリデーション (空になることがある)
   implicit lazy val slipItemDecoder: Decoder[SlipItem] =
     Decoder.forProduct4("identity", "productId", "amount", "price")(
       SlipItem.apply)

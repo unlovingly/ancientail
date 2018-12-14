@@ -5,6 +5,10 @@ import cats.Eq
 import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.models.slip.Price
 
+/**
+ * Price Look Up Code, 製品情報と販売価格のペアから生成する
+ * @param value String JAN などは 11 桁
+ */
 case class PluCode(value: String)
 
 object PluCode {
@@ -16,7 +20,6 @@ object PluCode {
   }
 
   def generate(v: ProductId, a: Price): PluCode = {
-    // 本当は ShopId も含めたいが移動伝票の処理で困る
     new PluCode(v.value.toString + a.toString)
   }
 }

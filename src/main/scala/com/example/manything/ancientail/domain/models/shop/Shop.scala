@@ -7,6 +7,13 @@ import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
 import com.example.manything.ancientail.domain.models.slip.{Slip, SlipItem}
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
+/**
+ * 店舗
+ * Publisher から製品を仕入れ (Storing) 商品在庫 (Stock) として販売する。
+ * @param identity Option[ShopId]
+ * @param name String 店舗名
+ * @param stocks Seq[Stock] 在庫
+ */
 case class Shop(
   override val identity: Option[ShopId] = None,
   name: String,

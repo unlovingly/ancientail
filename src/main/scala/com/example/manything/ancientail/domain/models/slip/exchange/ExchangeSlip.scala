@@ -7,6 +7,7 @@ import com.example.manything.ancientail.domain.models.slip._
 
 /**
  * 移動伝票 (入庫伝票、出庫伝票)
+ * @see com.example.manything.ancientail.domain.models.slip.Slip
  */
 case class ExchangeSlip(
   override val identity: Option[SlipId] = None,
