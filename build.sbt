@@ -23,6 +23,10 @@ lazy val root = (project in file("."))
       "com.example.manything"  %% "roundelayout"       % "0.4.1-SNAPSHOT"
     ),
     routesImport ++= Seq(
+      "com.example.manything.ambientendre.domain.models.product.ProductId",
+      "com.example.manything.ambientendre.domain.models.publisher.PublisherId",
+      "com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.productIdBinder",
+      "com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.publisherIdBinder",
       "com.example.manything.ancientail.domain.models.shop.PluCode",
       "com.example.manything.ancientail.domain.models.shop.ShopId",
       "com.example.manything.ancientail.domain.models.slip.SlipId",

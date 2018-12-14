@@ -8,5 +8,6 @@ trait ProductRepository[A[_]] extends Repository[Product] {
 
   def retrieve(): A[Seq[EntityType]]
   def retrieve(id: Identifier): A[EntityType]
+  def retrieve(id: Seq[Identifier]): A[Seq[EntityType]]
   def store(entity: EntityType): A[EntityType]
 }
