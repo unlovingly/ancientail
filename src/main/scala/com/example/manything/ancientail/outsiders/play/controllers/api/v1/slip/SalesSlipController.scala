@@ -36,8 +36,12 @@ class SalesSlipController(cc: ControllerComponents,
       slipUseCases.retrieve()
 
     val result = slips
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
+      .fold({
+        case _: NoSuchElementException =>
+          NotFound("")
+        case e =>
+          BadRequest(e.toString.asJson.spaces2)
+      }, right => Ok(right.asJson.spaces2))
 
     result
   }

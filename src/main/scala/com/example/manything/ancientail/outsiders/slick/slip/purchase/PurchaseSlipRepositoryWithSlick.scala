@@ -67,7 +67,7 @@ class PurchaseSlipRepositoryWithSlick(val db: Database)(
       q2 <- storeItems(q1, entity.items)
     } yield (q1, q2)
 
-    val a = query.asTry.map { _.toEither }
+    val a = query.transactionally.asTry.map { _.toEither }
 
     EitherT(db.run(a))
       .map {

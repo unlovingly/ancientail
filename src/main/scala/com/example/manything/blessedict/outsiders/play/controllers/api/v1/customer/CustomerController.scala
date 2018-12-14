@@ -30,8 +30,12 @@ class CustomerController(cc: ControllerComponents,
       customerUseCases.retrieve()
 
     val result = customers
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
+      .fold({
+        case _: NoSuchElementException =>
+          NotFound("")
+        case e =>
+          BadRequest(e.toString.asJson.spaces2)
+      }, right => Ok(right.asJson.spaces2))
 
     result
   }

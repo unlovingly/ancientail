@@ -14,6 +14,7 @@ import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.models.slip.SlipId
 import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.domain.usecases.slip.PurchaseSlipUseCases
+import org.postgresql.util.PSQLException
 
 @Singleton
 class PurchaseSlipController(cc: ControllerComponents,
@@ -36,8 +37,12 @@ class PurchaseSlipController(cc: ControllerComponents,
       slipUseCases.retrieve()
 
     val result = slips
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
+      .fold({
+        case _: NoSuchElementException =>
+          NotFound("")
+        case e =>
+          BadRequest(e.toString.asJson.spaces2)
+      }, right => Ok(right.asJson.spaces2))
 
     result
   }
@@ -68,8 +73,12 @@ class PurchaseSlipController(cc: ControllerComponents,
         slipUseCases.storing(request.body)
 
       val result = slip
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.asJson.spaces2))
+        .fold({
+          case _: PSQLException =>
+            BadRequest("")
+          case e =>
+            BadRequest(e.toString.asJson.spaces2)
+        }, right => Ok(right.asJson.spaces2))
 
       result
     }
