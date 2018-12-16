@@ -6,6 +6,7 @@ import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItemId}
 import com.example.manything.ancientail.outsiders.slick.slip.PolishedSlipItem
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
+import com.example.manything.outsiders.slick.Scrubbable
 
 class SlipItems(tag: Tag)
   extends Table[PolishedSlipItem](tag, "sales_slip_items") {

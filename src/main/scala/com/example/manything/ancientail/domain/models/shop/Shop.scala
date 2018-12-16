@@ -4,7 +4,6 @@ import java.util.UUID
 
 import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
-import com.example.manything.ancientail.domain.models.slip.{Slip, SlipItem}
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 /**
@@ -24,15 +23,11 @@ case class Shop(
   /**
    * 入庫処理
    */
-  def inbound(slip: Slip): Shop = {
-    import cats.syntax.monoid.catsSyntaxSemigroup
-
-    val newStocks = convertFrom(slip.items)
-
-    val result = (newStocks ++ stocks)
+  def inbound(ss: Seq[Stock]): Shop = {
+    val result = (ss ++ stocks)
       .groupBy(_.pluCode)
       .values
-      .map(_.reduce((x, y) => x |+| y))
+      .map(_.reduce((x, y) => x + y))
       .toSeq
 
     this.copy(stocks = result)
@@ -41,16 +36,14 @@ case class Shop(
   /**
    * 出庫処理
    */
-  def outbound(slip: Slip): Shop = {
-    val newStocks = convertFrom(slip.items)
-
+  def outbound(ss: Seq[Stock]): Shop = {
     // newStocks に含まれるキーは stocks にもあると保証しておかねばならない
-    val ka = newStocks.map(_.pluCode).toSet
+    val ka = ss.map(_.pluCode).toSet
     val kb = stocks.map(_.pluCode).toSet
 
     require(ka subsetOf kb)
 
-    val result = (stocks ++ newStocks)
+    val result = (stocks ++ ss)
       .groupBy(_.pluCode)
       .values
       .map(_.reduce((x, y) => x - y))
@@ -59,23 +52,23 @@ case class Shop(
     this.copy(stocks = result)
   }
 
-  def sell(slip: SalesSlip): Shop = outbound(slip)
+  def sell(slip: SalesSlip): Shop = ???
 
   /**
    * 仕入れ処理
    *
    * システム上では入庫処理に相当する
    */
-  def storing(slip: PurchaseSlip): Shop = inbound(slip)
-
-  private def convertFrom(items: Seq[SlipItem]): Seq[Stock] = {
-    items.map { s =>
-      Stock(pluCode = PluCode.generate(v = s.productId, a = s.price),
+  def storing(slip: PurchaseSlip): Shop = {
+    val ss = slip.items.map { i =>
+      Stock(pluCode = PluCode.generate(v = i.productId, a = i.price),
             shopId = identity.get,
-            productId = s.productId,
-            amount = s.amount,
-            price = s.price)
+            productId = i.productId,
+            amount = i.amount,
+            price = i.price)
     }
+
+    inbound(ss)
   }
 }
 

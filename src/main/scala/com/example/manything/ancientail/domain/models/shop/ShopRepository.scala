@@ -1,6 +1,5 @@
 package com.example.manything.ancientail.domain.models.shop
 
-import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.roundelayout.domain.Repository
 
 trait ShopRepository[A[_]] extends Repository[Shop] {
@@ -11,7 +10,7 @@ trait ShopRepository[A[_]] extends Repository[Shop] {
   def retrieveWithStocksBy(shopId: Identifier): A[EntityType]
   def retrieveWithStocksBy(shopId: Identifier, code: PluCode): A[EntityType]
   def retrieveWithStocksBy(shopId: Identifier,
-                           productId: Seq[ProductId]): A[EntityType]
+                           productId: Seq[PluCode]): A[EntityType]
 
   /**
    * 棚卸し処理、理論在庫状態を保存する

@@ -5,7 +5,6 @@ import scala.concurrent.ExecutionContext
 import cats.data.EitherT
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.models.shop._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
@@ -137,11 +136,10 @@ class ShopRepositoryWithSlick(val db: Database)(
 
   override def retrieveWithStocksBy(
     shopId: Identifier,
-    productIds: Seq[ProductId]): EitherTFuture[EntityType] = {
+    pluCode: Seq[PluCode]): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
-    // TODO productId
-    val t = stocks filter (_.amount > 0)
+    val t = stocks filter (_.amount > 0) filter (_.pluCode inSetBind pluCode)
     val h = shops filter (_.identity === shopId.bind)
     val q = h joinLeft t on (_.identity === _.shopId)
     val a = q.result.asTry.map { _.toEither }

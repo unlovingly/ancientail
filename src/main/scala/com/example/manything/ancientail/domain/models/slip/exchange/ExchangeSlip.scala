@@ -14,7 +14,7 @@ case class ExchangeSlip(
   override val number: String,
   override val senderId: ShopId,
   override val receiverId: ShopId,
-  override val items: Seq[SlipItem],
+  override val items: Seq[ExchangeSlipItem],
   override val publishedAt: ZonedDateTime,
   override val approvedAt: ZonedDateTime =
     ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))

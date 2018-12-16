@@ -22,7 +22,7 @@ class SalesSlipUseCases[A[_]](val shops: ShopRepository[A],
     implicit ME: MonadError[A, Throwable]): A[SalesSlip] = {
     import cats.implicits.toFlatMapOps
 
-    val productIds = slip.items.map(_.productId)
+    val productIds = slip.items.map(_.pluCode)
     val shop = shops.retrieveWithStocksBy(slip.senderId, productIds)
 
     // TODO 副作用起きまくりなので IO に変える

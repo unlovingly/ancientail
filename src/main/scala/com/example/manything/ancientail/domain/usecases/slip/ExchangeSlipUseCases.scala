@@ -2,9 +2,12 @@ package com.example.manything.ancientail.domain.usecases.slip
 
 import scala.concurrent.ExecutionContext
 
-import cats.{FlatMap, MonadError}
+import cats.MonadError
 
-import com.example.manything.ancientail.domain.models.shop.ShopRepository
+import com.example.manything.ancientail.domain.models.shop.{
+  PluCode,
+  ShopRepository
+}
 import com.example.manything.ancientail.domain.models.slip.exchange.{
   ExchangeSlip,
   ExchangeSlipRepository
@@ -19,10 +22,9 @@ class ExchangeSlipUseCases[A[_]](val shops: ShopRepository[A],
 
   override def exchange(slip: ExchangeSlip)(
     implicit ME: MonadError[A, Throwable]): A[ExchangeSlip] = {
-    import cats.implicits.toFunctorOps
-    import cats.implicits.toFlatMapOps
+    import cats.implicits.{toFlatMapOps, toFunctorOps}
 
-    val productIds = slip.items.map(_.productId)
+    val productIds = slip.items.map(i => PluCode.generate(i.productId, i.price))
     val receiver = shops.retrieveWithStocksBy(slip.receiverId, productIds)
     val sender = shops.retrieveWithStocksBy(slip.senderId, productIds)
 
