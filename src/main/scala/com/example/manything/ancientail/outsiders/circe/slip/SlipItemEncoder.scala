@@ -7,13 +7,9 @@ import com.example.manything.ancientail.domain.models.slip.{
 
 trait SlipItemEncoder {
   import io.circe.Encoder
-  import io.circe.generic.semiauto.deriveEncoder
 
   import com.example.manything.ambientendre.outsiders.circe.product.ProductCodec.productIdEncoder
 
   implicit lazy val slipItemIdEncoder: Encoder[SlipItemId] =
     Encoder.encodeString.contramap[SlipItemId](_.value.toString)
-
-  implicit lazy val slipItemEncoder: Encoder[SlipItem] =
-    deriveEncoder
 }

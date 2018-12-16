@@ -7,9 +7,11 @@ import cats.data.EitherT
 import slick.lifted
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.models.slip.sales.SalesSlipRepository
-import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItem}
-import com.example.manything.ancientail.outsiders.slick.slip.PolishedSlipItem
+import com.example.manything.ancientail.domain.models.slip.SlipId
+import com.example.manything.ancientail.domain.models.slip.sales.{
+  SalesSlipItem,
+  SalesSlipRepository
+}
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class SalesSlipRepositoryWithSlick(val db: Database)(
@@ -89,9 +91,9 @@ class SalesSlipRepositoryWithSlick(val db: Database)(
     }
   }
 
-  private def storeItems(slipId: SlipId, ss: Seq[SlipItem]) = {
+  private def storeItems(slipId: SlipId, ss: Seq[SalesSlipItem]) = {
     // TODO: ensure(amount > 0)
-    def storeItems(entity: PolishedSlipItem) = {
+    def storeItems(entity: PolishedSalesSlipItem) = {
       if (entity.identity.isDefined) {
         slipItems.update(entity).map(_ => entity)
       } else {
@@ -101,7 +103,7 @@ class SalesSlipRepositoryWithSlick(val db: Database)(
 
     DBIO.sequence {
       ss.map { s =>
-        storeItems(PolishedSlipItem.from(slipId, s))
+        storeItems(PolishedSalesSlipItem.from(slipId, s))
       }
     }
   }

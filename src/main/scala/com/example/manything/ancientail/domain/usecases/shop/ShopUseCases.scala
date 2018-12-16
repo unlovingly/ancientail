@@ -34,7 +34,7 @@ class ShopUseCases[A[_]](val shops: ShopRepository[A],
 
     shop.flatMap { s =>
       ME.fromTry(Try {
-          s.outbound(slip)
+          s.sell(slip)
         })
         .flatMap { l =>
           shops.store(l)
@@ -56,7 +56,7 @@ class ShopUseCases[A[_]](val shops: ShopRepository[A],
 
     shop.flatMap { s =>
       ME.fromTry(Try {
-          s.inbound(slip)
+          s.storing(slip)
         })
         .flatMap { l =>
           shops.store(l)

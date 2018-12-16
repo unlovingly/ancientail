@@ -52,7 +52,21 @@ case class Shop(
     this.copy(stocks = result)
   }
 
-  def sell(slip: SalesSlip): Shop = ???
+  def sell(slip: SalesSlip): Shop = {
+    val ss = slip.items.map { i =>
+      // 時間がないので可逆にした
+      // 本来は非可逆だと思うが、その場合はドメインサービスに譲るのか？
+      val (id, price) = i.pluCode.decompose
+
+      Stock(pluCode = i.pluCode,
+            shopId = identity.get,
+            productId = id,
+            amount = i.amount,
+            price = price)
+    }
+
+    outbound(ss)
+  }
 
   /**
    * 仕入れ処理

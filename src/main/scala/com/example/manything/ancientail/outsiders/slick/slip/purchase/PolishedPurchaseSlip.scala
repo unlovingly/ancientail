@@ -4,8 +4,11 @@ import java.time.OffsetDateTime
 
 import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 import com.example.manything.ancientail.domain.models.shop.ShopId
-import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
-import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItem}
+import com.example.manything.ancientail.domain.models.slip.SlipId
+import com.example.manything.ancientail.domain.models.slip.purchase.{
+  PurchaseSlip,
+  PurchaseSlipItem
+}
 
 /**
  * 購入伝票
@@ -20,7 +23,7 @@ case class PolishedPurchaseSlip(
   publishedAt: OffsetDateTime,
   approvedAt: OffsetDateTime
 ) {
-  def to(items: Seq[SlipItem] = Seq.empty): PurchaseSlip = {
+  def to(items: Seq[PurchaseSlipItem] = Seq.empty): PurchaseSlip = {
     PurchaseSlip(
       identity = identity,
       number = number,

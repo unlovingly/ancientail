@@ -57,20 +57,4 @@ class ExchangeSlipController(cc: ControllerComponents,
 
       result
     }
-
-  def exchange() =
-    Action(circe.tolerantJson[ExchangeSlip]).async { implicit request =>
-      import cats.implicits.catsStdInstancesForFuture
-
-      import io.circe.syntax.EncoderOps
-
-      val slip =
-        slipUseCases.exchange(request.body)
-
-      val result = slip
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.asJson.spaces2))
-
-      result
-    }
 }

@@ -62,24 +62,4 @@ class PurchaseSlipController(cc: ControllerComponents,
 
       result
     }
-
-  def storing() =
-    Action(circe.tolerantJson[PurchaseSlip]).async { implicit request =>
-      import cats.implicits.catsStdInstancesForFuture
-
-      import io.circe.syntax.EncoderOps
-
-      val slip =
-        slipUseCases.storing(request.body)
-
-      val result = slip
-        .fold({
-          case _: PSQLException =>
-            BadRequest("")
-          case e =>
-            BadRequest(e.toString.asJson.spaces2)
-        }, right => Ok(right.asJson.spaces2))
-
-      result
-    }
 }

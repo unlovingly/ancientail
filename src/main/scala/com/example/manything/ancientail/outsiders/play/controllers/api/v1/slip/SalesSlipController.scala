@@ -61,20 +61,4 @@ class SalesSlipController(cc: ControllerComponents,
 
       result
     }
-
-  def sales() =
-    Action(circe.tolerantJson[SalesSlip]).async { implicit request =>
-      import cats.implicits.catsStdInstancesForFuture
-
-      import io.circe.syntax.EncoderOps
-
-      val slip =
-        slipUseCases.sell(request.body)
-
-      val result = slip
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.asJson.spaces2))
-
-      result
-    }
 }
