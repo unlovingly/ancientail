@@ -14,7 +14,6 @@ import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.models.slip.SlipId
 import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.domain.usecases.slip.PurchaseSlipUseCases
-import org.postgresql.util.PSQLException
 
 @Singleton
 class PurchaseSlipController(cc: ControllerComponents,
@@ -58,6 +57,22 @@ class PurchaseSlipController(cc: ControllerComponents,
 
       val result = slips
         .fold(left => BadRequest(left.toString.asJson.noSpaces),
+              right => Ok(right.asJson.spaces2))
+
+      result
+    }
+
+  def store() =
+    Action(circe.tolerantJson[PurchaseSlip]).async { implicit request =>
+      import cats.implicits.catsStdInstancesForFuture
+
+      import io.circe.syntax.EncoderOps
+
+      val slip =
+        slipUseCases.store(request.body)
+
+      val result = slip
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
               right => Ok(right.asJson.spaces2))
 
       result

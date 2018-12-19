@@ -118,8 +118,12 @@ class ShopController(cc: ControllerComponents,
         shopUseCases.sell(request.body)
 
       val result = slip
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.asJson.spaces2))
+        .fold({
+          case e: NoSuchElementException =>
+            BadRequest("")
+          case e =>
+            BadRequest(e.toString.asJson.spaces2)
+        }, right => Ok(right.asJson.spaces2))
 
       result
     }

@@ -15,7 +15,7 @@ class SlipItems(tag: Tag)
   }
 
   def identity = column[SlipItemId]("slip_item_id", O.PrimaryKey, O.AutoInc)
-  def pluCode = column[PluCode]("product_id", O.Unique)
+  def pluCode = column[PluCode]("plu_code")
   def amount = column[Int]("amount")
   def price = column[Int]("price")
 

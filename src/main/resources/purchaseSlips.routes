@@ -1,2 +1,4 @@
 GET   /           com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.PurchaseSlipController.index
 GET   /detail/:id com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.PurchaseSlipController.detail(id: SlipId)
+
+POST  /           com.example.manything.ancientail.outsiders.play.controllers.api.v1.slip.PurchaseSlipController.store

@@ -8,6 +8,7 @@ import com.example.manything.ancientail.domain.models.slip._
 
 /**
  * 納品伝票
+ *
  * @see com.example.manything.ancientail.domain.models.slip.Slip
  */
 case class PurchaseSlip(

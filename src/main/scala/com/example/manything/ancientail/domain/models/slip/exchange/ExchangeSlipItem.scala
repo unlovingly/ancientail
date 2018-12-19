@@ -5,6 +5,7 @@ import com.example.manything.ancientail.domain.models.slip._
 
 /**
  * 伝票の列…
+ *
  * @param identity Option[SlipItemId]
  * @param productId ProductId
  * @param amount 数量

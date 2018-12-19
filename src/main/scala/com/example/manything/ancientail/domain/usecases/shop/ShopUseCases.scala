@@ -25,6 +25,7 @@ class ShopUseCases[A[_]](val shops: ShopRepository[A],
   override def sell(slip: SalesSlip)(
     implicit ME: MonadError[A, Throwable]): A[Shop] = {
     import cats.implicits.toFlatMapOps
+    import cats.implicits.toFunctorOps
 
     // 1. 商品在庫をとる
     // 2. 出庫処理をとる (在庫数を変更する)
@@ -36,20 +37,22 @@ class ShopUseCases[A[_]](val shops: ShopRepository[A],
       ME.fromTry(Try {
           s.sell(slip)
         })
-        .flatMap { l =>
+        .map { l =>
           shops.store(l)
           // TODO 本当は Shop を集約ルートにすべき 時間あるときやる
           //  slips を shops に注入するのがいいんじゃないか
+          //  このままだとトランザクション境界が壊れている
           salesSlips.store(slip)
+
+          l
         }
     }
-
-    shop
   }
 
   override def store(slip: PurchaseSlip)(
     implicit ME: MonadError[A, Throwable]): A[Shop] = {
     import cats.implicits.toFlatMapOps
+    import cats.implicits.toFunctorOps
 
     val id = slip.items.map(i => PluCode.generate(v = i.productId, a = i.price))
     val shop = shops.retrieveWithStocksBy(slip.receiverId, id)
@@ -58,14 +61,12 @@ class ShopUseCases[A[_]](val shops: ShopRepository[A],
       ME.fromTry(Try {
           s.storing(slip)
         })
-        .flatMap { l =>
+        .map { l =>
           shops.store(l)
-          // TODO 本当は Shop を集約ルートにすべき 時間あるときやる
-          //  slips を shops に注入するのがいいんじゃないか
           purchaseSlips.store(slip)
+
+          l
         }
     }
-
-    shop
   }
 }

@@ -8,6 +8,7 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 /**
  * 伝票
  * この抽象化はいらない？
+ *
  * @note 入出庫履歴を別途用意すべきかもしれない
  */
 trait Slip extends Entity {

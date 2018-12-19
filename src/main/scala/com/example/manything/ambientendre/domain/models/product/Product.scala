@@ -7,6 +7,7 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 /**
  * 製品情報
+ *
  * @param identity Option[ProductId] サロゲートキー
  * @param name String 型番
  * @param publisherId PublisherId 販売者

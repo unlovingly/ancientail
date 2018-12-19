@@ -9,6 +9,7 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 /**
  * 店舗
  * Publisher から製品を仕入れ (Storing) 商品在庫 (Stock) として販売する。
+ *
  * @param identity Option[ShopId]
  * @param name String 店舗名
  * @param stocks Seq[Stock] 在庫
@@ -25,7 +26,7 @@ case class Shop(
    */
   def inbound(ss: Seq[Stock]): Shop = {
     val result = (ss ++ stocks)
-      .groupBy(_.pluCode)
+      .groupBy(_.pluCode.toString)
       .values
       .map(_.reduce((x, y) => x + y))
       .toSeq
@@ -38,13 +39,13 @@ case class Shop(
    */
   def outbound(ss: Seq[Stock]): Shop = {
     // newStocks に含まれるキーは stocks にもあると保証しておかねばならない
-    val ka = ss.map(_.pluCode).toSet
-    val kb = stocks.map(_.pluCode).toSet
+    val ka = ss.map(_.pluCode.toString).toSet
+    val kb = stocks.map(_.pluCode.toString).toSet
 
     require(ka subsetOf kb)
 
     val result = (stocks ++ ss)
-      .groupBy(_.pluCode)
+      .groupBy(_.pluCode.toString)
       .values
       .map(_.reduce((x, y) => x - y))
       .toSeq
@@ -53,10 +54,17 @@ case class Shop(
   }
 
   def sell(slip: SalesSlip): Shop = {
+    // stocks から ss の (productId, price) をとる
+    val sssss = stocks
+      .groupBy(_.pluCode.toString)
+      .mapValues { ssss =>
+        val sss = ssss.head
+        (sss.productId, sss.price)
+      }
+
     val ss = slip.items.map { i =>
-      // 時間がないので可逆にした
-      // 本来は非可逆だと思うが、その場合はドメインサービスに譲るのか？
-      val (id, price) = i.pluCode.decompose
+      // val (id, price) = i.pluCode.decompose
+      val (id, price) = sssss(i.pluCode.toString)
 
       Stock(pluCode = i.pluCode,
             shopId = identity.get,

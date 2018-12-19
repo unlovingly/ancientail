@@ -7,6 +7,7 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 /**
  * 販売者
  * ライセンシーであることが多く、製品を卸している
+ *
  * @param identity Option[PublisherId]
  * @param name 販売者名
  */

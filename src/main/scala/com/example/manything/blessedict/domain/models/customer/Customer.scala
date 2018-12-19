@@ -7,6 +7,7 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 /**
  * 顧客
  * 店舗に来る人
+ *
  * @param identity Option[CustomerId]
  * @param name 個人名
  */

@@ -8,6 +8,7 @@ import com.example.manything.blessedict.domain.models.customer.CustomerId
 
 /**
  * 売上伝票
+ *
  * @see com.example.manything.ancientail.domain.models.slip.Slip
  */
 case class SalesSlip(

@@ -6,5 +6,3 @@ GET   /retrieveWithStocks             com.example.manything.ancientail.outsiders
 GET   /retrieveWithStocksByCode/:code com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.retrieveWithStocksByCode(code: PluCode)
 GET   /retrieveWithStocksByQuery      com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.retrieveWithStocksByQuery(q: String)
 
-POST  /sell                           com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.sell
-POST  /store                          com.example.manything.ancientail.outsiders.play.controllers.api.v1.shop.ShopController.store
