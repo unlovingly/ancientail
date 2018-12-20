@@ -19,7 +19,7 @@ class SlipItemCodecTest extends FlatSpec with DiagrammedAssertions {
                                   amount = 1,
                                   price = 100)
 
-  val slipItemIdAsString = """"00000000-0000-0000-0000-000000000000""""
+  val slipItemIdAsString = "\"00000000-0000-0000-0000-000000000000\""
   val slipItemAsString: String = Resource
     .fromAutoCloseable(IO { scala.io.Source.fromResource("slipItem.json") })
     .use(s => IO(s.mkString.trim()))

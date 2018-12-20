@@ -12,12 +12,12 @@ class PluCodeCodecTest
   with DiagrammedAssertions
   with cats.tests.StrictCatsEquality {
   val code = PluCode.generate(ProductId(new UUID(0, 0)), 1000)
-  //val codeAsString = "\"00000000-0000-0000-0000-000000000000----1000\""
   val codeAsString = "\"00000000-0000-0000-0000-000000000000----1000\""
 
   it should "pluCodeDecoder" in {
+    import cats.implicits.catsStdEqForEither
+
     import io.circe.parser._
-    import cats.implicits._
 
     import PluCodeCodec.pluCodeDecoder
     import com.example.manything.ancientail.domain.models.shop.PluCode.pluCodeEq
@@ -26,10 +26,12 @@ class PluCodeCodecTest
   }
 
   it should "pluCodeEncoder" in {
-    //import io.circe.syntax.EncoderOps
+    import cats.implicits.catsKernelStdOrderForString
 
-    //import PluCodeCodec.pluCodeEncoder
+    import io.circe.syntax.EncoderOps
 
-    //assert(code.asJson.noSpaces === codeAsString)
+    import PluCodeCodec.pluCodeEncoder
+
+    assert(code.asJson.noSpaces === codeAsString)
   }
 }

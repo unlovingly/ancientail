@@ -28,12 +28,13 @@ class StockCodecTest
     .unsafeRunSync()
 
   it should "stockEncoder" in {
-    //import io.circe.syntax.EncoderOps
-    //import org.scalactic.TripleEquals.defaultEquality
+    import cats.implicits.catsKernelStdOrderForString
 
-    //import StockCodec.stockEncoder
+    import io.circe.syntax.EncoderOps
 
-    //assert(stock.asJson.spaces2 === stockAsString)
+    import StockCodec.stockEncoder
+
+    assert(stock.asJson.spaces2 === stockAsString)
   }
 
   it should "stockDecoder" in {
