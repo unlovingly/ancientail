@@ -6,7 +6,14 @@ import com.example.manything.ambientendre.domain.models.product.{
 }
 
 trait ShowProducts[A[_]] {
-  this: ProductUseCases[A] =>
-  def retrieve(): A[Seq[Product]] = products.retrieve()
-  def retrieve(id: Seq[ProductId]): A[Seq[Product]] = products.retrieve(id)
+
+  /**
+   * 登録されている製品を取得する
+   */
+  def retrieve(): A[Seq[Product]]
+
+  /**
+   * 登録されている製品から指定された製品を取得する
+   */
+  def retrieve(id: Seq[ProductId]): A[Seq[Product]]
 }

@@ -8,7 +8,7 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
 /**
  * 店舗
- * Publisher から製品を仕入れ (Storing) 商品在庫 (Stock) として販売する。
+ * Publisher から製品を仕入れ (Storing) 商品在庫 (Stock) として販売 (Sell) する。
  *
  * @param identity Option[ShopId]
  * @param name String 店舗名
@@ -53,6 +53,9 @@ case class Shop(
     this.copy(stocks = result)
   }
 
+  /**
+   * 販売処理
+   */
   def sell(slip: SalesSlip): Shop = {
     // stocks から ss の (productId, price) をとる
     val sssss = stocks
@@ -78,8 +81,6 @@ case class Shop(
 
   /**
    * 仕入れ処理
-   *
-   * システム上では入庫処理に相当する
    */
   def storing(slip: PurchaseSlip): Shop = {
     val ss = slip.items.map { i =>

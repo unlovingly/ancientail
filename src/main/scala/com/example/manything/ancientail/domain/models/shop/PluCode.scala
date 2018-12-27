@@ -34,7 +34,7 @@ object PluCode {
   def parse(v: String): PluCode = {
     val (productId, price) = v.split("""----""") match {
       case Array(a, b) => (a, b)
-      case _ => throw new IllegalArgumentException() // いらない？
+      case _ => throw new IllegalArgumentException()
     }
 
     new PluCode(ProductId(UUID.fromString(productId)), price.toInt)
