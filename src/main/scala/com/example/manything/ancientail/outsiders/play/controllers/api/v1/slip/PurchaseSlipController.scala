@@ -36,8 +36,12 @@ class PurchaseSlipController(cc: ControllerComponents,
       slipUseCases.retrieve()
 
     val result = slips
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
+      .fold({
+        case _: NoSuchElementException =>
+          NotFound("")
+        case e =>
+          BadRequest(e.toString.asJson.spaces2)
+      }, right => Ok(right.asJson.spaces2))
 
     result
   }
@@ -58,14 +62,14 @@ class PurchaseSlipController(cc: ControllerComponents,
       result
     }
 
-  def storing() =
+  def store() =
     Action(circe.tolerantJson[PurchaseSlip]).async { implicit request =>
       import cats.implicits.catsStdInstancesForFuture
 
       import io.circe.syntax.EncoderOps
 
       val slip =
-        slipUseCases.storing(request.body)
+        slipUseCases.store(request.body)
 
       val result = slip
         .fold(left => BadRequest(left.toString.asJson.spaces2),

@@ -4,6 +4,13 @@ import java.util.UUID
 
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
+/**
+ * 販売者
+ * ライセンシーであることが多く、店舗に製品を卸している
+ *
+ * @param identity Option[PublisherId]
+ * @param name 販売者名
+ */
 case class Publisher(
   override val identity: Option[PublisherId] = None,
   name: String

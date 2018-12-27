@@ -9,7 +9,10 @@ import play.api.libs.circe.Circe
 import play.api.mvc._
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.models.publisher.Publisher
+import com.example.manything.ambientendre.domain.models.publisher.{
+  Publisher,
+  PublisherId
+}
 import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 
 @Singleton
@@ -21,7 +24,7 @@ class PublisherController(cc: ControllerComponents,
   with Circe {
   import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec._
 
-  def index() = Action.async { implicit request =>
+  def retrieve() = Action.async { implicit request =>
     import cats.implicits.catsStdInstancesForFuture
 
     import io.circe.syntax.EncoderOps
@@ -35,6 +38,22 @@ class PublisherController(cc: ControllerComponents,
 
     result
   }
+
+  def retrieveBy(id: Seq[PublisherId]) =
+    Action.async { implicit request =>
+      import cats.implicits.catsStdInstancesForFuture
+
+      import io.circe.syntax.EncoderOps
+
+      val publishers =
+        publihserUseCases.retrieve(id)
+
+      val result = publishers
+        .fold(left => BadRequest(left.toString.asJson.spaces2),
+              right => Ok(right.asJson.spaces2))
+
+      result
+    }
 
   def performCreation() =
     Action(circe.tolerantJson[Publisher]).async { implicit request =>

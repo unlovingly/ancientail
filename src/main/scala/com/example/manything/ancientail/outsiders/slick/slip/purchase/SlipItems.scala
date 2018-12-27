@@ -4,11 +4,10 @@ import slick.lifted.Tag
 
 import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItemId}
-import com.example.manything.ancientail.outsiders.slick.slip.PolishedSlipItem
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class SlipItems(tag: Tag)
-  extends Table[PolishedSlipItem](tag, "purchase_slip_items") {
+  extends Table[PolishedPurchaseSlipItem](tag, "purchase_slip_items") {
   import com.example.manything.ambientendre.outsiders.slick.product.productIdColumnType
   import com.example.manything.ancientail.outsiders.slick.slip.{
     slipIdColumnType,
@@ -23,5 +22,5 @@ class SlipItems(tag: Tag)
   def slipId = column[SlipId]("slip_id")
 
   def * =
-    (identity.?, productId, amount, price, slipId) <> ((PolishedSlipItem.apply _).tupled, PolishedSlipItem.unapply)
+    (identity.?, productId, amount, price, slipId) <> ((PolishedPurchaseSlipItem.apply _).tupled, PolishedPurchaseSlipItem.unapply)
 }

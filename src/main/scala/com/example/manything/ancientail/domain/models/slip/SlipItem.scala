@@ -2,16 +2,16 @@ package com.example.manything.ancientail.domain.models.slip
 
 import java.util.UUID
 
-import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.roundelayout.domain.{Entity, Identifiability}
 
-case class SlipItem(
-  override val identity: Option[SlipItemId] = None,
-  productId: ProductId,
-  amount: Amount,
-  price: Price
-) extends Entity {
+/**
+ * 伝票の列…
+ */
+trait SlipItem extends Entity {
   override type Identifier = SlipItemId
+  override val identity: Option[SlipItemId] = None
+  val amount: Amount
+  val price: Price
 }
 
 case class SlipItemId(override val value: UUID)

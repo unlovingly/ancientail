@@ -9,7 +9,7 @@ import com.example.manything.blessedict.domain.models.customer.{
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class Customers(tag: Tag) extends Table[Customer](tag, "customers") {
-  def identity = column[CustomerId]("slip_item_id", O.PrimaryKey, O.AutoInc)
+  def identity = column[CustomerId]("customer_id", O.PrimaryKey, O.AutoInc)
   def name = column[String]("name")
 
   def * =

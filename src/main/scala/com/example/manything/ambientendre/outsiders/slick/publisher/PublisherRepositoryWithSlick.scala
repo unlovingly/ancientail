@@ -34,6 +34,18 @@ class PublisherRepositoryWithSlick(val db: Database)(
       .map { _.get }
   }
 
+  override def retrieve(id: Seq[Identifier]): EitherTFuture[Seq[EntityType]] = {
+    import cats.implicits.catsStdInstancesForFuture
+
+    val q = for {
+      p <- publishers if p.identity inSetBind id
+    } yield p
+    val a = q.result.asTry.map { _.toEither }
+
+    EitherT(db.run(a))
+      .ensure(new NoSuchElementException())(_.nonEmpty)
+  }
+
   override def store(entity: EntityType): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
