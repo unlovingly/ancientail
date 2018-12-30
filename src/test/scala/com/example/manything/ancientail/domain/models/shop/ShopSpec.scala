@@ -8,12 +8,24 @@ import org.scalatest._
 import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 import com.example.manything.ancientail.domain.models.slip._
-import com.example.manything.ancientail.domain.models.slip.exchange.ExchangeSlip
-import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
+import com.example.manything.ancientail.domain.models.slip.sales.{
+  SalesSlip,
+  SalesSlipItem
+}
+import com.example.manything.ancientail.domain.models.slip.purchase.{
+  PurchaseSlip,
+  PurchaseSlipItem
+}
+import com.example.manything.blessedict.domain.models.customer.CustomerId
 
-class ShopSpec extends FlatSpec with DiagrammedAssertions {
+class ShopSpec
+  extends FlatSpec
+  with DiagrammedAssertions
+  with cats.tests.StrictCatsEquality {
   val receiverId: ShopId = ShopId(value = new UUID(0, 0))
   val senderId: ShopId = ShopId(value = new UUID(0, 1))
+
+  val customerId: CustomerId = CustomerId(value = new UUID(5, 0))
 
   val publisherId: PublisherId = PublisherId(value = new UUID(1, 1))
 
@@ -31,44 +43,40 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
     senderId = publisherId,
     receiverId = receiverId,
     items = Seq(
-      SlipItem(identity = Some(slipItem1Id),
-               productId = productId1,
-               amount = 1,
-               price = 1000),
-      SlipItem(identity = Some(slipItem2Id),
-               productId = productId1,
-               amount = 1,
-               price = 2000),
-      SlipItem(identity = Some(slipItem3Id),
-               productId = productId2,
-               amount = 2,
-               price = 1000),
-      SlipItem(identity = Some(slipItem4Id),
-               productId = productId2,
-               amount = 1,
-               price = 1000)
+      PurchaseSlipItem(identity = Some(slipItem1Id),
+                       productId = productId1,
+                       amount = 1,
+                       price = 1000),
+      PurchaseSlipItem(identity = Some(slipItem2Id),
+                       productId = productId1,
+                       amount = 1,
+                       price = 2000),
+      PurchaseSlipItem(identity = Some(slipItem4Id),
+                       productId = productId2,
+                       amount = 6,
+                       price = 1000)
     ),
     publishedAt = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
   )
 
-  val exchangeSlip: ExchangeSlip = ExchangeSlip(
+  val salesSlip: SalesSlip = SalesSlip(
     identity = Some(SlipId(new UUID(3, 1))),
     number = "00001",
     senderId = senderId,
-    receiverId = receiverId,
+    receiverId = None,
     items = Seq(
-      SlipItem(identity = Some(slipItem1Id),
-               productId = productId1,
-               amount = 1,
-               price = 1000),
-      SlipItem(identity = Some(slipItem2Id),
-               productId = productId1,
-               amount = 2,
-               price = 2000),
-      SlipItem(identity = Some(slipItem4Id),
-               productId = productId2,
-               amount = 6,
-               price = 1000)
+      SalesSlipItem(identity = Some(slipItem1Id),
+                    pluCode = PluCode.generate(productId1, 1000),
+                    amount = 1,
+                    price = 1000),
+      SalesSlipItem(identity = Some(slipItem2Id),
+                    pluCode = PluCode.generate(productId1, 2000),
+                    amount = 2,
+                    price = 2000),
+      SalesSlipItem(identity = Some(slipItem4Id),
+                    pluCode = PluCode.generate(productId2, 1000),
+                    amount = 6,
+                    price = 1000)
     ),
     publishedAt = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
   )
@@ -93,7 +101,13 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
   val receiver: Shop = Shop(
     identity = Some(receiverId),
     name = "Shop One",
-    stocks = Seq.empty
+    stocks = Seq(
+      Stock(pluCode = PluCode.generate(productId1, 2000),
+            shopId = receiverId,
+            productId = productId1,
+            amount = 1,
+            price = 2000)
+    )
   )
 
   val sender: Shop = Shop(
@@ -140,30 +154,27 @@ class ShopSpec extends FlatSpec with DiagrammedAssertions {
     )
   )
 
-  "method storing" should "update Shop.stocks" in {
-    val sorter = (s: Seq[Stock]) => s.sortBy(t => t.pluCode.value)
+  "storing" should "increase stocks" in {
+    import Stock.stockEq
+    import cats.implicits.catsKernelStdEqForList
 
-    val crime = sorter(suspect1.storing(purchaseSlip).stocks)
-    val expect = sorter(expected.stocks)
+    val sorter = (s: Seq[Stock]) => s.sortBy(t => t.pluCode.toString)
 
-    assert(crime === expect)
-  }
-
-  "inbound" should "increase stocks" in {
-    val sorter = (s: Seq[Stock]) => s.sortBy(t => t.pluCode.value)
-
-    val crime = sorter(receiver.inbound(exchangeSlip).stocks)
-    val expect = sorter(expected.stocks)
+    val crime = sorter(receiver.storing(purchaseSlip).stocks).toList
+    val expect = sorter(expected.stocks).toList
 
     assert(crime === expect)
   }
 
-  "outbonud" should "decrease stocks" in {
+  "sell" should "decrease stocks" in {
+    import Stock.stockEq
+    import cats.implicits.catsKernelStdEqForList
+
     val sorter =
       (s: Seq[Stock]) => s.sortBy(t => (t.productId.value, t.price, t.amount))
 
-    val crime = sorter(sender.outbound(exchangeSlip).stocks)
-    val expect = sorter(expected.stocks)
+    val crime = sorter(sender.sell(salesSlip).stocks).toList
+    val expect = sorter(expected.stocks).toList
 
     assert(crime === expect)
   }

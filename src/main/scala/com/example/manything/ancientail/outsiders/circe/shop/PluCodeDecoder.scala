@@ -11,7 +11,7 @@ trait PluCodeDecoder {
   implicit lazy val pluCodeDecoder: Decoder[PluCode] =
     Decoder.decodeString.emap { str =>
       Either
-        .catchNonFatal(PluCode(str))
+        .catchNonFatal(PluCode.parse(str))
         .leftMap(_ => "PluCode")
     }
 

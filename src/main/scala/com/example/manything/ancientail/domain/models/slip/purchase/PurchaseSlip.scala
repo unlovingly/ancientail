@@ -8,6 +8,7 @@ import com.example.manything.ancientail.domain.models.slip._
 
 /**
  * 納品伝票
+ *
  * @see com.example.manything.ancientail.domain.models.slip.Slip
  */
 case class PurchaseSlip(
@@ -15,7 +16,7 @@ case class PurchaseSlip(
   override val number: String,
   override val senderId: PublisherId,
   override val receiverId: ShopId,
-  override val items: Seq[SlipItem],
+  override val items: Seq[PurchaseSlipItem],
   override val publishedAt: ZonedDateTime,
   override val approvedAt: ZonedDateTime =
     ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))

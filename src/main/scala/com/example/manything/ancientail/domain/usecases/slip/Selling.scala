@@ -4,6 +4,10 @@ import cats.MonadError
 
 import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
 
-trait SellProducts[A[_]] {
+trait Selling[A[_]] {
+
+  /**
+   * 販売処理
+   */
   def sell(slip: SalesSlip)(implicit ME: MonadError[A, Throwable]): A[SalesSlip]
 }

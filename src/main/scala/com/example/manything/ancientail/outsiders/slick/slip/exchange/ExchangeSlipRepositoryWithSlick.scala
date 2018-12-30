@@ -7,9 +7,11 @@ import cats.data.EitherT
 import slick.lifted
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ancientail.domain.models.slip.exchange.ExchangeSlipRepository
-import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItem}
-import com.example.manything.ancientail.outsiders.slick.slip.PolishedSlipItem
+import com.example.manything.ancientail.domain.models.slip.SlipId
+import com.example.manything.ancientail.domain.models.slip.exchange.{
+  ExchangeSlipItem,
+  ExchangeSlipRepository
+}
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class ExchangeSlipRepositoryWithSlick(val db: Database)(
@@ -75,8 +77,8 @@ class ExchangeSlipRepositoryWithSlick(val db: Database)(
     }
   }
 
-  private def store(slipId: SlipId, ss: Seq[SlipItem]) = {
-    val targets = ss.map(PolishedSlipItem.from(slipId, _))
+  private def store(slipId: SlipId, ss: Seq[ExchangeSlipItem]) = {
+    val targets = ss.map(PolishedExchangeSlipItem.from(slipId, _))
 
     DBIO.sequence {
       targets.map { t =>

@@ -6,5 +6,5 @@ trait PluCodeEncoder {
   import io.circe.Encoder
 
   implicit lazy val pluCodeEncoder: Encoder[PluCode] =
-    Encoder.encodeString.contramap[PluCode](_.value.toString)
+    Encoder.encodeString.contramap[PluCode](_.toString)
 }

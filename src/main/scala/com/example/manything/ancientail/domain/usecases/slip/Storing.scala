@@ -4,15 +4,11 @@ import cats.MonadError
 
 import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
 
-/**
- * 入庫ユースケース
- */
-trait StoringProducts[A[_]] {
+trait Storing[A[_]] {
 
   /**
-   * 1. 伝票を保存して
-   * 2. 在庫情報を更新する
+   * 入庫処理
    */
-  def storing(slip: PurchaseSlip)(
+  def store(slip: PurchaseSlip)(
     implicit ME: MonadError[A, Throwable]): A[PurchaseSlip]
 }
