@@ -24,6 +24,21 @@ class ShopController(cc: ControllerComponents,
 
   val shopId: ShopId = ShopId(new UUID(0, 0))
 
+  def detail(shopId: ShopId) = Action.async { implicit request =>
+    import cats.implicits.catsStdInstancesForFuture
+
+    import io.circe.syntax.EncoderOps
+
+    val shops =
+      shopUseCases.retrieve(shopId)
+
+    val result = shops
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.asJson.spaces2))
+
+    result
+  }
+
   def retrieveWithStocks() = Action.async { implicit request =>
     import cats.implicits.catsStdInstancesForFuture
 

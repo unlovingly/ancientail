@@ -13,7 +13,7 @@ package object shop {
 
   implicit lazy val pluCodeColumnType: BaseColumnType[PluCode] =
     MappedColumnType
-      .base[PluCode, String](_.value, PluCode.apply)
+      .base[PluCode, String](_.toString, PluCode.parse)
 
   implicit lazy val shopIdColumnType: BaseColumnType[ShopId] =
     MappedColumnType

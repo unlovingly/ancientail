@@ -12,9 +12,10 @@ trait SlipEncoder {
   import io.circe.generic.semiauto.deriveEncoder
 
   import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec.publisherIdEncoder
+  import com.example.manything.ancientail.outsiders.circe.shop.ShopCodec.pluCodeEncoder
   import com.example.manything.ancientail.outsiders.circe.shop.ShopCodec.shopIdEncoder
-  import com.example.manything.ancientail.outsiders.circe.slip.SlipItemCodec.slipItemEncoder
   import com.example.manything.blessedict.outsiders.circe.CustomerCodec.customerIdEncoder
+  import SlipItemCodec._
 
   implicit lazy val slipIdEncoder: Encoder[SlipId] =
     Encoder.encodeString.contramap[SlipId](_.value.toString)

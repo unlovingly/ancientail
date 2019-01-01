@@ -3,8 +3,11 @@ package com.example.manything.ancientail.outsiders.slick.slip.sales
 import java.time.OffsetDateTime
 
 import com.example.manything.ancientail.domain.models.shop.ShopId
-import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
-import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItem}
+import com.example.manything.ancientail.domain.models.slip.SlipId
+import com.example.manything.ancientail.domain.models.slip.sales.{
+  SalesSlip,
+  SalesSlipItem
+}
 import com.example.manything.blessedict.domain.models.customer.CustomerId
 
 /**
@@ -20,7 +23,7 @@ case class PolishedSalesSlip(
   publishedAt: OffsetDateTime,
   approvedAt: OffsetDateTime
 ) {
-  def to(items: Seq[SlipItem] = Seq.empty): SalesSlip = {
+  def to(items: Seq[SalesSlipItem] = Seq.empty): SalesSlip = {
     SalesSlip(
       identity = identity,
       number = number,

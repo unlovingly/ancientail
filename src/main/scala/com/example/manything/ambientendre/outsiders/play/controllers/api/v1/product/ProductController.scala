@@ -9,7 +9,10 @@ import play.api.libs.circe.Circe
 import play.api.mvc._
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.models.product.Product
+import com.example.manything.ambientendre.domain.models.product.{
+  Product,
+  ProductId
+}
 import com.example.manything.ambientendre.domain.usecases.product.ProductUseCases
 import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 
@@ -23,13 +26,28 @@ class ProductController(cc: ControllerComponents,
   with Circe {
   import com.example.manything.ambientendre.outsiders.circe.product.ProductCodec._
 
-  def index() = Action.async { implicit request: Request[AnyContent] =>
+  def retrieve() = Action.async { implicit request =>
     import cats.implicits.catsStdInstancesForFuture
 
     import io.circe.syntax.EncoderOps
 
     val products =
       productUseCases.retrieve()
+
+    val result = products
+      .fold(left => BadRequest(left.toString.asJson.spaces2),
+            right => Ok(right.asJson.spaces2))
+
+    result
+  }
+
+  def retrieveBy(id: Seq[ProductId]) = Action.async { implicit request =>
+    import cats.implicits.catsStdInstancesForFuture
+
+    import io.circe.syntax.EncoderOps
+
+    val products =
+      productUseCases.retrieve(id)
 
     val result = products
       .fold(left => BadRequest(left.toString.asJson.spaces2),

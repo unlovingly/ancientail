@@ -7,11 +7,12 @@ resolvers += Resolver.jcenterRepo
 lazy val root = (project in file("."))
   .settings(
     name := """ancientail""",
-    version := "0.6.0-SNAPSHOT",
+    version := "0.6.1",
     libraryDependencies ++= Seq(
       filters,
       "org.typelevel"          %% "cats-core"          % "1.4.0",
       "org.typelevel"          %% "cats-effect"        % "1.0.0",
+      "org.typelevel"          %% "cats-testkit"       % "1.4.0",
       "com.typesafe.slick"     %% "slick"              % "3.2.3",
       "com.github.tminglei"    %% "slick-pg"           % "0.16.3",
       "org.postgresql"         % "postgresql"          % "42.2.5",
@@ -23,6 +24,10 @@ lazy val root = (project in file("."))
       "com.example.manything"  %% "roundelayout"       % "0.4.1-SNAPSHOT"
     ),
     routesImport ++= Seq(
+      "com.example.manything.ambientendre.domain.models.product.ProductId",
+      "com.example.manything.ambientendre.domain.models.publisher.PublisherId",
+      "com.example.manything.ambientendre.outsiders.play.controllers.api.v1.product.productIdBinder",
+      "com.example.manything.ambientendre.outsiders.play.controllers.api.v1.publisher.publisherIdBinder",
       "com.example.manything.ancientail.domain.models.shop.PluCode",
       "com.example.manything.ancientail.domain.models.shop.ShopId",
       "com.example.manything.ancientail.domain.models.slip.SlipId",

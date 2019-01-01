@@ -1,8 +1,9 @@
 package com.example.manything.ancientail.domain.usecases.slip
 
 import scala.concurrent.ExecutionContext
+import scala.util.Try
 
-import cats.Functor
+import cats.MonadError
 
 import com.example.manything.ancientail.domain.models.shop.ShopRepository
 import com.example.manything.ancientail.domain.models.slip.sales.{
@@ -14,24 +15,30 @@ class SalesSlipUseCases[A[_]](val shops: ShopRepository[A],
                               val slips: SalesSlipRepository[A])(
   implicit val executionContext: ExecutionContext)
   extends SlipUseCases[A]
-  with SellProducts[A] {
+  with Selling[A] {
   override type EntityType = SalesSlip
 
-  override def sell(slip: SalesSlip)(implicit F: Functor[A]): A[SalesSlip] = {
-    import cats.syntax.functor.toFunctorOps
+  override def sell(slip: SalesSlip)(
+    implicit ME: MonadError[A, Throwable]): A[SalesSlip] = {
+    import cats.implicits.toFlatMapOps
 
-    val productIds = slip.items.map(_.productId)
-    val shop = shops.retrieveWithStocksBy(slip.senderId, productIds)
+    // 1. 商品在庫をとる
+    // 2. 出庫処理をとる (在庫数を変更する)
+    // 3. 保存する
+    val id = slip.items.map(_.pluCode)
+    val shop = shops.retrieveWithStocksBy(slip.senderId, id)
 
-    // 逐次処理しなければいけない？
-    val result = slips.store(slip)
-
-    shop.map { s =>
-      val h = s.outbound(slip)
-
-      shops.store(h)
+    shop.flatMap { s =>
+      ME.fromTry(Try {
+          s.sell(slip)
+        })
+        .flatMap { l =>
+          shops.store(l)
+          // TODO 本当は Shop を集約ルートにすべき 時間あるときやる
+          //  slips を shops に注入するのがいいんじゃないか
+          //  このままだとトランザクション境界が壊れている
+          slips.store(slip)
+        }
     }
-
-    result
   }
 }

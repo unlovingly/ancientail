@@ -9,9 +9,6 @@ import com.example.manything.ambientendre.outsiders.slick.publisher.PublisherRep
 import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 import com.example.manything.outsiders.play.components.OutsiderComponents
 
-/**
- * Publisher リポジトリや Publisher コントローラーに必要な依存オブジェクトを宣言する
- */
 trait PublisherComponents {
   this: BuiltInComponentsFromContext with OutsiderComponents =>
   private lazy val repository: PublisherRepository[EitherTFuture] =

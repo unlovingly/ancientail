@@ -11,9 +11,9 @@ package object shop {
     implicit stringBinder: PathBindable[String]): PathBindable[PluCode] =
     new PathBindable[PluCode] {
       override def bind(key: String, value: String): Either[String, PluCode] =
-        stringBinder.bind(key, value).map(PluCode.apply)
+        stringBinder.bind(key, value).map(PluCode.parse)
       override def unbind(key: String, value: PluCode): String =
-        value.value
+        value.toString
     }
   implicit def shopIdBinder(
     implicit uuidBinder: PathBindable[UUID]): PathBindable[ShopId] =

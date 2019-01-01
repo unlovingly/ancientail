@@ -1,10 +1,14 @@
 package com.example.manything.ancientail.domain.usecases.slip
 
 import scala.concurrent.ExecutionContext
+import scala.util.Try
 
-import cats.Functor
+import cats.MonadError
 
-import com.example.manything.ancientail.domain.models.shop.ShopRepository
+import com.example.manything.ancientail.domain.models.shop.{
+  PluCode,
+  ShopRepository
+}
 import com.example.manything.ancientail.domain.models.slip.purchase.{
   PurchaseSlip,
   PurchaseSlipRepository
@@ -14,24 +18,23 @@ class PurchaseSlipUseCases[A[_]](val shops: ShopRepository[A],
                                  val slips: PurchaseSlipRepository[A])(
   implicit val executionContext: ExecutionContext)
   extends SlipUseCases[A]
-  with StoringProducts[A] {
+  with Storing[A] {
   override type EntityType = PurchaseSlip
+  override def store(slip: PurchaseSlip)(
+    implicit ME: MonadError[A, Throwable]): A[PurchaseSlip] = {
+    import cats.implicits.toFlatMapOps
 
-  override def storing(slip: PurchaseSlip)(
-    implicit F: Functor[A]): A[PurchaseSlip] = {
-    import cats.syntax.functor.toFunctorOps
+    val id = slip.items.map(i => PluCode.generate(v = i.productId, a = i.price))
+    val shop = shops.retrieveWithStocksBy(slip.receiverId, id)
 
-    val productIds = slip.items.map(_.productId)
-    val shop = shops.retrieveWithStocksBy(slip.receiverId, productIds)
-    // 1. 伝票を保存して
-    val result = slips.store(slip)
-
-    shop.map { s =>
-      val h = s.inbound(slip)
-
-      shops.store(h)
+    shop.flatMap { s =>
+      ME.fromTry(Try {
+          s.storing(slip)
+        })
+        .flatMap { l =>
+          shops.store(l)
+          slips.store(slip)
+        }
     }
-
-    result
   }
 }
