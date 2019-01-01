@@ -1,18 +1,18 @@
-organization := "com.example.manything.ancientail"
-
-scalaVersion := "2.12.7"
-
 resolvers += Resolver.jcenterRepo
 
 lazy val root = (project in file("."))
   .settings(
-    name := """ancientail""",
-    version := "0.6.1",
+    inThisBuild(Seq(
+      organization := "com.example.manything.ancientail",
+      scalaVersion := "2.12.7",
+      version := "0.6.2-SNAPSHOT"
+    )),
+    name := "ancientail",
     libraryDependencies ++= Seq(
       filters,
       "org.typelevel"          %% "cats-core"          % "1.4.0",
       "org.typelevel"          %% "cats-effect"        % "1.0.0",
-      "org.typelevel"          %% "cats-testkit"       % "1.4.0",
+      "org.typelevel"          %% "cats-testkit"       % "1.4.0" % "test",
       "com.typesafe.slick"     %% "slick"              % "3.2.3",
       "com.github.tminglei"    %% "slick-pg"           % "0.16.3",
       "org.postgresql"         % "postgresql"          % "42.2.5",
@@ -68,4 +68,3 @@ lazy val password = sys.env.getOrElse("POSTGRES_PASSWORD", "p@ssw0rd")
 lazy val hostname = sys.env.getOrElse("POSTGRES_HOSTNAME", "localhost")
 lazy val database = sys.env.getOrElse("POSTGRES_DATABASE", "username")
 lazy val port = sys.env.getOrElse("POSTGRES_PORT", "32768")
-
