@@ -4,23 +4,22 @@ lazy val root = (project in file("."))
   .settings(
     inThisBuild(Seq(
       organization := "com.example.manything.ancientail",
-      scalaVersion := "2.12.7",
+      scalaVersion := "2.12.8",
       version := "0.6.2-SNAPSHOT"
     )),
     name := "ancientail",
     libraryDependencies ++= Seq(
       filters,
-      "org.typelevel"          %% "cats-core"          % "1.4.0",
-      "org.typelevel"          %% "cats-effect"        % "1.0.0",
-      "org.typelevel"          %% "cats-testkit"       % "1.4.0" % "test",
+      "org.typelevel"          %% "cats-core"          % "1.5.0",
+      "org.typelevel"          %% "cats-effect"        % "1.1.0",
+      "org.typelevel"          %% "cats-testkit"       % "1.5.0" % "test",
       "com.typesafe.slick"     %% "slick"              % "3.2.3",
-      "com.github.tminglei"    %% "slick-pg"           % "0.16.3",
+      "com.github.tminglei"    %% "slick-pg"           % "0.17.0",
       "org.postgresql"         % "postgresql"          % "42.2.5",
       "com.typesafe.play"      %% "play-slick"         % "3.0.3",
       "com.dripower"           %% "play-circe"         % "2610.0",
-      "io.circe"               %% "circe-java8"        % "0.10.1",
+      "io.circe"               %% "circe-java8"        % "0.11.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
-      "org.mockito"            % "mockito-core"        % "2.23.0" % "test",
       "com.example.manything"  %% "roundelayout"       % "0.4.1-SNAPSHOT"
     ),
     routesImport ++= Seq(

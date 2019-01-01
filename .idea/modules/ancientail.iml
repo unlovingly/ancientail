@@ -23,10 +23,19 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="TEST" name="sbt: commons-logging:commons-logging:1.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.github.tminglei:slick-pg_core_2.12:0.17.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.github.tminglei:slick-pg_2.12:0.17.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.typelevel:machinist_2.12:0.6.6:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.typelevel:cats-testkit_2.12:1.5.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.typelevel:cats-macros_2.12:1.5.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.typelevel:cats-laws_2.12:1.5.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.typelevel:cats-kernel_2.12:1.5.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.typelevel:cats-kernel-laws_2.12:1.5.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.typelevel:cats-core_2.12:1.5.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-parser-combinators_2.12:1.1.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:guava:23.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.code.findbugs:jsr305:3.0.2:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: org.typelevel:discipline_2.12:0.9.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.typelevel:cats-testkit_2.12:1.4.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.typelevel:cats-laws_2.12:1.4.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.typelevel:cats-kernel-laws_2.12:1.4.0:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: org.typelevel:catalysts-platform_2.12:0.6:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: org.typelevel:catalysts-macros_2.12:0.6:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest_2.12:3.0.5:jar" level="project" />
@@ -35,14 +44,7 @@
     <orderEntry type="library" scope="TEST" name="sbt: org.scala-sbt:test-interface:1.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.postgresql:postgresql:42.2.5:jar" level="project" />
     <orderEntry type="library" name="sbt: com.example.manything:roundelayout_2.12:0.4.1-SNAPSHOT:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.objenesis:objenesis:2.6:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: org.mockito:mockito-core:2.23.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: net.bytebuddy:byte-buddy-agent:1.9.0:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: net.bytebuddy:byte-buddy:1.9.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.dripower:play-circe_2.12:2610.0:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-parser-combinators_2.12:1.0.6:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.scala-lang:scala-reflect:2.12.7:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.12.7:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe.play:play_2.12:2.6.20:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:play-test_2.12:2.6.20:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe.play:play-streams_2.12:2.6.20:jar" level="project" />
@@ -61,10 +63,6 @@
     <orderEntry type="library" scope="TEST" name="sbt: com.google.inject.extensions:guice-assistedinject:4.1.0:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: com.google.inject:guice:4.1.0:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: aopalliance:aopalliance:1.0:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.typelevel:machinist_2.12:0.6.5:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.typelevel:cats-macros_2.12:1.4.0:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.typelevel:cats-kernel_2.12:1.4.0:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.typelevel:cats-core_2.12:1.4.0:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: cglib:cglib-nodep:3.2.4:jar" level="project" />
     <orderEntry type="library" name="sbt: ch.qos.logback:logback-classic:1.2.3:jar" level="project" />
     <orderEntry type="library" name="sbt: ch.qos.logback:logback-core:1.2.3:jar" level="project" />
@@ -74,11 +72,8 @@
     <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-databind:2.8.11.1:jar" level="project" />
     <orderEntry type="library" name="sbt: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.11:jar" level="project" />
     <orderEntry type="library" name="sbt: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.11:jar" level="project" />
-    <orderEntry type="library" name="sbt: com.google.code.findbugs:jsr305:1.3.9:jar" level="project" />
-    <orderEntry type="library" scope="TEST" name="sbt: com.google.code.findbugs:jsr305:3.0.2:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: com.google.code.gson:gson:2.8.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.google.errorprone:error_prone_annotations:2.0.18:jar" level="project" />
-    <orderEntry type="library" name="sbt: com.google.guava:guava:22.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.google.j2objc:j2objc-annotations:1.1:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: com.novocode:junit-interface:0.11:jar" level="project" />
     <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:cachecontrol_2.12:1.1.2:jar" level="project" />
@@ -159,16 +154,16 @@
     <orderEntry type="library" name="sbt: com.typesafe.slick:slick-hikaricp_2.12:3.2.1:jar" level="project" />
     <orderEntry type="library" name="sbt: com.typesafe.slick:slick_2.12:3.2.3:jar" level="project" />
     <orderEntry type="library" name="sbt: com.zaxxer:HikariCP:2.5.1:jar" level="project" />
-    <orderEntry type="library" name="sbt: org.typelevel:cats-effect_2.12:1.0.0:jar" level="project" />
     <orderEntry type="library" name="sbt: com.chuusai:shapeless_2.12:2.3.3:jar" level="project" />
     <orderEntry type="library" name="sbt: io.circe:circe-generic_2.12:0.10.0:jar" level="project" />
     <orderEntry type="library" name="sbt: io.circe:circe-jawn_2.12:0.10.0:jar" level="project" />
     <orderEntry type="library" name="sbt: io.circe:circe-parser_2.12:0.10.0:jar" level="project" />
     <orderEntry type="library" name="sbt: org.spire-math:jawn-parser_2.12:0.13.0:jar" level="project" />
-    <orderEntry type="library" name="sbt: com.github.tminglei:slick-pg_2.12:0.16.3:jar" level="project" />
-    <orderEntry type="library" name="sbt: com.github.tminglei:slick-pg_core_2.12:0.16.3:jar" level="project" />
-    <orderEntry type="library" name="sbt: io.circe:circe-core_2.12:0.10.1:jar" level="project" />
-    <orderEntry type="library" name="sbt: io.circe:circe-java8_2.12:0.10.1:jar" level="project" />
-    <orderEntry type="library" name="sbt: io.circe:circe-numbers_2.12:0.10.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.12.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-reflect:2.12.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.typelevel:cats-effect_2.12:1.1.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.circe:circe-core_2.12:0.11.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.circe:circe-java8_2.12:0.11.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.circe:circe-numbers_2.12:0.11.0:jar" level="project" />
   </component>
 </module>
