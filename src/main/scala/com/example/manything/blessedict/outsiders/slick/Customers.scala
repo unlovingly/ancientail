@@ -2,10 +2,7 @@ package com.example.manything.blessedict.outsiders.slick
 
 import _root_.slick.lifted.Tag
 
-import com.example.manything.blessedict.domain.models.customer.{
-  Customer,
-  CustomerId
-}
+import com.example.manything.blessedict.domain.models.customer.{ Customer, CustomerId }
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class Customers(tag: Tag) extends Table[Customer](tag, "customers") {

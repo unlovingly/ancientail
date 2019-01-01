@@ -4,7 +4,7 @@ import slick.lifted.Tag
 
 import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.models.shop._
-import com.example.manything.ancientail.domain.models.slip.{Amount, Price}
+import com.example.manything.ancientail.domain.models.slip.{ Amount, Price }
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class Stocks(tag: Tag) extends Table[Stock](tag, "stocks") {

@@ -3,9 +3,9 @@ package com.example.manything.ancientail.outsiders.circe.slip
 import java.time.ZonedDateTime
 import java.util.UUID
 
-import cats.effect.{IO, Resource}
+import cats.effect.{ IO, Resource }
 
-import org.scalatest.{DiagrammedAssertions, FlatSpec}
+import org.scalatest.{ DiagrammedAssertions, FlatSpec }
 
 import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 import com.example.manything.ancientail.domain.models.shop.ShopId
@@ -26,37 +26,43 @@ class SlipCodecTest extends FlatSpec with DiagrammedAssertions {
 
   val slipIdAsString = "\"00000000-0000-0000-0000-000000000000\""
 
-  val exchangeSlip = ExchangeSlip(identity = Some(slipId),
-                                  number = "1",
-                                  senderId = shopId,
-                                  receiverId = shopId,
-                                  publishedAt = dateTime,
-                                  approvedAt = dateTime,
-                                  items = Seq.empty)
+  val exchangeSlip = ExchangeSlip(
+    identity = Some(slipId),
+    number = "1",
+    senderId = shopId,
+    receiverId = shopId,
+    publishedAt = dateTime,
+    approvedAt = dateTime,
+    items = Seq.empty
+  )
   val exchangeSlipAsString = Resource
     .fromAutoCloseable(IO { scala.io.Source.fromResource("slip.json") })
     .use(s => IO(s.mkString.trim()))
     .unsafeRunSync()
 
-  val purchaseSlip = PurchaseSlip(identity = Some(slipId),
-                                  number = "1",
-                                  senderId = publisherId,
-                                  receiverId = shopId,
-                                  publishedAt = dateTime,
-                                  approvedAt = dateTime,
-                                  items = Seq.empty)
+  val purchaseSlip = PurchaseSlip(
+    identity = Some(slipId),
+    number = "1",
+    senderId = publisherId,
+    receiverId = shopId,
+    publishedAt = dateTime,
+    approvedAt = dateTime,
+    items = Seq.empty
+  )
   val purchaseSlipAsString = Resource
     .fromAutoCloseable(IO { scala.io.Source.fromResource("slip.json") })
     .use(s => IO(s.mkString.trim()))
     .unsafeRunSync()
 
-  val salesSlip = SalesSlip(identity = Some(slipId),
-                            number = "1",
-                            senderId = shopId,
-                            receiverId = Some(customerId),
-                            publishedAt = dateTime,
-                            approvedAt = dateTime,
-                            items = Seq.empty)
+  val salesSlip = SalesSlip(
+    identity = Some(slipId),
+    number = "1",
+    senderId = shopId,
+    receiverId = Some(customerId),
+    publishedAt = dateTime,
+    approvedAt = dateTime,
+    items = Seq.empty
+  )
   val salesSlipAsString = Resource
     .fromAutoCloseable(IO { scala.io.Source.fromResource("slip.json") })
     .use(s => IO(s.mkString.trim()))

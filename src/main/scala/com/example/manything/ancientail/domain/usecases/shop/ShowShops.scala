@@ -1,6 +1,6 @@
 package com.example.manything.ancientail.domain.usecases.shop
 
-import com.example.manything.ancientail.domain.models.shop.{Shop, ShopId}
+import com.example.manything.ancientail.domain.models.shop.{ Shop, ShopId }
 
 trait ShowShops[A[_]] {
 

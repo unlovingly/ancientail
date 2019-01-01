@@ -9,21 +9,19 @@ import play.api.libs.circe.Circe
 import play.api.mvc._
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.models.product.{
-  Product,
-  ProductId
-}
+import com.example.manything.ambientendre.domain.models.product.{ Product, ProductId }
 import com.example.manything.ambientendre.domain.usecases.product.ProductUseCases
 import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 
 @Singleton
-class ProductController(cc: ControllerComponents,
-                        productUseCases: ProductUseCases[EitherTFuture],
-                        publisherUseCases: PublisherUseCases[EitherTFuture])(
-  implicit executionContext: ExecutionContext)
-  extends AbstractController(cc)
-  with I18nSupport
-  with Circe {
+class ProductController(
+    cc: ControllerComponents,
+    productUseCases: ProductUseCases[EitherTFuture],
+    publisherUseCases: PublisherUseCases[EitherTFuture]
+)(implicit executionContext: ExecutionContext)
+    extends AbstractController(cc)
+    with I18nSupport
+    with Circe {
   import com.example.manything.ambientendre.outsiders.circe.product.ProductCodec._
 
   def retrieve() = Action.async { implicit request =>
@@ -35,8 +33,10 @@ class ProductController(cc: ControllerComponents,
       productUseCases.retrieve()
 
     val result = products
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
+      .fold(
+        left => BadRequest(left.toString.asJson.spaces2),
+        right => Ok(right.asJson.spaces2)
+      )
 
     result
   }
@@ -50,8 +50,10 @@ class ProductController(cc: ControllerComponents,
       productUseCases.retrieve(id)
 
     val result = products
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
+      .fold(
+        left => BadRequest(left.toString.asJson.spaces2),
+        right => Ok(right.asJson.spaces2)
+      )
 
     result
   }
@@ -66,8 +68,10 @@ class ProductController(cc: ControllerComponents,
         productUseCases.create(request.body)
 
       val result = publisher
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.asJson.spaces2))
+        .fold(
+          left => BadRequest(left.toString.asJson.spaces2),
+          right => Ok(right.asJson.spaces2)
+        )
 
       result
     }

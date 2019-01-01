@@ -4,7 +4,7 @@ import java.util.UUID
 
 import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
-import com.example.manything.roundelayout.domain.{Entity, Identifiability}
+import com.example.manything.roundelayout.domain.{ Entity, Identifiability }
 
 /**
  * 店舗
@@ -15,9 +15,9 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
  * @param stocks Seq[Stock] 在庫
  */
 case class Shop(
-  override val identity: Option[ShopId] = None,
-  name: String,
-  stocks: Seq[Stock]
+    override val identity: Option[ShopId] = None,
+    name: String,
+    stocks: Seq[Stock]
 ) extends Entity {
   override type Identifier = ShopId
 
@@ -69,11 +69,13 @@ case class Shop(
       // val (id, price) = i.pluCode.decompose
       val (id, price) = sssss(i.pluCode.toString)
 
-      Stock(pluCode = i.pluCode,
-            shopId = identity.get,
-            productId = id,
-            amount = i.amount,
-            price = price)
+      Stock(
+        pluCode = i.pluCode,
+        shopId = identity.get,
+        productId = id,
+        amount = i.amount,
+        price = price
+      )
     }
 
     outbound(ss)
@@ -84,11 +86,13 @@ case class Shop(
    */
   def storing(slip: PurchaseSlip): Shop = {
     val ss = slip.items.map { i =>
-      Stock(pluCode = PluCode.generate(v = i.productId, a = i.price),
-            shopId = identity.get,
-            productId = i.productId,
-            amount = i.amount,
-            price = i.price)
+      Stock(
+        pluCode = PluCode.generate(v = i.productId, a = i.price),
+        shopId = identity.get,
+        productId = i.productId,
+        amount = i.amount,
+        price = i.price
+      )
     }
 
     inbound(ss)

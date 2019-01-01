@@ -1,9 +1,9 @@
 package com.example.manything.ancientail.domain.models.shop
 
-import cats.{Eq, Semigroup}
+import cats.{ Eq, Semigroup }
 
 import com.example.manything.ambientendre.domain.models.product.ProductId
-import com.example.manything.ancientail.domain.models.slip.{Amount, Price}
+import com.example.manything.ancientail.domain.models.slip.{ Amount, Price }
 
 /**
  * 店舗在庫
@@ -15,11 +15,11 @@ import com.example.manything.ancientail.domain.models.slip.{Amount, Price}
  * @param price Price 価格
  */
 case class Stock(
-  pluCode: PluCode,
-  shopId: ShopId,
-  productId: ProductId,
-  amount: Amount,
-  price: Price
+    pluCode: PluCode,
+    shopId: ShopId,
+    productId: ProductId,
+    amount: Amount,
+    price: Price
 ) {
   def +(operand: Stock): Stock = {
     import cats.syntax.eq.catsSyntaxEq

@@ -2,25 +2,27 @@ resolvers += Resolver.jcenterRepo
 
 lazy val root = (project in file("."))
   .settings(
-    inThisBuild(Seq(
-      organization := "com.example.manything.ancientail",
-      scalaVersion := "2.12.8",
-      version := "0.6.2-SNAPSHOT"
-    )),
+    inThisBuild(
+      Seq(
+        organization := "com.example.manything.ancientail",
+        scalaVersion := "2.12.8",
+        version := "0.6.2-SNAPSHOT"
+      )
+    ),
     name := "ancientail",
     libraryDependencies ++= Seq(
       filters,
-      "org.typelevel"          %% "cats-core"          % "1.5.0",
-      "org.typelevel"          %% "cats-effect"        % "1.1.0",
-      "org.typelevel"          %% "cats-testkit"       % "1.5.0" % "test",
-      "com.typesafe.slick"     %% "slick"              % "3.2.3",
-      "com.github.tminglei"    %% "slick-pg"           % "0.17.0",
-      "org.postgresql"         % "postgresql"          % "42.2.5",
-      "com.typesafe.play"      %% "play-slick"         % "3.0.3",
-      "com.dripower"           %% "play-circe"         % "2610.0",
-      "io.circe"               %% "circe-java8"        % "0.11.0",
+      "org.typelevel" %% "cats-core" % "1.5.0",
+      "org.typelevel" %% "cats-effect" % "1.1.0",
+      "org.typelevel" %% "cats-testkit" % "1.5.0" % "test",
+      "com.typesafe.slick" %% "slick" % "3.2.3",
+      "com.github.tminglei" %% "slick-pg" % "0.17.0",
+      "org.postgresql" % "postgresql" % "42.2.5",
+      "com.typesafe.play" %% "play-slick" % "3.0.3",
+      "com.dripower" %% "play-circe" % "2610.0",
+      "io.circe" %% "circe-java8" % "0.11.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
-      "com.example.manything"  %% "roundelayout"       % "0.4.1-SNAPSHOT"
+      "com.example.manything" %% "roundelayout" % "0.4.1-SNAPSHOT"
     ),
     routesImport ++= Seq(
       "com.example.manything.ambientendre.domain.models.product.ProductId",
@@ -57,7 +59,7 @@ lazy val flyway = (project in file("database"))
     flywayUrl := s"jdbc:postgresql://$hostname:$port/$database?user=$username&password=$password",
     flywayLocations += "filesystem:database/migrations",
     libraryDependencies ++= Seq(
-      "org.postgresql"         % "postgresql"          % "42.2.5",
+      "org.postgresql" % "postgresql" % "42.2.5",
     ),
   )
   .enablePlugins(FlywayPlugin)

@@ -10,5 +10,6 @@ trait Storing[A[_]] {
    * 入庫処理
    */
   def store(slip: PurchaseSlip)(
-    implicit ME: MonadError[A, Throwable]): A[PurchaseSlip]
+      implicit ME: MonadError[A, Throwable]
+  ): A[PurchaseSlip]
 }

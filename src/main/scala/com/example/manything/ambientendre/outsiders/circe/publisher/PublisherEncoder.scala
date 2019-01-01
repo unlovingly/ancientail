@@ -1,9 +1,6 @@
 package com.example.manything.ambientendre.outsiders.circe.publisher
 
-import com.example.manything.ambientendre.domain.models.publisher.{
-  Publisher,
-  PublisherId
-}
+import com.example.manything.ambientendre.domain.models.publisher.{ Publisher, PublisherId }
 
 trait PublisherEncoder {
   import io.circe.Encoder

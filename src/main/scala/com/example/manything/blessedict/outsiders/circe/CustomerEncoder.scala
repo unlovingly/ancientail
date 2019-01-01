@@ -1,9 +1,6 @@
 package com.example.manything.blessedict.outsiders.circe
 
-import com.example.manything.blessedict.domain.models.customer.{
-  Customer,
-  CustomerId
-}
+import com.example.manything.blessedict.domain.models.customer.{ Customer, CustomerId }
 
 trait CustomerEncoder {
   import io.circe.Encoder

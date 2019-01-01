@@ -13,12 +13,13 @@ import com.example.manything.blessedict.domain.models.customer.Customer
 import com.example.manything.blessedict.domain.usecases.customer.CustomerUseCases
 
 @Singleton
-class CustomerController(cc: ControllerComponents,
-                         customerUseCases: CustomerUseCases[EitherTFuture])(
-  implicit executionContext: ExecutionContext)
-  extends AbstractController(cc)
-  with I18nSupport
-  with Circe {
+class CustomerController(
+    cc: ControllerComponents,
+    customerUseCases: CustomerUseCases[EitherTFuture]
+)(implicit executionContext: ExecutionContext)
+    extends AbstractController(cc)
+    with I18nSupport
+    with Circe {
   import com.example.manything.blessedict.outsiders.circe.CustomerCodec._
 
   def index() = Action.async { implicit request =>
@@ -50,8 +51,10 @@ class CustomerController(cc: ControllerComponents,
         customerUseCases.create(request.body)
 
       val result = customer
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.asJson.spaces2))
+        .fold(
+          left => BadRequest(left.toString.asJson.spaces2),
+          right => Ok(right.asJson.spaces2)
+        )
 
       result
     }

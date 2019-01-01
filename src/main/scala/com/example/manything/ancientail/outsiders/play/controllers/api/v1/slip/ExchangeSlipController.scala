@@ -16,12 +16,13 @@ import com.example.manything.ancientail.domain.models.slip.exchange.ExchangeSlip
 import com.example.manything.ancientail.domain.usecases.slip.ExchangeSlipUseCases
 
 @Singleton
-class ExchangeSlipController(cc: ControllerComponents,
-                             slipUseCases: ExchangeSlipUseCases[EitherTFuture])(
-  implicit executionContext: ExecutionContext)
-  extends AbstractController(cc)
-  with I18nSupport
-  with Circe {
+class ExchangeSlipController(
+    cc: ControllerComponents,
+    slipUseCases: ExchangeSlipUseCases[EitherTFuture]
+)(implicit executionContext: ExecutionContext)
+    extends AbstractController(cc)
+    with I18nSupport
+    with Circe {
   import com.example.manything.ancientail.outsiders.circe.slip.SlipCodec._
 
   // TODO
@@ -36,8 +37,10 @@ class ExchangeSlipController(cc: ControllerComponents,
       slipUseCases.retrieve()
 
     val result = slips
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
+      .fold(
+        left => BadRequest(left.toString.asJson.spaces2),
+        right => Ok(right.asJson.spaces2)
+      )
 
     result
   }
@@ -52,8 +55,10 @@ class ExchangeSlipController(cc: ControllerComponents,
         slipUseCases.retrieve(shopId, id)
 
       val result = slips
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.asJson.spaces2))
+        .fold(
+          left => BadRequest(left.toString.asJson.spaces2),
+          right => Ok(right.asJson.spaces2)
+        )
 
       result
     }
