@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       "org.typelevel"          %% "cats-effect"        % "1.1.0",
       "org.typelevel"          %% "cats-testkit"       % "1.5.0" % "test",
       "com.typesafe.slick"     %% "slick"              % "3.2.3",
-      "com.github.tminglei"    %% "slick-pg"           % "0.16.3",
+      "com.github.tminglei"    %% "slick-pg"           % "0.17.0",
       "org.postgresql"         % "postgresql"          % "42.2.5",
       "com.typesafe.play"      %% "play-slick"         % "3.0.3",
       "com.dripower"           %% "play-circe"         % "2610.0",
