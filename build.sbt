@@ -4,7 +4,7 @@ lazy val root = (project in file("."))
   .settings(
     inThisBuild(Seq(
       organization := "com.example.manything.ancientail",
-      scalaVersion := "2.12.7",
+      scalaVersion := "2.12.8",
       version := "0.6.2-SNAPSHOT"
     )),
     name := "ancientail",
