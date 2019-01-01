@@ -8,20 +8,14 @@ import org.scalatest._
 import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 import com.example.manything.ancientail.domain.models.slip._
-import com.example.manything.ancientail.domain.models.slip.sales.{
-  SalesSlip,
-  SalesSlipItem
-}
+import com.example.manything.ancientail.domain.models.slip.sales.{ SalesSlip, SalesSlipItem }
 import com.example.manything.ancientail.domain.models.slip.purchase.{
   PurchaseSlip,
   PurchaseSlipItem
 }
 import com.example.manything.blessedict.domain.models.customer.CustomerId
 
-class ShopSpec
-  extends FlatSpec
-  with DiagrammedAssertions
-  with cats.tests.StrictCatsEquality {
+class ShopSpec extends FlatSpec with DiagrammedAssertions with cats.tests.StrictCatsEquality {
   val receiverId: ShopId = ShopId(value = new UUID(0, 0))
   val senderId: ShopId = ShopId(value = new UUID(0, 1))
 
@@ -43,18 +37,24 @@ class ShopSpec
     senderId = publisherId,
     receiverId = receiverId,
     items = Seq(
-      PurchaseSlipItem(identity = Some(slipItem1Id),
-                       productId = productId1,
-                       amount = 1,
-                       price = 1000),
-      PurchaseSlipItem(identity = Some(slipItem2Id),
-                       productId = productId1,
-                       amount = 1,
-                       price = 2000),
-      PurchaseSlipItem(identity = Some(slipItem4Id),
-                       productId = productId2,
-                       amount = 6,
-                       price = 1000)
+      PurchaseSlipItem(
+        identity = Some(slipItem1Id),
+        productId = productId1,
+        amount = 1,
+        price = 1000
+      ),
+      PurchaseSlipItem(
+        identity = Some(slipItem2Id),
+        productId = productId1,
+        amount = 1,
+        price = 2000
+      ),
+      PurchaseSlipItem(
+        identity = Some(slipItem4Id),
+        productId = productId2,
+        amount = 6,
+        price = 1000
+      )
     ),
     publishedAt = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
   )
@@ -65,18 +65,24 @@ class ShopSpec
     senderId = senderId,
     receiverId = None,
     items = Seq(
-      SalesSlipItem(identity = Some(slipItem1Id),
-                    pluCode = PluCode.generate(productId1, 1000),
-                    amount = 1,
-                    price = 1000),
-      SalesSlipItem(identity = Some(slipItem2Id),
-                    pluCode = PluCode.generate(productId1, 2000),
-                    amount = 2,
-                    price = 2000),
-      SalesSlipItem(identity = Some(slipItem4Id),
-                    pluCode = PluCode.generate(productId2, 1000),
-                    amount = 6,
-                    price = 1000)
+      SalesSlipItem(
+        identity = Some(slipItem1Id),
+        pluCode = PluCode.generate(productId1, 1000),
+        amount = 1,
+        price = 1000
+      ),
+      SalesSlipItem(
+        identity = Some(slipItem2Id),
+        pluCode = PluCode.generate(productId1, 2000),
+        amount = 2,
+        price = 2000
+      ),
+      SalesSlipItem(
+        identity = Some(slipItem4Id),
+        pluCode = PluCode.generate(productId2, 1000),
+        amount = 6,
+        price = 1000
+      )
     ),
     publishedAt = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
   )
@@ -85,16 +91,20 @@ class ShopSpec
     identity = Some(receiverId),
     name = "Shop One",
     stocks = Seq(
-      Stock(pluCode = PluCode.generate(productId1, 2000),
-            shopId = receiverId,
-            productId = productId1,
-            amount = 1,
-            price = 2000),
-      Stock(pluCode = PluCode.generate(productId2, 1000),
-            shopId = receiverId,
-            productId = productId2,
-            amount = 3,
-            price = 1000)
+      Stock(
+        pluCode = PluCode.generate(productId1, 2000),
+        shopId = receiverId,
+        productId = productId1,
+        amount = 1,
+        price = 2000
+      ),
+      Stock(
+        pluCode = PluCode.generate(productId2, 1000),
+        shopId = receiverId,
+        productId = productId2,
+        amount = 3,
+        price = 1000
+      )
     )
   )
 
@@ -102,11 +112,13 @@ class ShopSpec
     identity = Some(receiverId),
     name = "Shop One",
     stocks = Seq(
-      Stock(pluCode = PluCode.generate(productId1, 2000),
-            shopId = receiverId,
-            productId = productId1,
-            amount = 1,
-            price = 2000)
+      Stock(
+        pluCode = PluCode.generate(productId1, 2000),
+        shopId = receiverId,
+        productId = productId1,
+        amount = 1,
+        price = 2000
+      )
     )
   )
 
@@ -114,21 +126,27 @@ class ShopSpec
     identity = Some(senderId),
     name = "Shop Two",
     stocks = Seq(
-      Stock(pluCode = PluCode.generate(productId1, 1000),
-            shopId = receiverId,
-            productId = productId1,
-            amount = 2,
-            price = 1000),
-      Stock(pluCode = PluCode.generate(productId1, 2000),
-            shopId = receiverId,
-            productId = productId1,
-            amount = 4,
-            price = 2000),
-      Stock(pluCode = PluCode.generate(productId2, 1000),
-            shopId = receiverId,
-            productId = productId2,
-            amount = 12,
-            price = 1000)
+      Stock(
+        pluCode = PluCode.generate(productId1, 1000),
+        shopId = receiverId,
+        productId = productId1,
+        amount = 2,
+        price = 1000
+      ),
+      Stock(
+        pluCode = PluCode.generate(productId1, 2000),
+        shopId = receiverId,
+        productId = productId1,
+        amount = 4,
+        price = 2000
+      ),
+      Stock(
+        pluCode = PluCode.generate(productId2, 1000),
+        shopId = receiverId,
+        productId = productId2,
+        amount = 12,
+        price = 1000
+      )
     )
   )
 
@@ -136,21 +154,27 @@ class ShopSpec
     identity = Some(receiverId),
     name = "Shop One",
     stocks = Seq(
-      Stock(pluCode = PluCode.generate(productId1, 1000),
-            shopId = receiverId,
-            productId = productId1,
-            amount = 1,
-            price = 1000),
-      Stock(pluCode = PluCode.generate(productId1, 2000),
-            shopId = receiverId,
-            productId = productId1,
-            amount = 2,
-            price = 2000),
-      Stock(pluCode = PluCode.generate(productId2, 1000),
-            shopId = receiverId,
-            productId = productId2,
-            amount = 6,
-            price = 1000)
+      Stock(
+        pluCode = PluCode.generate(productId1, 1000),
+        shopId = receiverId,
+        productId = productId1,
+        amount = 1,
+        price = 1000
+      ),
+      Stock(
+        pluCode = PluCode.generate(productId1, 2000),
+        shopId = receiverId,
+        productId = productId1,
+        amount = 2,
+        price = 2000
+      ),
+      Stock(
+        pluCode = PluCode.generate(productId2, 1000),
+        shopId = receiverId,
+        productId = productId2,
+        amount = 6,
+        price = 1000
+      )
     )
   )
 

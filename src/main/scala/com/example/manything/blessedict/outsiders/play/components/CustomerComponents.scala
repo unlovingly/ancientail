@@ -17,12 +17,14 @@ trait CustomerComponents {
   private lazy val repository: CustomerRepository[EitherTFuture] =
     new CustomerRepositoryWithSlick(db = db)
   private lazy val customerUseCases = new CustomerUseCases(
-    customers = repository)
+    customers = repository
+  )
 
   lazy val customerController =
     new CustomerController(
       cc = controllerComponents,
-      customerUseCases = customerUseCases)(executionContext)
+      customerUseCases = customerUseCases
+    )(executionContext)
   lazy val customerRoutes =
     new customers.Routes(httpErrorHandler, customerController)
 }

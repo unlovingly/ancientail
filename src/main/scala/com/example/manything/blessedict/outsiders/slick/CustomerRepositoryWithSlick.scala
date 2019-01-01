@@ -9,8 +9,8 @@ import com.example.manything.blessedict.domain.models.customer._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class CustomerRepositoryWithSlick(val db: Database)(
-  implicit val executionContext: ExecutionContext)
-  extends CustomerRepository[EitherTFuture] {
+    implicit val executionContext: ExecutionContext
+) extends CustomerRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
     import cats.implicits.catsStdInstancesForFuture
 
@@ -39,7 +39,8 @@ class CustomerRepositoryWithSlick(val db: Database)(
 
     val q = (customers returning customers.map { _.identity }) += Customer(
       entity.identity,
-      entity.name)
+      entity.name
+    )
     val a = q.asTry.map { _.toEither }
 
     EitherT(db.run(a)).map { identity =>

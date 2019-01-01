@@ -2,7 +2,7 @@ package com.example.manything.ancientail.domain.models.shop
 
 import java.util.UUID
 
-import org.scalatest.{DiagrammedAssertions, FlatSpec}
+import org.scalatest.{ DiagrammedAssertions, FlatSpec }
 
 import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.models.slip.Price
@@ -14,11 +14,13 @@ class StockSpec extends FlatSpec with DiagrammedAssertions {
   val productId2: ProductId = ProductId(new UUID(2, 2))
 
   val generator = (pId: ProductId, price: Price) =>
-    Stock(pluCode = PluCode.generate(pId, price),
-          shopId = shopId,
-          productId = pId,
-          amount = 1,
-          price = price)
+    Stock(
+      pluCode = PluCode.generate(pId, price),
+      shopId = shopId,
+      productId = pId,
+      amount = 1,
+      price = price
+  )
 
   val stock1 = generator(productId1, 1000)
   val stock2 = generator(productId1, 1000)

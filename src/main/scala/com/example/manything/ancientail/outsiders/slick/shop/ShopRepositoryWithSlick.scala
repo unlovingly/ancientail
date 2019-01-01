@@ -9,8 +9,8 @@ import com.example.manything.ancientail.domain.models.shop._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class ShopRepositoryWithSlick(val db: Database)(
-  implicit val executionContext: ExecutionContext)
-  extends ShopRepository[EitherTFuture] {
+    implicit val executionContext: ExecutionContext
+) extends ShopRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
     import cats.implicits.catsStdInstancesForFuture
 
@@ -53,12 +53,14 @@ class ShopRepositoryWithSlick(val db: Database)(
 
   private def store(id: Option[ShopId], ss: Seq[Stock]) = {
     val targets = ss.map { s =>
-      Stock(pluCode = PluCode
-              .generate(v = s.productId, a = s.price),
-            shopId = id.get,
-            productId = s.productId,
-            amount = s.amount,
-            price = s.price)
+      Stock(
+        pluCode = PluCode
+          .generate(v = s.productId, a = s.price),
+        shopId = id.get,
+        productId = s.productId,
+        amount = s.amount,
+        price = s.price
+      )
     }
 
     DBIO.sequence {
@@ -69,7 +71,8 @@ class ShopRepositoryWithSlick(val db: Database)(
   }
 
   override def retrieveWithStocksBy(
-    shopId: Identifier): EitherTFuture[EntityType] = {
+      shopId: Identifier
+  ): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
     // TODO productId
@@ -90,8 +93,9 @@ class ShopRepositoryWithSlick(val db: Database)(
   }
 
   override def retrieveWithStocksBy(
-    shopId: Identifier,
-    code: PluCode): EitherTFuture[EntityType] = {
+      shopId: Identifier,
+      code: PluCode
+  ): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
     val s = stocks filter (_.pluCode === code.bind) filter (_.amount > 0)
@@ -111,7 +115,8 @@ class ShopRepositoryWithSlick(val db: Database)(
   }
 
   override def retrieveWithStocksBy(
-    q: String): EitherTFuture[Seq[EntityType]] = {
+      q: String
+  ): EitherTFuture[Seq[EntityType]] = {
     import cats.implicits.catsStdInstancesForFuture
 
     import com.example.manything.ambientendre.outsiders.slick.product._
@@ -135,8 +140,9 @@ class ShopRepositoryWithSlick(val db: Database)(
   }
 
   override def retrieveWithStocksBy(
-    shopId: Identifier,
-    pluCode: Seq[PluCode]): EitherTFuture[EntityType] = {
+      shopId: Identifier,
+      pluCode: Seq[PluCode]
+  ): EitherTFuture[EntityType] = {
     import cats.implicits.catsStdInstancesForFuture
 
     val t = stocks filter (_.amount > 0) filter (_.pluCode inSetBind pluCode)

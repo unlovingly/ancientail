@@ -2,11 +2,11 @@ package com.example.manything.ancientail.outsiders.circe.shop
 
 import java.util.UUID
 
-import cats.effect.{IO, Resource}
+import cats.effect.{ IO, Resource }
 
-import org.scalatest.{DiagrammedAssertions, FlatSpec}
+import org.scalatest.{ DiagrammedAssertions, FlatSpec }
 
-import com.example.manything.ancientail.domain.models.shop.{Shop, ShopId}
+import com.example.manything.ancientail.domain.models.shop.{ Shop, ShopId }
 
 class ShopCodecTest extends FlatSpec with DiagrammedAssertions {
   val shopId = ShopId(new UUID(0, 0))

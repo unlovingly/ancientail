@@ -5,10 +5,7 @@ import slick.jdbc.JdbcCapabilities
 
 import com.github.tminglei.slickpg._
 
-trait PostgresProfile
-  extends ExPostgresProfile
-  with PgDate2Support
-  with PgRangeSupport {
+trait PostgresProfile extends ExPostgresProfile with PgDate2Support with PgRangeSupport {
   override protected def computeCapabilities: Set[Capability] =
     super.computeCapabilities + JdbcCapabilities.insertOrUpdate
 

@@ -12,8 +12,8 @@ import com.example.manything.ancientail.domain.models.slip.sales._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class SalesSlipRepositoryWithSlick(val db: Database)(
-  implicit val executionContext: ExecutionContext)
-  extends SalesSlipRepository[EitherTFuture] {
+    implicit val executionContext: ExecutionContext
+) extends SalesSlipRepository[EitherTFuture] {
   val slips = lifted.TableQuery[SalesSlips]
   val slipItems = lifted.TableQuery[SlipItems]
 
@@ -68,7 +68,8 @@ class SalesSlipRepositoryWithSlick(val db: Database)(
   }
 
   override def store(
-    entities: Seq[SalesSlip]): EitherTFuture[Seq[SalesSlip]] = {
+      entities: Seq[SalesSlip]
+  ): EitherTFuture[Seq[SalesSlip]] = {
     require(entities.nonEmpty)
 
     val query = storeSlips(entities)
@@ -82,7 +83,7 @@ class SalesSlipRepositoryWithSlick(val db: Database)(
     val query =
       entity.identity match {
         case Some(_) => slips.update(target).map(_ => target)
-        case _ => (slips returning slips).+=(target)
+        case _       => (slips returning slips).+=(target)
       }
 
     val action = for {

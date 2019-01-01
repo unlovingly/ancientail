@@ -1,9 +1,6 @@
 package com.example.manything.ambientendre.domain.usecases.product
 
-import com.example.manything.ambientendre.domain.models.product.{
-  Product,
-  ProductId
-}
+import com.example.manything.ambientendre.domain.models.product.{ Product, ProductId }
 
 trait ShowProducts[A[_]] {
 

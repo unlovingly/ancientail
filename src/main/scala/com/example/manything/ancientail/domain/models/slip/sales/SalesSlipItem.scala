@@ -12,8 +12,8 @@ import com.example.manything.ancientail.domain.models.slip._
  * @param price 仕入れ値
  */
 case class SalesSlipItem(
-  override val identity: Option[SlipItemId] = None,
-  pluCode: PluCode,
-  amount: Amount,
-  price: Price
+    override val identity: Option[SlipItemId] = None,
+    pluCode: PluCode,
+    amount: Amount,
+    price: Price
 ) extends SlipItem

@@ -8,7 +8,8 @@ import com.example.manything.ancientail.domain.models.slip.SlipId
 
 package object slip {
   implicit def pathBinder(
-    implicit uuidBinder: PathBindable[UUID]): PathBindable[SlipId] =
+      implicit uuidBinder: PathBindable[UUID]
+  ): PathBindable[SlipId] =
     new PathBindable[SlipId] {
       override def bind(key: String, value: String): Either[String, SlipId] =
         uuidBinder.bind(key, value).map(SlipId.apply)

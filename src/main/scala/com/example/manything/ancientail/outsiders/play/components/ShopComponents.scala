@@ -19,7 +19,8 @@ trait ShopComponents {
 
   lazy val shopController =
     new ShopController(cc = controllerComponents, shopUseCases = shopUseCases)(
-      executionContext)
+      executionContext
+    )
   lazy val shopRoutes =
     new shops.Routes(httpErrorHandler, shopController)
 }

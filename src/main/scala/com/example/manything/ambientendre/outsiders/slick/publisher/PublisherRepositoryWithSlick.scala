@@ -9,8 +9,8 @@ import com.example.manything.ambientendre.domain.models.publisher._
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class PublisherRepositoryWithSlick(val db: Database)(
-  implicit val executionContext: ExecutionContext)
-  extends PublisherRepository[EitherTFuture] {
+    implicit val executionContext: ExecutionContext
+) extends PublisherRepository[EitherTFuture] {
   override def retrieve(): EitherTFuture[Seq[EntityType]] = {
     import cats.implicits.catsStdInstancesForFuture
 
@@ -51,7 +51,8 @@ class PublisherRepositoryWithSlick(val db: Database)(
 
     val q = (publishers returning publishers.map { _.identity }) += Publisher(
       entity.identity,
-      entity.name)
+      entity.name
+    )
     val a = q.asTry.map { _.toEither }
 
     EitherT(db.run(a)).map { identity =>
