@@ -8,6 +8,7 @@ trait SalesSlipRepository[A[_]] extends SlipRepository[SalesSlip, A] {
   /**
    * 売上を複数登録する
    * SlipRepository でもいいが他の伝票はできなくてもいい
+   *
    * @see store(entity: EntityType): A[SlipType]
    */
   def store(entity: Seq[EntityType]): A[Seq[SalesSlip]]

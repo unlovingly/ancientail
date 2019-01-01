@@ -18,6 +18,7 @@ trait ShopRepository[A[_]] extends Repository[Shop] {
 
   /**
    * 指定された店舗がもつ在庫を取得する
+   *
    * @deprecated
    * @see retrieveWithStocksBy(shopId: Identifier, codes: Seq[PluCode])
    */
