@@ -10,9 +10,9 @@ lazy val root = (project in file("."))
     name := "ancientail",
     libraryDependencies ++= Seq(
       filters,
-      "org.typelevel"          %% "cats-core"          % "1.4.0",
-      "org.typelevel"          %% "cats-effect"        % "1.0.0",
-      "org.typelevel"          %% "cats-testkit"       % "1.4.0" % "test",
+      "org.typelevel"          %% "cats-core"          % "1.5.0",
+      "org.typelevel"          %% "cats-effect"        % "1.1.0",
+      "org.typelevel"          %% "cats-testkit"       % "1.5.0" % "test",
       "com.typesafe.slick"     %% "slick"              % "3.2.3",
       "com.github.tminglei"    %% "slick-pg"           % "0.16.3",
       "org.postgresql"         % "postgresql"          % "42.2.5",
