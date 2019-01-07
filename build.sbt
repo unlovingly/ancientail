@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
       Seq(
         organization := "com.example.manything.ancientail",
         scalaVersion := "2.12.8",
-        version := "0.6.2-SNAPSHOT"
+        version := "0.6.2"
       )
     ),
     name := "ancientail",
@@ -43,16 +43,34 @@ lazy val root = (project in file("."))
       "-language:higherKinds",
       "-Ypartial-unification"
     ),
-    dockerBaseImage := "openjdk",
-    dockerEntrypoint := Seq("/opt/docker/bin/play2docker"),
+    dockerBaseImage := "hseeberger/scala-sbt",
     dockerExposedPorts := Seq(9000),
+    javaOptions in Universal ++= Seq(
+      // JVM memory tuning
+      "-J-Xmx1024m",
+      "-J-Xms512m",
+
+      // "-Dplay.http.secret.key=fdstsafewa",
+
+      // Since play uses separate pidfile we have to provide it with a proper path
+      // name of the pid file must be play.pid
+      // s"-Dpidfile.path=/var/run/${packageName.value}/play.pid",
+
+      // alternative, you can remove the PID file
+      // s"-Dpidfile.path=/dev/null",
+
+      // Use separate configuration file for production environment
+      // s"-Dconfig.file=/usr/share/${packageName.value}/conf/production.conf",
+
+      // Use separate logger configuration file for production environment
+      // s"-Dlogger.file=/usr/share/${packageName.value}/conf/production-logger.xml",
+    )
   )
-  .enablePlugins(DockerPlugin, PlayScala)
+  .enablePlugins(DockerPlugin, JavaAppPackaging, PlayScala)
   .disablePlugins(PlayLayoutPlugin)
 
 PlayKeys.playMonitoredFiles ++= (sourceDirectories in (Compile, TwirlKeys.compileTemplates)).value
 
-// TODO 外部ファイル化
 lazy val flyway = (project in file("database"))
   .settings(
     name := "flyway",
@@ -64,8 +82,8 @@ lazy val flyway = (project in file("database"))
   )
   .enablePlugins(FlywayPlugin)
 
-lazy val username = sys.env.getOrElse("POSTGRES_USERNAME", "username")
+lazy val username = sys.env.getOrElse("POSTGRES_USER", "username")
 lazy val password = sys.env.getOrElse("POSTGRES_PASSWORD", "p@ssw0rd")
 lazy val hostname = sys.env.getOrElse("POSTGRES_HOSTNAME", "localhost")
 lazy val database = sys.env.getOrElse("POSTGRES_DATABASE", "username")
-lazy val port = sys.env.getOrElse("POSTGRES_PORT", "32768")
+lazy val port = sys.env.getOrElse("POSTGRES_PORT", "5432")
