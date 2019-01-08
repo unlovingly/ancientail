@@ -27,8 +27,10 @@ trait ShopRepository[A[_]] extends Repository[Shop] {
   /**
    * 指定された店舗がもつ在庫を取得する
    */
-  def retrieveWithStocksBy(shopId: Identifier,
-                           codes: Seq[PluCode]): A[EntityType]
+  def retrieveWithStocksBy(
+      shopId: Identifier,
+      codes: Seq[PluCode]
+  ): A[EntityType]
 
   /**
    * 棚卸し処理、理論在庫状態を保存する

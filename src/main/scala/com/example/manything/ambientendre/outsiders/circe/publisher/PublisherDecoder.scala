@@ -2,10 +2,7 @@ package com.example.manything.ambientendre.outsiders.circe.publisher
 
 import java.util.UUID
 
-import com.example.manything.ambientendre.domain.models.publisher.{
-  Publisher,
-  PublisherId
-}
+import com.example.manything.ambientendre.domain.models.publisher.{ Publisher, PublisherId }
 
 trait PublisherDecoder {
   import cats.syntax.either._

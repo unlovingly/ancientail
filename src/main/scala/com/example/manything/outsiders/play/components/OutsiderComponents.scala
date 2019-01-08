@@ -1,7 +1,7 @@
 package com.example.manything.outsiders.play.components
 
-import slick.basic.{BasicProfile, DatabaseConfig}
-import slick.jdbc.{JdbcBackend, JdbcProfile}
+import slick.basic.{ BasicProfile, DatabaseConfig }
+import slick.jdbc.{ JdbcBackend, JdbcProfile }
 
 import play.api.db.slick._
 

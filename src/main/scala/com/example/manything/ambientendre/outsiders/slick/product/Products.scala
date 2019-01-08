@@ -1,9 +1,6 @@
 package com.example.manything.ambientendre.outsiders.slick.product
 
-import com.example.manything.ambientendre.domain.models.product.{
-  Product,
-  ProductId
-}
+import com.example.manything.ambientendre.domain.models.product.{ Product, ProductId }
 import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 

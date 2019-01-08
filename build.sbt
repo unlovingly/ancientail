@@ -1,27 +1,28 @@
-organization := "com.example.manything.ancientail"
-
-scalaVersion := "2.12.7"
-
 resolvers += Resolver.jcenterRepo
 
 lazy val root = (project in file("."))
   .settings(
-    name := """ancientail""",
-    version := "0.6.1",
+    inThisBuild(
+      Seq(
+        organization := "com.example.manything.ancientail",
+        scalaVersion := "2.12.8",
+        version := "0.6.2"
+      )
+    ),
+    name := "ancientail",
     libraryDependencies ++= Seq(
       filters,
-      "org.typelevel"          %% "cats-core"          % "1.4.0",
-      "org.typelevel"          %% "cats-effect"        % "1.0.0",
-      "org.typelevel"          %% "cats-testkit"       % "1.4.0",
-      "com.typesafe.slick"     %% "slick"              % "3.2.3",
-      "com.github.tminglei"    %% "slick-pg"           % "0.16.3",
-      "org.postgresql"         % "postgresql"          % "42.2.5",
-      "com.typesafe.play"      %% "play-slick"         % "3.0.3",
-      "com.dripower"           %% "play-circe"         % "2610.0",
-      "io.circe"               %% "circe-java8"        % "0.10.1",
+      "org.typelevel" %% "cats-core" % "1.5.0",
+      "org.typelevel" %% "cats-effect" % "1.1.0",
+      "org.typelevel" %% "cats-testkit" % "1.5.0" % "test",
+      "com.typesafe.slick" %% "slick" % "3.2.3",
+      "com.github.tminglei" %% "slick-pg" % "0.17.0",
+      "org.postgresql" % "postgresql" % "42.2.5",
+      "com.typesafe.play" %% "play-slick" % "3.0.3",
+      "com.dripower" %% "play-circe" % "2610.0",
+      "io.circe" %% "circe-java8" % "0.11.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
-      "org.mockito"            % "mockito-core"        % "2.23.0" % "test",
-      "com.example.manything"  %% "roundelayout"       % "0.4.1-SNAPSHOT"
+      "com.example.manything" %% "roundelayout" % "0.4.1-SNAPSHOT"
     ),
     routesImport ++= Seq(
       "com.example.manything.ambientendre.domain.models.product.ProductId",
@@ -42,30 +43,47 @@ lazy val root = (project in file("."))
       "-language:higherKinds",
       "-Ypartial-unification"
     ),
-    dockerBaseImage := "openjdk",
-    dockerEntrypoint := Seq("/opt/docker/bin/play2docker"),
+    dockerBaseImage := "hseeberger/scala-sbt",
     dockerExposedPorts := Seq(9000),
+    javaOptions in Universal ++= Seq(
+      // JVM memory tuning
+      "-J-Xmx1024m",
+      "-J-Xms512m",
+
+      // "-Dplay.http.secret.key=fdstsafewa",
+
+      // Since play uses separate pidfile we have to provide it with a proper path
+      // name of the pid file must be play.pid
+      // s"-Dpidfile.path=/var/run/${packageName.value}/play.pid",
+
+      // alternative, you can remove the PID file
+      // s"-Dpidfile.path=/dev/null",
+
+      // Use separate configuration file for production environment
+      // s"-Dconfig.file=/usr/share/${packageName.value}/conf/production.conf",
+
+      // Use separate logger configuration file for production environment
+      // s"-Dlogger.file=/usr/share/${packageName.value}/conf/production-logger.xml",
+    )
   )
-  .enablePlugins(DockerPlugin, PlayScala)
+  .enablePlugins(DockerPlugin, JavaAppPackaging, PlayScala)
   .disablePlugins(PlayLayoutPlugin)
 
 PlayKeys.playMonitoredFiles ++= (sourceDirectories in (Compile, TwirlKeys.compileTemplates)).value
 
-// TODO 外部ファイル化
 lazy val flyway = (project in file("database"))
   .settings(
     name := "flyway",
     flywayUrl := s"jdbc:postgresql://$hostname:$port/$database?user=$username&password=$password",
     flywayLocations += "filesystem:database/migrations",
     libraryDependencies ++= Seq(
-      "org.postgresql"         % "postgresql"          % "42.2.5",
+      "org.postgresql" % "postgresql" % "42.2.5",
     ),
   )
   .enablePlugins(FlywayPlugin)
 
-lazy val username = sys.env.getOrElse("POSTGRES_USERNAME", "username")
+lazy val username = sys.env.getOrElse("POSTGRES_USER", "username")
 lazy val password = sys.env.getOrElse("POSTGRES_PASSWORD", "p@ssw0rd")
 lazy val hostname = sys.env.getOrElse("POSTGRES_HOSTNAME", "localhost")
 lazy val database = sys.env.getOrElse("POSTGRES_DATABASE", "username")
-lazy val port = sys.env.getOrElse("POSTGRES_PORT", "32768")
-
+lazy val port = sys.env.getOrElse("POSTGRES_PORT", "5432")

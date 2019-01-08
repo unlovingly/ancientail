@@ -4,7 +4,7 @@ import java.util.UUID
 
 import slick.lifted
 
-import com.example.manything.ancientail.domain.models.shop.{PluCode, ShopId}
+import com.example.manything.ancientail.domain.models.shop.{ PluCode, ShopId }
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 package object shop {

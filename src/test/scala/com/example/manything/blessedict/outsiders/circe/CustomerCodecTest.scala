@@ -2,12 +2,9 @@ package com.example.manything.blessedict.outsiders.circe
 
 import java.util.UUID
 
-import org.scalatest.{DiagrammedAssertions, FlatSpec}
+import org.scalatest.{ DiagrammedAssertions, FlatSpec }
 
-import com.example.manything.blessedict.domain.models.customer.{
-  Customer,
-  CustomerId
-}
+import com.example.manything.blessedict.domain.models.customer.{ Customer, CustomerId }
 
 class CustomerCodecTest extends FlatSpec with DiagrammedAssertions {
   val id = CustomerId(value = new UUID(0, 0))

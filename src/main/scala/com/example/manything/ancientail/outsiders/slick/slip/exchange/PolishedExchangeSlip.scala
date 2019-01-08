@@ -15,12 +15,12 @@ import com.example.manything.ancientail.domain.models.slip.exchange.{
  * 店舗間で移動するとき発行される。
  */
 case class PolishedExchangeSlip(
-  identity: Option[SlipId] = None,
-  number: String,
-  senderId: ShopId,
-  receiverId: ShopId,
-  publishedAt: OffsetDateTime,
-  approvedAt: OffsetDateTime
+    identity: Option[SlipId] = None,
+    number: String,
+    senderId: ShopId,
+    receiverId: ShopId,
+    publishedAt: OffsetDateTime,
+    approvedAt: OffsetDateTime
 ) {
   def to(items: Seq[ExchangeSlipItem] = Seq.empty): ExchangeSlip = {
     ExchangeSlip(

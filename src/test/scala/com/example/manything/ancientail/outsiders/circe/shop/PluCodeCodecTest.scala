@@ -2,15 +2,15 @@ package com.example.manything.ancientail.outsiders.circe.shop
 
 import java.util.UUID
 
-import org.scalatest.{DiagrammedAssertions, FlatSpec}
+import org.scalatest.{ DiagrammedAssertions, FlatSpec }
 
 import com.example.manything.ambientendre.domain.models.product.ProductId
 import com.example.manything.ancientail.domain.models.shop.PluCode
 
 class PluCodeCodecTest
-  extends FlatSpec
-  with DiagrammedAssertions
-  with cats.tests.StrictCatsEquality {
+    extends FlatSpec
+    with DiagrammedAssertions
+    with cats.tests.StrictCatsEquality {
   val code = PluCode.generate(ProductId(new UUID(0, 0)), 1000)
   val codeAsString = "\"00000000-0000-0000-0000-000000000000----1000\""
 

@@ -8,7 +8,7 @@ import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.domain.models.slip.sales.SalesSlipItem
 
 trait SlipItemDecoder {
-  import cats.syntax.either.{catsSyntaxEither, catsSyntaxEitherObject}
+  import cats.syntax.either.{ catsSyntaxEither, catsSyntaxEitherObject }
 
   import io.circe.Decoder
 
@@ -25,11 +25,14 @@ trait SlipItemDecoder {
   // TODO productId のバリデーション (空になることがある)
   implicit lazy val exchangeSlipItemDecoder: Decoder[ExchangeSlipItem] =
     Decoder.forProduct4("identity", "productId", "amount", "price")(
-      ExchangeSlipItem.apply)
+      ExchangeSlipItem.apply
+    )
   implicit lazy val purchaseSlipItemDecoder: Decoder[PurchaseSlipItem] =
     Decoder.forProduct4("identity", "productId", "amount", "price")(
-      PurchaseSlipItem.apply)
+      PurchaseSlipItem.apply
+    )
   implicit lazy val salesSlipItemDecoder: Decoder[SalesSlipItem] =
     Decoder.forProduct4("identity", "productId", "amount", "price")(
-      SalesSlipItem.apply)
+      SalesSlipItem.apply
+    )
 }

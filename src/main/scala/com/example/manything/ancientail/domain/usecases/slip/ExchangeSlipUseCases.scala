@@ -8,9 +8,10 @@ import com.example.manything.ancientail.domain.models.slip.exchange.{
   ExchangeSlipRepository
 }
 
-class ExchangeSlipUseCases[A[_]](val shops: ShopRepository[A],
-                                 val slips: ExchangeSlipRepository[A])(
-  implicit val executionContext: ExecutionContext)
-  extends SlipUseCases[A] {
+class ExchangeSlipUseCases[A[_]](
+    val shops: ShopRepository[A],
+    val slips: ExchangeSlipRepository[A]
+)(implicit val executionContext: ExecutionContext)
+    extends SlipUseCases[A] {
   override type EntityType = ExchangeSlip
 }

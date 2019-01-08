@@ -3,7 +3,7 @@ package com.example.manything.ambientendre.domain.models.product
 import java.util.UUID
 
 import com.example.manything.ambientendre.domain.models.publisher.PublisherId
-import com.example.manything.roundelayout.domain.{Entity, Identifiability}
+import com.example.manything.roundelayout.domain.{ Entity, Identifiability }
 
 /**
  * 製品情報
@@ -13,12 +13,11 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
  * @param publisherId PublisherId 販売者
  */
 case class Product(
-  override val identity: Option[ProductId] = None,
-  name: String,
-  publisherId: PublisherId
+    override val identity: Option[ProductId] = None,
+    name: String,
+    publisherId: PublisherId
 ) extends Entity {
   override type Identifier = ProductId
 }
 
-case class ProductId(override val value: UUID)
-  extends Identifiability[Product, UUID]
+case class ProductId(override val value: UUID) extends Identifiability[Product, UUID]

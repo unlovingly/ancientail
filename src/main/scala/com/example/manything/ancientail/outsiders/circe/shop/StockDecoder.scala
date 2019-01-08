@@ -11,5 +11,6 @@ trait StockDecoder {
 
   implicit lazy val stockDecoder: Decoder[Stock] =
     Decoder.forProduct5("pluCode", "shopId", "productId", "amount", "price")(
-      Stock.apply)
+      Stock.apply
+    )
 }

@@ -6,20 +6,19 @@ import scala.util.Try
 import cats.MonadError
 
 import com.example.manything.ancientail.domain.models.shop.ShopRepository
-import com.example.manything.ancientail.domain.models.slip.sales.{
-  SalesSlip,
-  SalesSlipRepository
-}
+import com.example.manything.ancientail.domain.models.slip.sales.{ SalesSlip, SalesSlipRepository }
 
-class SalesSlipUseCases[A[_]](val shops: ShopRepository[A],
-                              val slips: SalesSlipRepository[A])(
-  implicit val executionContext: ExecutionContext)
-  extends SlipUseCases[A]
-  with Selling[A] {
+class SalesSlipUseCases[A[_]](
+    val shops: ShopRepository[A],
+    val slips: SalesSlipRepository[A]
+)(implicit val executionContext: ExecutionContext)
+    extends SlipUseCases[A]
+    with Selling[A] {
   override type EntityType = SalesSlip
 
-  override def sell(slip: SalesSlip)(
-    implicit ME: MonadError[A, Throwable]): A[SalesSlip] = {
+  override def sell(
+      slip: SalesSlip
+  )(implicit ME: MonadError[A, Throwable]): A[SalesSlip] = {
     import cats.implicits.toFlatMapOps
 
     // 1. 商品在庫をとる

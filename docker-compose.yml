@@ -1,0 +1,14 @@
+version: "3"
+services:
+  web:
+    env_file: ./.env
+    image: ancientail:0.6.2
+    links:
+      - "pg:pg"
+    ports:
+      - "9000:9000"
+  pg:
+    env_file: ./.env
+    image: postgres:latest
+    ports:
+      - "5432:5432"

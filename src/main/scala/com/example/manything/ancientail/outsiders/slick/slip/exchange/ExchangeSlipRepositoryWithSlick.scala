@@ -15,8 +15,8 @@ import com.example.manything.ancientail.domain.models.slip.exchange.{
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
 class ExchangeSlipRepositoryWithSlick(val db: Database)(
-  implicit val executionContext: ExecutionContext)
-  extends ExchangeSlipRepository[EitherTFuture] {
+    implicit val executionContext: ExecutionContext
+) extends ExchangeSlipRepository[EitherTFuture] {
   val slips = lifted.TableQuery[ExchangeSlips]
   val slipItems = lifted.TableQuery[SlipItems]
 

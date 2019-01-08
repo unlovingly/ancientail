@@ -8,7 +8,7 @@ import com.example.manything.ancientail.domain.models.slip.purchase.PurchaseSlip
 import com.example.manything.ancientail.domain.models.slip.sales.SalesSlip
 
 trait SlipDecoder {
-  import cats.syntax.either.{catsSyntaxEither, catsSyntaxEitherObject}
+  import cats.syntax.either.{ catsSyntaxEither, catsSyntaxEitherObject }
 
   import io.circe.Decoder
   import io.circe.generic.auto._
@@ -28,29 +28,35 @@ trait SlipDecoder {
     }
 
   implicit lazy val exchangeSlipDecoder: Decoder[ExchangeSlip] =
-    Decoder.forProduct7("identity",
-                        "number",
-                        "senderId",
-                        "receiverId",
-                        "items",
-                        "publishedAt",
-                        "approvedAt")(ExchangeSlip.apply)
+    Decoder.forProduct7(
+      "identity",
+      "number",
+      "senderId",
+      "receiverId",
+      "items",
+      "publishedAt",
+      "approvedAt"
+    )(ExchangeSlip.apply)
 
   implicit lazy val purchaseSlipDecoder: Decoder[PurchaseSlip] =
-    Decoder.forProduct7("identity",
-                        "number",
-                        "senderId",
-                        "receiverId",
-                        "items",
-                        "publishedAt",
-                        "approvedAt")(PurchaseSlip.apply)
+    Decoder.forProduct7(
+      "identity",
+      "number",
+      "senderId",
+      "receiverId",
+      "items",
+      "publishedAt",
+      "approvedAt"
+    )(PurchaseSlip.apply)
 
   implicit lazy val salesSlipDecoder: Decoder[SalesSlip] =
-    Decoder.forProduct7("identity",
-                        "number",
-                        "senderId",
-                        "receiverId",
-                        "items",
-                        "publishedAt",
-                        "approvedAt")(SalesSlip.apply)
+    Decoder.forProduct7(
+      "identity",
+      "number",
+      "senderId",
+      "receiverId",
+      "items",
+      "publishedAt",
+      "approvedAt"
+    )(SalesSlip.apply)
 }

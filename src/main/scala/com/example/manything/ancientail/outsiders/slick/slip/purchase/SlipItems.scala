@@ -3,11 +3,10 @@ package com.example.manything.ancientail.outsiders.slick.slip.purchase
 import slick.lifted.Tag
 
 import com.example.manything.ambientendre.domain.models.product.ProductId
-import com.example.manything.ancientail.domain.models.slip.{SlipId, SlipItemId}
+import com.example.manything.ancientail.domain.models.slip.{ SlipId, SlipItemId }
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-class SlipItems(tag: Tag)
-  extends Table[PolishedPurchaseSlipItem](tag, "purchase_slip_items") {
+class SlipItems(tag: Tag) extends Table[PolishedPurchaseSlipItem](tag, "purchase_slip_items") {
   import com.example.manything.ambientendre.outsiders.slick.product.productIdColumnType
   import com.example.manything.ancientail.outsiders.slick.slip.{
     slipIdColumnType,

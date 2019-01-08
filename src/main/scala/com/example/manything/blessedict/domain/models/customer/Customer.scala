@@ -2,7 +2,7 @@ package com.example.manything.blessedict.domain.models.customer
 
 import java.util.UUID
 
-import com.example.manything.roundelayout.domain.{Entity, Identifiability}
+import com.example.manything.roundelayout.domain.{ Entity, Identifiability }
 
 /**
  * 顧客
@@ -12,11 +12,10 @@ import com.example.manything.roundelayout.domain.{Entity, Identifiability}
  * @param name 個人名
  */
 case class Customer(
-  override val identity: Option[CustomerId],
-  name: String
+    override val identity: Option[CustomerId],
+    name: String
 ) extends Entity {
   override type Identifier = CustomerId
 }
 
-case class CustomerId(override val value: UUID)
-  extends Identifiability[Customer, UUID]
+case class CustomerId(override val value: UUID) extends Identifiability[Customer, UUID]

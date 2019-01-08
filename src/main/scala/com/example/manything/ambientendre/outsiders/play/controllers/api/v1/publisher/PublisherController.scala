@@ -9,19 +9,17 @@ import play.api.libs.circe.Circe
 import play.api.mvc._
 
 import com.example.manything.EitherTFuture
-import com.example.manything.ambientendre.domain.models.publisher.{
-  Publisher,
-  PublisherId
-}
+import com.example.manything.ambientendre.domain.models.publisher.{ Publisher, PublisherId }
 import com.example.manything.ambientendre.domain.usecases.publisher.PublisherUseCases
 
 @Singleton
-class PublisherController(cc: ControllerComponents,
-                          publihserUseCases: PublisherUseCases[EitherTFuture])(
-  implicit executionContext: ExecutionContext)
-  extends AbstractController(cc)
-  with I18nSupport
-  with Circe {
+class PublisherController(
+    cc: ControllerComponents,
+    publihserUseCases: PublisherUseCases[EitherTFuture]
+)(implicit executionContext: ExecutionContext)
+    extends AbstractController(cc)
+    with I18nSupport
+    with Circe {
   import com.example.manything.ambientendre.outsiders.circe.publisher.PublisherCodec._
 
   def retrieve() = Action.async { implicit request =>
@@ -33,8 +31,10 @@ class PublisherController(cc: ControllerComponents,
       publihserUseCases.retrieve()
 
     val result = publishers
-      .fold(left => BadRequest(left.toString.asJson.spaces2),
-            right => Ok(right.asJson.spaces2))
+      .fold(
+        left => BadRequest(left.toString.asJson.spaces2),
+        right => Ok(right.asJson.spaces2)
+      )
 
     result
   }
@@ -49,8 +49,10 @@ class PublisherController(cc: ControllerComponents,
         publihserUseCases.retrieve(id)
 
       val result = publishers
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.asJson.spaces2))
+        .fold(
+          left => BadRequest(left.toString.asJson.spaces2),
+          right => Ok(right.asJson.spaces2)
+        )
 
       result
     }
@@ -65,8 +67,10 @@ class PublisherController(cc: ControllerComponents,
         publihserUseCases.create(request.body)
 
       val result = publisher
-        .fold(left => BadRequest(left.toString.asJson.spaces2),
-              right => Ok(right.asJson.spaces2))
+        .fold(
+          left => BadRequest(left.toString.asJson.spaces2),
+          right => Ok(right.asJson.spaces2)
+        )
 
       result
     }

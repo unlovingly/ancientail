@@ -2,10 +2,7 @@ package com.example.manything.ambientendre.outsiders.circe.product
 
 import java.util.UUID
 
-import com.example.manything.ambientendre.domain.models.product.{
-  Product,
-  ProductId
-}
+import com.example.manything.ambientendre.domain.models.product.{ Product, ProductId }
 
 trait ProductDecoder {
   import cats.syntax.either._

@@ -1,7 +1,7 @@
 package com.example.manything.outsiders.play
 
 import play.api.ApplicationLoader.Context
-import play.api.{Application, ApplicationLoader => Loader}
+import play.api.{ Application, ApplicationLoader => Loader }
 
 import com.example.manything.outsiders.play.components.ApplicationComponents
 

@@ -16,12 +16,12 @@ import com.example.manything.ancientail.domain.models.slip.purchase.{
  * 販売者 (メーカー) が発行する伝票。納品書などに相当する
  */
 case class PolishedPurchaseSlip(
-  identity: Option[SlipId] = None,
-  number: String,
-  senderId: PublisherId,
-  receiverId: ShopId,
-  publishedAt: OffsetDateTime,
-  approvedAt: OffsetDateTime
+    identity: Option[SlipId] = None,
+    number: String,
+    senderId: PublisherId,
+    receiverId: ShopId,
+    publishedAt: OffsetDateTime,
+    approvedAt: OffsetDateTime
 ) {
   def to(items: Seq[PurchaseSlipItem] = Seq.empty): PurchaseSlip = {
     PurchaseSlip(

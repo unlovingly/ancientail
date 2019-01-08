@@ -14,12 +14,14 @@ trait PublisherComponents {
   private lazy val repository: PublisherRepository[EitherTFuture] =
     new PublisherRepositoryWithSlick(db = db)
   private lazy val publisherUseCases = new PublisherUseCases(
-    publishers = repository)
+    publishers = repository
+  )
 
   lazy val publisherController =
     new PublisherController(
       cc = controllerComponents,
-      publihserUseCases = publisherUseCases)(executionContext)
+      publihserUseCases = publisherUseCases
+    )(executionContext)
   lazy val publisherRoutes =
     new publishers.Routes(httpErrorHandler, publisherController)
 }

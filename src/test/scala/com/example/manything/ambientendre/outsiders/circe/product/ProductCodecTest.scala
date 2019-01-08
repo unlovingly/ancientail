@@ -2,12 +2,9 @@ package com.example.manything.ambientendre.outsiders.circe.product
 
 import java.util.UUID
 
-import org.scalatest.{DiagrammedAssertions, FlatSpec}
+import org.scalatest.{ DiagrammedAssertions, FlatSpec }
 
-import com.example.manything.ambientendre.domain.models.product.{
-  Product,
-  ProductId
-}
+import com.example.manything.ambientendre.domain.models.product.{ Product, ProductId }
 import com.example.manything.ambientendre.domain.models.publisher.PublisherId
 
 class ProductCodecTest extends FlatSpec with DiagrammedAssertions {
@@ -15,9 +12,11 @@ class ProductCodecTest extends FlatSpec with DiagrammedAssertions {
   val publisherId = PublisherId(value = new UUID(0, 0))
   val productId = ProductId(value = new UUID(0, 0))
 
-  val product = Product(identity = Some(productId),
-                        name = "The Product",
-                        publisherId = publisherId)
+  val product = Product(
+    identity = Some(productId),
+    name = "The Product",
+    publisherId = publisherId
+  )
 
   val productIdAsString = s""""00000000-0000-0000-0000-000000000000""""
   val publisherIdAsString = s""""00000000-0000-0000-0000-000000000000""""

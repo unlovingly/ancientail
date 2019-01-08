@@ -8,8 +8,7 @@ import com.example.manything.ancientail.domain.models.shop.ShopId
 import com.example.manything.ancientail.domain.models.slip.SlipId
 import com.example.manything.outsiders.infrastructure.PostgresProfile.api._
 
-class ExchangeSlips(tag: Tag)
-  extends Table[PolishedExchangeSlip](tag, "exchange_slips") {
+class ExchangeSlips(tag: Tag) extends Table[PolishedExchangeSlip](tag, "exchange_slips") {
   import com.example.manything.ancientail.outsiders.slick.slip.slipIdColumnType
   import com.example.manything.ancientail.outsiders.slick.shop.shopIdColumnType
 
