@@ -1,5 +1,7 @@
 # 在庫管理システム
 
+[![CircleCI](https://circleci.com/gh/unlovingly/ancientail/tree/master.svg?style=svg&circle-token=e9967fa0037e517723666eea0e55a67bc44092c9)](https://circleci.com/gh/unlovingly/ancientail/tree/master)
+
 このシステムは`商品在庫`を追跡するシステムの API サーバーだ。
 `販売者`から`入荷`した`製品`を`店舗`で販売する業務をサポートする。
 
