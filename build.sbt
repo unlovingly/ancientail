@@ -42,7 +42,7 @@ lazy val root = (project in file("."))
       "-language:higherKinds",
       "-Ypartial-unification"
     ),
-    dockerBaseImage := "hseeberger/scala-sbt",
+    dockerBaseImage := "circleci/openjdk:8-jdk",
     dockerExposedPorts := Seq(9000),
     dockerUpdateLatest := true,
     javaOptions in Universal ++= Seq(
