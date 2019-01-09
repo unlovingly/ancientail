@@ -22,7 +22,6 @@ lazy val root = (project in file("."))
       "com.dripower" %% "play-circe" % "2610.0",
       "io.circe" %% "circe-java8" % "0.11.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
-      "com.example.manything" %% "roundelayout" % "0.4.1-SNAPSHOT"
     ),
     routesImport ++= Seq(
       "com.example.manything.ambientendre.domain.models.product.ProductId",
@@ -45,6 +44,7 @@ lazy val root = (project in file("."))
     ),
     dockerBaseImage := "hseeberger/scala-sbt",
     dockerExposedPorts := Seq(9000),
+    dockerUpdateLatest := true,
     javaOptions in Universal ++= Seq(
       // JVM memory tuning
       "-J-Xmx1024m",
