@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
       Seq(
         organization := "com.example.manything.ancientail",
         scalaVersion := "2.12.8",
-        version := "0.6.3"
+        version := "0.6.5"
       )
     ),
     name := "ancientail",
