@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
       Seq(
         organization := "com.example.manything.ancientail",
         scalaVersion := "2.12.8",
-        version := "0.6.2"
+        version := "0.6.3"
       )
     ),
     name := "ancientail",
@@ -22,7 +22,6 @@ lazy val root = (project in file("."))
       "com.dripower" %% "play-circe" % "2610.0",
       "io.circe" %% "circe-java8" % "0.11.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % "test",
-      "com.example.manything" %% "roundelayout" % "0.4.1-SNAPSHOT"
     ),
     routesImport ++= Seq(
       "com.example.manything.ambientendre.domain.models.product.ProductId",
@@ -43,8 +42,9 @@ lazy val root = (project in file("."))
       "-language:higherKinds",
       "-Ypartial-unification"
     ),
-    dockerBaseImage := "hseeberger/scala-sbt",
+    dockerBaseImage := "circleci/openjdk:8-jdk",
     dockerExposedPorts := Seq(9000),
+    dockerUpdateLatest := true,
     javaOptions in Universal ++= Seq(
       // JVM memory tuning
       "-J-Xmx1024m",

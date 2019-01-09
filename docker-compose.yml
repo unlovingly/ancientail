@@ -2,7 +2,7 @@ version: "3"
 services:
   web:
     env_file: ./.env
-    image: ancientail:0.6.2
+    image: ancientail:latest
     links:
       - "pg:pg"
     ports:
